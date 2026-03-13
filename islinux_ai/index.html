@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompts | isLinux - 开发者专用提示词库</title>
+    <meta name="description" content="专为开发者打造的 AI 提示词库，涵盖代码生成、调试、文档编写、Shell 脚本等场景。">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(88, 166, 255, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #58a6ff;
+            margin: 0;
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            margin: 1rem 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .category-tab {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .category-tab:hover,
+        .category-tab.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+
+        /* Prompt Cards */
+        .prompt-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .prompt-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .prompt-card:hover {
+            border-color: #58a6ff;
+            transform: translateY(-2px);
+        }
+
+        .prompt-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .prompt-title {
+            margin: 0;
+            color: #58a6ff;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .prompt-category {
+            background: rgba(88, 166, 255, 0.15);
+            color: #58a6ff;
+            padding: 0.2rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .prompt-body {
+            padding: 1.5rem;
+        }
+
+        .prompt-description {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .prompt-code {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #7ee787;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .prompt-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #2ea043;
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-color);
+        }
+
+        /* Search */
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+
+        /* Article Section */
+        .article-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .article-card:hover {
+            border-color: var(--accent-color);
+            background: rgba(35, 134, 54, 0.05);
+        }
+
+        .article-card h3 {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .article-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-color);
+            color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+            .prompt-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="logo">🤖 AI.isLinux.com</h1>
+    <p class="tagline">开发者专用 AI 提示词库</p>
+    <a href="https://islinux.com" class="back-link">← 返回主站</a>
+</header>
+
+<div class="container">
+    <!-- Search -->
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="搜索提示词...">
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+        <button class="category-tab active" data-category="all">全部</button>
+        <button class="category-tab" data-category="shell">Shell 脚本</button>
+        <button class="category-tab" data-category="code">代码生成</button>
+        <button class="category-tab" data-category="debug">调试</button>
+        <button class="category-tab" data-category="doc">文档</button>
+        <button class="category-tab" data-category="sql">SQL</button>
+        <button class="category-tab" data-category="git">Git</button>
+    </div>
+
+    <!-- Prompt Grid -->
+    <div class="prompt-grid" id="promptGrid">
+        <!-- Shell 脚本 -->
+        <div class="prompt-card" data-category="shell">
+            <div class="prompt-header">
+                <h3 class="prompt-title">📜 Shell 脚本优化助手</h3>
+                <span class="prompt-category">Shell</span>
+            </div>
+            <div class="prompt-body">
+                <p class="prompt-description">让 AI 检查你的 Bash 脚本，找出安全隐患和性能问题。</p>
+                <code class="prompt-code" id="prompt1">请作为高级 Linux 运维专家，检查以下 Bash 脚本的安全性、可维护性和性能问题：
+
+1. 指出潜在的安全风险（如未引用的变量、命令注入风险）
+2. 提出性能优化建议
+3. 给出具体的改进代码
+4. 遵循 ShellCheck 最佳实践
+
+脚本内容：
+[在此粘贴你的脚本]</code>
+                <div class="prompt-actions">
+                    <button class="btn btn-primary" onclick="copyText('prompt1')">📋 复制提示词</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 代码生成 -->
+        <div class="prompt-card" data-category="code">
+            <div class="prompt-header">
+                <h3 class="prompt-title">💻 Python 函数生成器</h3>
+                <span class="prompt-category">代码生成</span>
+            </div>
+            <div class="prompt-body">
+                <p class="prompt-description">描述需求，让 AI 生成符合 PEP8 规范的 Python 代码。</p>
+                <code class="prompt-code" id="prompt2">请作为资深 Python 开发者，编写一个函数实现以下功能：
+
+功能描述：[详细描述]
+
+要求：
+1. 遵循 PEP8 代码规范
+2. 添加完整的类型注解
+3. 包含详细的 docstring（Google 风格）
+4. 提供 2-3 个使用示例
+5. 考虑边界情况和错误处理
+
+请输出完整的函数代码。</code>
+                <div class="prompt-actions">
+                    <button class="btn btn-primary" onclick="copyText('prompt2')">📋 复制提示词</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 调试 -->
+        <div class="prompt-card" data-category="debug">
+            <div class="prompt-header">
+                <h3 class="prompt-title">🐛 代码调试助手</h3>
+                <span class="prompt-category">调试</span>
+            </div>
+            <div class="prompt-body">
+                <p class="prompt-description">粘贴错误信息和代码，让 AI 帮你快速定位问题。</p>
+                <code class="prompt-code" id="prompt3">请帮我调试以下代码问题：
+
+错误信息：
+[粘贴完整的错误堆栈]
+
+相关代码：
+[粘贴代码]
+
+我已经尝试过：
+1. [尝试过的方法 1]
+2. [尝试过的方法 2]
+
+环境信息：
+- 语言版本：
+- 操作系统：
+- 相关库版本：
+
+请分析可能的原因并给出解决方案。</code>
+                <div class="prompt-actions">
+                    <button class="btn btn-primary" onclick="copyText('prompt3')">📋 复制提示词</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文档 -->
+        <div class="prompt-card" data-category="doc">
+            <div class="prompt-header">
+                <h3 class="prompt-title">📖 README 生成器</h3>
+                <span class="prompt-category">文档</span>
+            </div>
+            <div class="prompt-body">
+                <p class="prompt-description">根据项目代码自动生成专业的 README 文档。</p>
+                <code class="prompt-code" id="prompt4">请为以下项目生成一个专业的 README.md 文件：
+
+项目名称：[名称]
+项目描述：[简短描述]
+主要功能：
+- [功能 1]
+- [功能 2]
+
+技术栈：[列出使用的技术]
+安装步骤：[简要说明]
+使用示例：[提供示例]
+
+要求：
+1. 使用 Markdown 格式
+2. 包含徽章（Badge）
+3. 包含目录
+4. 包含安装、使用、API 文档等章节
+5. 添加贡献指南和许可证说明</code>
+                <div class="prompt-actions">
+                    <button class="btn btn-primary" onclick="copyText('prompt4')">📋 复制提示词</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SQL -->
+        <div class="prompt-card" data-category="sql">
+            <div class="prompt-header">
+                <h3 class="prompt-title">🗄️ SQL 查询优化</h3>
+                <span class="prompt-category">SQL</span>
+            </div>
+            <div class="prompt-body">
+                <p class="prompt-description">优化慢查询，让数据库性能提升。</p>
+                <code class="prompt-code" id="prompt5">请作为数据库专家，优化以下 SQL 查询：
+
+数据库类型：[MySQL/PostgreSQL/SQLite]
+
+表结构：
+[描述表结构或提供 CREATE TABLE 语句]
+
+当前查询：
+[粘贴 SQL]
+
+问题描述：
+- 查询速度慢
+- 数据量：约 [X] 万行
+- 期望响应时间：[X]ms 以内
+
+请：
+1. 分析查询性能瓶颈
+2. 提供优化后的 SQL
+3. 建议需要的索引
+4. 解释优化原理</code>
+                <div class="prompt-actions">
+                    <button class="btn btn-primary" onclick="copyText('prompt5')">📋 复制提示词</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Git -->
+        <div class="prompt-card" data-category="git">
+            <div class="prompt-header">
+                <h3 class="prompt-title">🔧 Git 提交信息生成</h3>
+                <span class="prompt-category">Git</span>
+            </div>
+            <div class="prompt-body">
+                <p class="prompt-description">根据代码变更自动生成规范的 Commit Message。</p>
+                <code class="prompt-code" id="prompt6">请根据以下 Git 变更生成符合 Conventional Commits 规范的提交信息：
+
+变更内容：
+[粘贴 git diff 或描述变更]
+
+要求：
+1. 使用 Conventional Commits 格式（feat/fix/docs/style/refactor/perf/test/chore）
+2. 标题简洁明了（不超过 50 字符）
+3. 如有必要，添加详细的正文说明
+4. 如果有关联的 Issue，添加引用
+
+请生成 3 个备选提交信息供选择。</code>
+                <div class="prompt-actions">
+                    <button class="btn btn-primary" onclick="copyText('prompt6')">📋 复制提示词</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Section -->
+    <section class="article-section">
+        <h2 class="section-title">📚 相关文章</h2>
+        <a href="/articles/prompt-engineering-shell.html" class="article-card">
+            <h3>AI Prompt Engineering: 如何写出完美的 Shell 脚本生成指令</h3>
+            <p>掌握提示词工程，让 AI 帮你写出高质量、安全的 Bash 脚本。包含完整模板、实战示例和进阶技巧。</p>
+        </a>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2026 AI.isLinux.com | <a href="index.html" style="color: inherit;">首页</a> | <a href="about.html" style="color: inherit;">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;">隐私</a> | <a href="https://islinux.com" style="color: inherit;">返回主站</a></p>
+</footer>
+
+<div class="toast" id="toast">✅ 已复制到剪贴板</div>
+
+<script>
+    // Copy function
+    function copyText(id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            showToast();
+        });
+    }
+
+    // Toast
+    function showToast() {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // Category filter
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            const category = tab.dataset.category;
+            document.querySelectorAll('.prompt-card').forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Search
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        document.querySelectorAll('.prompt-card').forEach(card => {
+            const text = card.innerText.toLowerCase();
+            card.style.display = text.includes(term) ? 'block' : 'none';
+        });
+    });
+</script>
+
+</body>
+</html>

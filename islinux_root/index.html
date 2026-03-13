@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>isLinux.com | 开发者全能工具基地</title>
+    <meta name="description" content="isLinux 提供 Linux 命令查询、AI 提示词、金融计算及开发者常用工具，助力高效开发。">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(35,134,54,0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        .logo span { color: #fff; }
+
+        .tagline {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin: 1rem 0 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        nav a:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Section */
+        section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+        }
+
+        /* Site Grid */
+        .site-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .site-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .site-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 20px rgba(35, 134, 54, 0.2);
+        }
+
+        .site-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .site-card h3 {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        .site-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .site-card .url {
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        /* Article List */
+        .article-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .article-card:hover {
+            border-color: var(--accent-color);
+            background: rgba(35, 134, 54, 0.05);
+        }
+
+        .article-card h3 {
+            margin: 0 0 0.5rem;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .article-card p {
+            margin: 0 0 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .article-tag {
+            background: var(--accent-color);
+            color: #fff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        /* Terminal Style */
+        .terminal {
+            background: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .terminal .prompt {
+            color: var(--accent-color);
+        }
+
+        .terminal .command {
+            color: #fff;
+        }
+
+        .terminal .output {
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo { font-size: 2rem; }
+            nav { gap: 1rem; }
+            .site-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="logo">is<span>Linux</span>.com</h1>
+    <p class="tagline">如果它关乎技术，它就在这里。</p>
+    <nav>
+        <a href="https://ai.islinux.com">AI 子站</a>
+        <a href="https://tool.islinux.com">工具箱</a>
+        <a href="https://calc.islinux.com">计算器</a>
+        <a href="#articles">技术文章</a>
+    </nav>
+</header>
+
+<div class="container">
+    <!-- 子站导航 -->
+    <section>
+        <h2 class="section-title">子站导航</h2>
+        <div class="site-grid">
+            <a href="https://ai.islinux.com" class="site-card">
+                <div class="icon">🤖</div>
+                <h3>AI 提示词库</h3>
+                <p>针对开发者优化的 Prompt 集合，涵盖代码生成、调试、文档编写等场景。</p>
+                <span class="url">ai.islinux.com</span>
+            </a>
+
+            <a href="https://tool.islinux.com" class="site-card">
+                <div class="icon">🛠️</div>
+                <h3>开发者工具箱</h3>
+                <p>JSON 格式化、代码压缩、加解密工具，纯前端运行，数据不上传。</p>
+                <span class="url">tool.islinux.com</span>
+            </a>
+
+            <a href="https://calc.islinux.com" class="site-card">
+                <div class="icon">💰</div>
+                <h3>财务计算器</h3>
+                <p>房贷、汇率、时薪及投资收益计算，助力自由职业者科学报价。</p>
+                <span class="url">calc.islinux.com</span>
+            </a>
+
+            <a href="#articles" class="site-card">
+                <div class="icon">📚</div>
+                <h3>技术博客</h3>
+                <p>Linux 实战技巧、VPS 测评、AI 提示词工程等原创技术文章。</p>
+                <span class="url">islinux.com/articles</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- 终端演示 -->
+    <section>
+        <h2 class="section-title">快速开始</h2>
+        <div class="terminal">
+            <div><span class="prompt">$</span> <span class="command">curl -s https://islinux.com/api/commands | jq '.[]'</span></div>
+            <div class="output"># 获取 Linux 命令列表</div>
+            <br>
+            <div><span class="prompt">$</span> <span class="command">git clone https://github.com/islinux/toolkit.git</span></div>
+            <div class="output"># 克隆工具集合</div>
+        </div>
+    </section>
+
+    <!-- 最新文章 -->
+    <section id="articles">
+        <h2 class="section-title">最新文章</h2>
+        <div class="article-list">
+            <a href="/articles/linux-productivity-tools-2026.html" class="article-card">
+                <h3>🐧 2026 现代 Linux 生产力工具推荐</h3>
+                <p>本文更新于 2026 年 3 月，为你精选最适合开发者的 Linux 效率工具，涵盖终端增强、代码编辑、系统监控、开发效率等多个方面。</p>
+                <div class="article-meta">
+                    <span class="article-tag">Linux</span>
+                    <span>阅读时长：12 分钟</span>
+                </div>
+            </a>
+
+            <a href="/articles/vps-singapore-review.html" class="article-card">
+                <h3>☁️ 新加坡云服务器延迟测评与开发者选购指南</h3>
+                <p>2026 年最新新加坡 VPS 性能测评，涵盖 DigitalOcean、Vultr、Linode、AWS 等主流服务商的延迟、带宽、稳定性对比。</p>
+                <div class="article-meta">
+                    <span class="article-tag">VPS</span>
+                    <span>阅读时长：15 分钟</span>
+                </div>
+            </a>
+
+            <a href="https://ai.islinux.com/articles/prompt-engineering-shell.html" class="article-card">
+                <h3>🤖 AI Prompt Engineering: 如何写出完美的 Shell 脚本生成指令</h3>
+                <p>掌握提示词工程，让 AI 帮你写出高质量、安全的 Bash 脚本。包含完整模板、实战示例和进阶技巧。</p>
+                <div class="article-meta">
+                    <span class="article-tag">AI</span>
+                    <span>阅读时长：18 分钟</span>
+                </div>
+            </a>
+
+            <a href="https://tool.islinux.com/articles/json-privacy-guide.html" class="article-card">
+                <h3>🔒 如何本地离线处理 JSON 格式化以保护商业机密</h3>
+                <p>在数据泄露频发的时代，保护敏感数据从选择正确的工具开始。了解在线工具的风险和本地处理的最佳实践。</p>
+                <div class="article-meta">
+                    <span class="article-tag">安全</span>
+                    <span>阅读时长：10 分钟</span>
+                </div>
+            </a>
+
+            <a href="https://calc.islinux.com/articles/freelancer-rate-calculator.html" class="article-card">
+                <h3>💼 自由职业者项目报价策略与时薪计算器</h3>
+                <p>科学计算你的真实时薪，避免报价过低。包含隐性成本清单、报价方法、谈判技巧和合同要点。</p>
+                <div class="article-meta">
+                    <span class="article-tag">财务</span>
+                    <span>阅读时长：14 分钟</span>
+                </div>
+            </a>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2026 isLinux.com. All tools are client-side processed for privacy.</p>
+    <p>
+        <a href="/about.html">关于我们</a> |
+        <a href="/privacy.html">隐私政策</a> |
+        <a href="/contact.html">联系我们</a>
+    </p>
+</footer>
+
+</body>
+</html>

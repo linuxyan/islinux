@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Engineering: Shell 脚本生成指令 | isLinux</title>
+    <style>
+        :root { --bg-color: #0d1117; --text-color: #c9d1d9; --accent-color: #58a6ff; --card-bg: #161b22; --border-color: #30363d; --text-muted: #8b949e; --code-bg: #000; }
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; line-height: 1.8; }
+        header { padding: 2rem 1rem; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .back-link { display: inline-block; color: var(--text-color); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem; }
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
+        .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        article h2 { color: var(--accent-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-top: 2.5rem; }
+        article h3 { color: #fff; margin-top: 1.5rem; }
+        article p { margin: 1rem 0; }
+        article ul { margin: 1rem 0; padding-left: 2rem; }
+        article li { margin: 0.5rem 0; }
+        pre { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 1.5rem 0; }
+        code { font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #7ee787; }
+        :not(pre) > code { background: rgba(110, 118, 129, 0.4); padding: 0.2rem 0.4rem; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid var(--border-color); padding: 0.8rem; text-align: left; }
+        th { background: var(--card-bg); color: #fff; }
+        .blockquote { border-left: 4px solid var(--accent-color); padding-left: 1rem; margin: 1.5rem 0; color: var(--text-muted); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); margin-top: 3rem; }
+        footer a { color: var(--text-color); text-decoration: none; }
+    </style>
+</head>
+<body>
+<header><a href="../index.html" class="back-link">← 返回首页</a></header>
+<div class="container">
+    <article>
+        <h1>🤖 AI Prompt Engineering: 如何写出完美的 Shell 脚本生成指令</h1>
+        <div class="meta">阅读时长：约 18 分钟</div>
+
+        <div class="blockquote">掌握提示词工程，让 AI 帮你写出高质量、安全的 Bash 脚本</div>
+
+        <h2>什么是 Prompt Engineering？</h2>
+        <p>Prompt Engineering（提示词工程）是指通过精心设计的输入提示，引导 AI 模型生成更准确、更有用的输出结果。</p>
+
+        <h2>Shell 脚本生成的核心要素</h2>
+        <h3>1. 角色设定</h3>
+        <p>明确 AI 的角色，让它以专业视角思考：</p>
+        <pre><code>作为拥有 10 年经验的 Linux 系统管理员...
+作为 DevOps 专家，擅长自动化脚本...
+作为安全工程师，专注于脚本安全性...</code></pre>
+
+        <h3>2. 任务描述</h3>
+        <table>
+            <tr><th>要素</th><th>示例</th></tr>
+            <tr><td>目标</td><td>备份 /var/www 目录</td></tr>
+            <tr><td>约束</td><td>不超过 50 行代码</td></tr>
+            <tr><td>格式</td><td>使用 Bash 4.0+ 语法</td></tr>
+            <tr><td>输出</td><td>生成完整可执行脚本</td></tr>
+        </table>
+
+        <h3>3. 安全要求</h3>
+        <pre><code>请确保脚本：
+- 验证输入参数
+- 检查命令执行结果
+- 不使用 eval
+- 正确处理特殊字符
+- 包含错误处理</code></pre>
+
+        <h2>完整 Prompt 模板</h2>
+        <h3>模板一：系统管理脚本</h3>
+        <pre><code>作为高级 Linux 运维专家，请编写一个 [任务描述] 脚本。
+
+具体要求：
+1. 使用 Bash 4.0+ 语法
+2. 包含参数验证
+3. 实现错误处理（set -euo pipefail）
+4. 添加详细注释说明每个步骤
+5. 遵循 ShellCheck 最佳实践
+6. 包含使用示例
+
+请输出完整的、可直接运行的脚本代码。</code></pre>
+
+        <h2>实战示例：数据库备份脚本</h2>
+        <pre><code>#!/bin/bash
+#===============================================================================
+# 脚本名称：mysql_backup.sh
+# 功能描述：MySQL 数据库生产环境备份脚本
+#===============================================================================
+
+set -euo pipefail  # 严格错误处理
+
+BACKUP_DIR="${1:-${MYSQL_BACKUP_DIR:-/backup/mysql}}"
+RETENTION_DAYS="${MYSQL_RETENTION_DAYS:-7}"
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
+}
+
+error_exit() {
+    log "ERROR: $*"
+    exit 1
+}
+
+check_prerequisites() {
+    if [[ -z "${MYSQL_PWD:-}" ]]; then
+        error_exit "MYSQL_PWD 环境变量未设置"
+    fi
+    if ! command -v mysqldump &>/dev/null; then
+        error_exit "mysqldump 命令未找到"
+    fi
+}
+
+perform_backup() {
+    local timestamp=$(date '+%Y%m%d_%H%M%S')
+    local backup_file="${BACKUP_DIR}/backup_${timestamp}.sql.gz"
+    log "开始备份数据库..."
+    mysqldump -u "$MYSQL_USER" --all-databases | gzip > "$backup_file"
+    log "备份完成：$backup_file"
+}
+
+main() {
+    log "MySQL 备份任务开始"
+    check_prerequisites
+    perform_backup
+    log "备份任务成功完成"
+}
+
+main "$@"</code></pre>
+
+        <h2>进阶技巧</h2>
+        <h3>1. 少样本学习（Few-Shot Learning）</h3>
+        <p>给 AI 提供示例，让它理解你的期望。</p>
+
+        <h3>2. 链式思考（Chain of Thought）</h3>
+        <p>让 AI 分步骤思考：1) 分析需求 2) 设计结构 3) 编写代码 4) 添加错误处理 5) 补充注释</p>
+
+        <h2>结语</h2>
+        <p>掌握 Prompt Engineering 可以大幅提升你的 Shell 脚本开发效率。记住：具体胜于模糊，安全优先，迭代优化，人工审核。</p>
+
+        <hr style="border-color: var(--border-color); margin: 2rem 0;">
+        <p><strong>相关阅读：</strong></p>
+        <ul>
+            <li><a href="../../islinux_root/articles/linux-productivity-tools-2026.html" style="color: var(--accent-color);">Linux 生产力工具推荐</a></li>
+        </ul>
+    </article>
+</div>
+<footer><p>&copy; 2026 isLinux.com</p><p><a href="../index.html">返回首页</a></p></footer>
+</body>
+</html>

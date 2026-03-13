@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开发者计算器 | isLinux - 金融/效率计算工具</title>
+    <meta name="description" content="专为开发者设计的计算器工具，包含时薪换算、房贷计算、汇率转换、投资收益等实用功能。">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #f78166;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --success-color: #3fb950;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(247, 129, 102, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            margin: 1rem 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Calculator Tabs */
+        .calc-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .calc-tab {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.7rem 1.3rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .calc-tab:hover,
+        .calc-tab.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+
+        /* Calculator Panels */
+        .calc-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            display: none;
+        }
+
+        .calc-panel.active {
+            display: block;
+        }
+
+        .panel-title {
+            margin: 0 0 1.5rem;
+            color: #fff;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .form-group .hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        /* Result Box */
+        .result-box {
+            background: linear-gradient(135deg, rgba(247, 129, 102, 0.1) 0%, rgba(247, 129, 102, 0.05) 100%);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .result-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .result-details {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .detail-value {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #ff6b4a;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        /* Article Section */
+        .article-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .article-card:hover {
+            border-color: var(--accent-color);
+            background: rgba(247, 129, 102, 0.05);
+        }
+
+        .article-card h3 {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .article-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+            .calc-panel { padding: 1.5rem 1rem; }
+            .result-value { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="logo">💰 Calc.isLinux.com</h1>
+    <p class="tagline">开发者金融/效率计算器</p>
+    <a href="https://islinux.com" class="back-link">← 返回主站</a>
+</header>
+
+<div class="container">
+    <!-- Calculator Tabs -->
+    <div class="calc-tabs">
+        <button class="calc-tab active" onclick="showCalc('hourly')">时薪换算</button>
+        <button class="calc-tab" onclick="showCalc('mortgage')">房贷计算</button>
+        <button class="calc-tab" onclick="showCalc('currency')">汇率转换</button>
+        <button class="calc-tab" onclick="showCalc('investment')">投资收益</button>
+        <button class="calc-tab" onclick="showCalc('freelance')">自由职业报价</button>
+    </div>
+
+    <!-- Hourly Rate Calculator -->
+    <div id="hourly" class="calc-panel active">
+        <h2 class="panel-title">⏱️ 时薪换算月薪</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>时薪（元/小时）</label>
+                <input type="number" id="hourly-rate" placeholder="例如：200" oninput="calcHourly()">
+                <span class="hint">您的每小时收入</span>
+            </div>
+            <div class="form-group">
+                <label>每周工作小时</label>
+                <input type="number" id="hourly-weekly" value="40" oninput="calcHourly()">
+                <span class="hint">标准工作制为 40 小时</span>
+            </div>
+        </div>
+        <div class="result-box">
+            <div class="result-label">预估月收入</div>
+            <div class="result-value" id="hourly-result">¥0</div>
+            <div class="result-details">
+                <div class="detail-item">
+                    <div class="detail-label">日收入</div>
+                    <div class="detail-value" id="hourly-daily">¥0</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">周收入</div>
+                    <div class="detail-value" id="hourly-weekly-result">¥0</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">年收入</div>
+                    <div class="detail-value" id="hourly-yearly">¥0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mortgage Calculator -->
+    <div id="mortgage" class="calc-panel">
+        <h2 class="panel-title">🏠 房贷计算器</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>贷款金额（万元）</label>
+                <input type="number" id="mortgage-amount" placeholder="例如：200" oninput="calcMortgage()">
+            </div>
+            <div class="form-group">
+                <label>年利率（%）</label>
+                <input type="number" id="mortgage-rate" placeholder="例如：4.2" step="0.01" oninput="calcMortgage()">
+            </div>
+            <div class="form-group">
+                <label>贷款期限（年）</label>
+                <select id="mortgage-years" onchange="calcMortgage()">
+                    <option value="10">10 年</option>
+                    <option value="15">15 年</option>
+                    <option value="20" selected>20 年</option>
+                    <option value="25">25 年</option>
+                    <option value="30">30 年</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>还款方式</label>
+                <select id="mortgage-type" onchange="calcMortgage()">
+                    <option value="equal-payment">等额本息</option>
+                    <option value="equal-principal">等额本金</option>
+                </select>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="btn btn-primary" onclick="calcMortgage()">计算</button>
+        </div>
+        <div class="result-box" id="mortgage-result" style="display: none;">
+            <div class="result-label">月供</div>
+            <div class="result-value" id="mortgage-monthly">¥0</div>
+            <div class="result-details">
+                <div class="detail-item">
+                    <div class="detail-label">还款总额</div>
+                    <div class="detail-value" id="mortgage-total">¥0</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">支付利息</div>
+                    <div class="detail-value" id="mortgage-interest">¥0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Currency Calculator -->
+    <div id="currency" class="calc-panel">
+        <h2 class="panel-title">💱 汇率转换</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>金额</label>
+                <input type="number" id="currency-amount" placeholder="例如：1000" value="1000" oninput="calcCurrency()">
+            </div>
+            <div class="form-group">
+                <label>从</label>
+                <select id="currency-from" onchange="calcCurrency()">
+                    <option value="USD">美元 (USD)</option>
+                    <option value="CNY" selected>人民币 (CNY)</option>
+                    <option value="EUR">欧元 (EUR)</option>
+                    <option value="GBP">英镑 (GBP)</option>
+                    <option value="JPY">日元 (JPY)</option>
+                    <option value="HKD">港币 (HKD)</option>
+                    <option value="SGD">新加坡元 (SGD)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>到</label>
+                <select id="currency-to" onchange="calcCurrency()">
+                    <option value="USD" selected>美元 (USD)</option>
+                    <option value="CNY">人民币 (CNY)</option>
+                    <option value="EUR">欧元 (EUR)</option>
+                    <option value="GBP">英镑 (GBP)</option>
+                    <option value="JPY">日元 (JPY)</option>
+                    <option value="HKD">港币 (HKD)</option>
+                    <option value="SGD">新加坡元 (SGD)</option>
+                </select>
+            </div>
+        </div>
+        <div class="result-box">
+            <div class="result-label">转换结果</div>
+            <div class="result-value" id="currency-result">0.00</div>
+            <div class="result-details" id="currency-rate"></div>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">
+            * 汇率仅供参考，实际交易汇率请以银行报价为准
+        </p>
+    </div>
+
+    <!-- Investment Calculator -->
+    <div id="investment" class="calc-panel">
+        <h2 class="panel-title">📈 投资收益计算器</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>初始本金（元）</label>
+                <input type="number" id="invest-principal" placeholder="例如：100000" oninput="calcInvest()">
+            </div>
+            <div class="form-group">
+                <label>年化收益率（%）</label>
+                <input type="number" id="invest-rate" placeholder="例如：8" step="0.1" oninput="calcInvest()">
+            </div>
+            <div class="form-group">
+                <label>投资期限（年）</label>
+                <input type="number" id="invest-years" placeholder="例如：10" oninput="calcInvest()">
+            </div>
+            <div class="form-group">
+                <label>每月追加（元）</label>
+                <input type="number" id="invest-monthly" placeholder="例如：2000" value="0" oninput="calcInvest()">
+            </div>
+        </div>
+        <div class="result-box" id="invest-result" style="display: none;">
+            <div class="result-label">最终收益</div>
+            <div class="result-value" id="invest-final">¥0</div>
+            <div class="result-details">
+                <div class="detail-item">
+                    <div class="detail-label">总本金</div>
+                    <div class="detail-value" id="invest-total-principal">¥0</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">总收益</div>
+                    <div class="detail-value" id="invest-profit">¥0</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">收益率</div>
+                    <div class="detail-value" id="invest-roi">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Freelance Rate Calculator -->
+    <div id="freelance" class="calc-panel">
+        <h2 class="panel-title">💼 自由职业报价计算器</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>目标年收入（万元）</label>
+                <input type="number" id="freelance-target" placeholder="例如：30" oninput="calcFreelance()">
+                <span class="hint">您希望一年赚多少钱</span>
+            </div>
+            <div class="form-group">
+                <label>年工作周数</label>
+                <input type="number" id="freelance-weeks" placeholder="例如：48" value="48" oninput="calcFreelance()">
+                <span class="hint">扣除休假后的实际工作周数</span>
+            </div>
+            <div class="form-group">
+                <label>周工作小时</label>
+                <input type="number" id="freelance-hours" placeholder="例如：40" value="40" oninput="calcFreelance()">
+            </div>
+            <div class="form-group">
+                <label>计费利用率（%）</label>
+                <input type="number" id="freelance-utilization" placeholder="例如：60" value="60" oninput="calcFreelance()">
+                <span class="hint">实际用于项目的时间占比（通常 50-70%）</span>
+            </div>
+        </div>
+        <div class="result-box" id="freelance-result" style="display: none;">
+            <div class="result-label">建议时薪</div>
+            <div class="result-value" id="freelance-hourly">¥0/小时</div>
+            <div class="result-details">
+                <div class="detail-item">
+                    <div class="detail-label">建议日薪</div>
+                    <div class="detail-value" id="freelance-daily">¥0/天</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">项目报价系数</div>
+                    <div class="detail-value" id="freelance-multiplier">1.5x</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Section -->
+    <section class="article-section">
+        <h2 class="section-title">📚 相关文章</h2>
+        <a href="/articles/freelancer-rate-calculator.html" class="article-card">
+            <h3>💼 自由职业者项目报价策略与时薪计算器</h3>
+            <p>科学计算你的真实时薪，避免报价过低。包含隐性成本清单、报价方法、谈判技巧和合同要点。</p>
+        </a>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2026 Calc.isLinux.com | <a href="index.html" style="color: inherit;">首页</a> | <a href="about.html" style="color: inherit;">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;">隐私</a> | <a href="https://islinux.com" style="color: inherit;">返回主站</a></p>
+</footer>
+
+<script>
+    // Show calculator
+    function showCalc(id) {
+        document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // Format currency
+    function formatMoney(num) {
+        return '¥' + num.toLocaleString('zh-CN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    // Hourly calculator
+    function calcHourly() {
+        const rate = parseFloat(document.getElementById('hourly-rate').value) || 0;
+        const weekly = parseFloat(document.getElementById('hourly-weekly').value) || 40;
+
+        const daily = rate * 8;
+        const weeklyResult = rate * weekly;
+        const monthly = weeklyResult * 4.33;
+        const yearly = monthly * 12;
+
+        document.getElementById('hourly-result').innerText = formatMoney(monthly);
+        document.getElementById('hourly-daily').innerText = formatMoney(daily);
+        document.getElementById('hourly-weekly-result').innerText = formatMoney(weeklyResult);
+        document.getElementById('hourly-yearly').innerText = formatMoney(yearly);
+    }
+
+    // Mortgage calculator
+    function calcMortgage() {
+        const amount = parseFloat(document.getElementById('mortgage-amount').value) || 0;
+        const rate = (parseFloat(document.getElementById('mortgage-rate').value) || 0) / 100;
+        const years = parseFloat(document.getElementById('mortgage-years').value) || 20;
+        const type = document.getElementById('mortgage-type').value;
+
+        if (amount <= 0 || rate <= 0) {
+            document.getElementById('mortgage-result').style.display = 'none';
+            return;
+        }
+
+        const months = years * 12;
+        const monthlyRate = rate / 12;
+        const principal = amount * 10000;
+
+        let monthlyPayment, totalPayment, totalInterest;
+
+        if (type === 'equal-payment') {
+            // 等额本息
+            monthlyPayment = principal * monthlyRate * Math.pow(1 + monthlyRate, months) / (Math.pow(1 + monthlyRate, months) - 1);
+            totalPayment = monthlyPayment * months;
+            totalInterest = totalPayment - principal;
+        } else {
+            // 等额本金
+            const principalMonthly = principal / months;
+            const firstPayment = principalMonthly + principal * monthlyRate;
+            const lastPayment = principalMonthly + principalMonthly * monthlyRate;
+            monthlyPayment = (firstPayment + lastPayment) / 2; // 平均月供
+            totalPayment = (principalMonthly + principal * monthlyRate + principalMonthly + principalMonthly * monthlyRate) * months / 2;
+            totalInterest = totalPayment - principal;
+        }
+
+        document.getElementById('mortgage-result').style.display = 'block';
+        document.getElementById('mortgage-monthly').innerText = formatMoney(monthlyPayment);
+        document.getElementById('mortgage-total').innerText = formatMoney(totalPayment);
+        document.getElementById('mortgage-interest').innerText = formatMoney(totalInterest);
+    }
+
+    // Currency calculator (using fixed rates for demo)
+    const rates = {
+        USD: 1,
+        CNY: 7.25,
+        EUR: 0.92,
+        GBP: 0.79,
+        JPY: 150,
+        HKD: 7.82,
+        SGD: 1.35
+    };
+
+    function calcCurrency() {
+        const amount = parseFloat(document.getElementById('currency-amount').value) || 0;
+        const from = document.getElementById('currency-from').value;
+        const to = document.getElementById('currency-to').value;
+
+        const result = amount * (rates[to] / rates[from]);
+        const rate = rates[to] / rates[from];
+
+        document.getElementById('currency-result').innerText = result.toFixed(2) + ' ' + to;
+        document.getElementById('currency-rate').innerHTML = `
+            <div class="detail-item">
+                <div class="detail-label">汇率</div>
+                <div class="detail-value">1 ${from} = ${rate.toFixed(4)} ${to}</div>
+            </div>
+        `;
+    }
+
+    // Investment calculator
+    function calcInvest() {
+        const principal = parseFloat(document.getElementById('invest-principal').value) || 0;
+        const rate = (parseFloat(document.getElementById('invest-rate').value) || 0) / 100;
+        const years = parseFloat(document.getElementById('invest-years').value) || 0;
+        const monthly = parseFloat(document.getElementById('invest-monthly').value) || 0;
+
+        if (principal <= 0 && monthly <= 0) {
+            document.getElementById('invest-result').style.display = 'none';
+            return;
+        }
+
+        const monthlyRate = rate / 12;
+        const totalMonths = years * 12;
+
+        // 初始本金复利
+        const principalFinal = principal * Math.pow(1 + rate, years);
+
+        // 每月定投
+        let monthlyFinal = 0;
+        if (monthly > 0 && monthlyRate > 0) {
+            monthlyFinal = monthly * (Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate;
+        } else if (monthly > 0) {
+            monthlyFinal = monthly * totalMonths;
+        }
+
+        const final = principalFinal + monthlyFinal;
+        const totalPrincipal = principal + monthly * totalMonths;
+        const profit = final - totalPrincipal;
+        const roi = totalPrincipal > 0 ? (profit / totalPrincipal) * 100 : 0;
+
+        document.getElementById('invest-result').style.display = 'block';
+        document.getElementById('invest-final').innerText = formatMoney(final);
+        document.getElementById('invest-total-principal').innerText = formatMoney(totalPrincipal);
+        document.getElementById('invest-profit').innerText = formatMoney(profit);
+        document.getElementById('invest-roi').innerText = roi.toFixed(1) + '%';
+    }
+
+    // Freelance rate calculator
+    function calcFreelance() {
+        const target = (parseFloat(document.getElementById('freelance-target').value) || 0) * 10000;
+        const weeks = parseFloat(document.getElementById('freelance-weeks').value) || 48;
+        const hours = parseFloat(document.getElementById('freelance-hours').value) || 40;
+        const utilization = (parseFloat(document.getElementById('freelance-utilization').value) || 60) / 100;
+
+        if (target <= 0) {
+            document.getElementById('freelance-result').style.display = 'none';
+            return;
+        }
+
+        const billableHours = weeks * hours * utilization;
+        const hourly = target / billableHours;
+        const daily = hourly * 8;
+
+        document.getElementById('freelance-result').style.display = 'block';
+        document.getElementById('freelance-hourly').innerText = formatMoney(hourly) + '/小时';
+        document.getElementById('freelance-daily').innerText = formatMoney(daily) + '/天';
+
+        // 项目报价系数建议
+        let multiplier = 1.2;
+        if (utilization < 0.5) multiplier = 2.0;
+        else if (utilization < 0.6) multiplier = 1.5;
+        else if (utilization < 0.7) multiplier = 1.3;
+
+        document.getElementById('freelance-multiplier').innerText = multiplier.toFixed(1) + 'x';
+    }
+
+    // Initialize
+    calcCurrency();
+</script>
+
+</body>
+</html>

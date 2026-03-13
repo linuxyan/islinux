@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开发者工具箱 | isLinux - 纯前端在线工具</title>
+    <meta name="description" content="JSON 格式化、代码压缩、加解密工具，纯前端运行，数据不上传服务器，保护您的隐私。">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(35, 134, 54, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            margin: 1rem 0;
+        }
+
+        .privacy-badge {
+            display: inline-block;
+            background: rgba(35, 134, 54, 0.15);
+            color: var(--accent-color);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Tool Grid */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .tool-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+            box-shadow: 0 4px 20px rgba(35, 134, 54, 0.2);
+        }
+
+        .tool-card.active {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(35, 134, 54, 0.3);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-card h3 {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .tool-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Tool Panel */
+        .tool-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .tool-panel.active {
+            display: block;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .panel-title {
+            margin: 0;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .panel-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Textarea */
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #7ee787;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            padding: 1rem;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        /* Output */
+        .output-area {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #7ee787;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #2ea043;
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-color);
+        }
+
+        /* Options */
+        .options-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .option-item select,
+        .option-item input {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            padding: 0.4rem 0.6rem;
+        }
+
+        /* Article Section */
+        .article-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .article-card:hover {
+            border-color: var(--accent-color);
+            background: rgba(35, 134, 54, 0.05);
+        }
+
+        .article-card h3 {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .article-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-color);
+            color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+            .tool-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="logo">🛠️ Tool.isLinux.com</h1>
+    <p class="tagline">开发者纯前端工具箱</p>
+    <span class="privacy-badge">🔒 所有数据处理均在浏览器本地完成，不上传服务器</span>
+    <br>
+    <a href="https://islinux.com" class="back-link">← 返回主站</a>
+</header>
+
+<div class="container">
+    <!-- Tool Selection -->
+    <div class="tool-grid">
+        <div class="tool-card active" onclick="showTool('json-format')">
+            <div class="tool-icon">📝</div>
+            <h3>JSON 格式化</h3>
+            <p>格式化、压缩、验证 JSON 数据</p>
+        </div>
+        <div class="tool-card" onclick="showTool('json-validate')">
+            <div class="tool-icon">✅</div>
+            <h3>JSON 验证</h3>
+            <p>检查 JSON 格式是否正确</p>
+        </div>
+        <div class="tool-card" onclick="showTool('base64')">
+            <div class="tool-icon">🔐</div>
+            <h3>Base64 编解码</h3>
+            <p>Base64 编码和解码工具</p>
+        </div>
+        <div class="tool-card" onclick="showTool('url-encode')">
+            <div class="tool-icon">🔗</div>
+            <h3>URL 编解码</h3>
+            <p>URL Encode 和 Decode</p>
+        </div>
+        <div class="tool-card" onclick="showTool('hash')">
+            <div class="tool-icon">🔑</div>
+            <h3>哈希计算</h3>
+            <p>MD5、SHA1、SHA256 计算</p>
+        </div>
+        <div class="tool-card" onclick="showTool('diff')">
+            <div class="tool-icon">📊</div>
+            <h3>文本对比</h3>
+            <p>比较两段文本的差异</p>
+        </div>
+    </div>
+
+    <!-- JSON Format Tool -->
+    <div id="json-format" class="tool-panel active">
+        <div class="panel-header">
+            <h2 class="panel-title">📝 JSON 格式化</h2>
+            <div class="panel-actions">
+                <button class="btn btn-secondary" onclick="clearInput('json-format-input')">清空</button>
+                <button class="btn btn-primary" onclick="formatJSON()">格式化</button>
+                <button class="btn btn-secondary" onclick="minifyJSON()">压缩</button>
+                <button class="btn btn-secondary" onclick="copyOutput()">📋 复制</button>
+            </div>
+        </div>
+        <div class="options-row">
+            <div class="option-item">
+                <label>缩进：</label>
+                <select id="json-indent">
+                    <option value="2">2 空格</option>
+                    <option value="4" selected>4 空格</option>
+                    <option value="0">Tab</option>
+                </select>
+            </div>
+        </div>
+        <textarea id="json-format-input" placeholder="在此粘贴 JSON..."></textarea>
+        <div class="output-area" id="json-format-output"></div>
+    </div>
+
+    <!-- JSON Validate Tool -->
+    <div id="json-validate" class="tool-panel">
+        <div class="panel-header">
+            <h2 class="panel-title">✅ JSON 验证</h2>
+            <div class="panel-actions">
+                <button class="btn btn-secondary" onclick="clearInput('json-validate-input')">清空</button>
+                <button class="btn btn-primary" onclick="validateJSON()">验证</button>
+            </div>
+        </div>
+        <textarea id="json-validate-input" placeholder="在此粘贴要验证的 JSON..."></textarea>
+        <div class="output-area" id="json-validate-output"></div>
+    </div>
+
+    <!-- Base64 Tool -->
+    <div id="base64" class="tool-panel">
+        <div class="panel-header">
+            <h2 class="panel-title">🔐 Base64 编解码</h2>
+            <div class="panel-actions">
+                <button class="btn btn-secondary" onclick="clearInput('base64-input')">清空</button>
+                <button class="btn btn-primary" onclick="base64Encode()">编码</button>
+                <button class="btn btn-secondary" onclick="base64Decode()">解码</button>
+                <button class="btn btn-secondary" onclick="copyOutput()">📋 复制</button>
+            </div>
+        </div>
+        <textarea id="base64-input" placeholder="输入要编码或解码的文本..."></textarea>
+        <div class="output-area" id="base64-output"></div>
+    </div>
+
+    <!-- URL Encode Tool -->
+    <div id="url-encode" class="tool-panel">
+        <div class="panel-header">
+            <h2 class="panel-title">🔗 URL 编解码</h2>
+            <div class="panel-actions">
+                <button class="btn btn-secondary" onclick="clearInput('url-input')">清空</button>
+                <button class="btn btn-primary" onclick="urlEncode()">Encode</button>
+                <button class="btn btn-secondary" onclick="urlDecode()">Decode</button>
+                <button class="btn btn-secondary" onclick="copyOutput()">📋 复制</button>
+            </div>
+        </div>
+        <textarea id="url-input" placeholder="输入要编码或解码的 URL..."></textarea>
+        <div class="output-area" id="url-output"></div>
+    </div>
+
+    <!-- Hash Tool -->
+    <div id="hash" class="tool-panel">
+        <div class="panel-header">
+            <h2 class="panel-title">🔑 哈希计算</h2>
+            <div class="panel-actions">
+                <button class="btn btn-secondary" onclick="clearInput('hash-input')">清空</button>
+                <button class="btn btn-secondary" onclick="copyOutput()">📋 复制</button>
+            </div>
+        </div>
+        <div class="options-row">
+            <div class="option-item">
+                <label>算法：</label>
+                <select id="hash-algo" onchange="calculateHash()">
+                    <option value="md5">MD5</option>
+                    <option value="sha1">SHA1</option>
+                    <option value="sha256">SHA256</option>
+                </select>
+            </div>
+        </div>
+        <textarea id="hash-input" placeholder="输入要计算哈希的文本..." oninput="calculateHash()"></textarea>
+        <div class="output-area" id="hash-output"></div>
+    </div>
+
+    <!-- Diff Tool -->
+    <div id="diff" class="tool-panel">
+        <div class="panel-header">
+            <h2 class="panel-title">📊 文本对比</h2>
+            <div class="panel-actions">
+                <button class="btn btn-secondary" onclick="clearInput('diff-input1'); clearInput('diff-input2')">清空</button>
+                <button class="btn btn-primary" onclick="compareText()">对比</button>
+            </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+                <label>原文本 A：</label>
+                <textarea id="diff-input1" style="min-height: 150px;" placeholder="文本 A..."></textarea>
+            </div>
+            <div>
+                <label>原文本 B：</label>
+                <textarea id="diff-input2" style="min-height: 150px;" placeholder="文本 B..."></textarea>
+            </div>
+        </div>
+        <div class="output-area" id="diff-output"></div>
+    </div>
+
+    <!-- Article Section -->
+    <section class="article-section">
+        <h2 class="section-title">📚 相关文章</h2>
+        <a href="/articles/json-privacy-guide.html" class="article-card">
+            <h3>🔒 如何本地离线处理 JSON 格式化以保护商业机密</h3>
+            <p>在数据泄露频发的时代，保护敏感数据从选择正确的工具开始。了解在线工具的风险和本地处理的最佳实践。</p>
+        </a>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2026 Tool.isLinux.com | <a href="index.html" style="color: inherit;">首页</a> | <a href="about.html" style="color: inherit;">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;">隐私</a> | <a href="https://islinux.com" style="color: inherit;">返回主站</a></p>
+</footer>
+
+<div class="toast" id="toast">✅ 已复制到剪贴板</div>
+
+<script>
+    // Show tool
+    function showTool(id) {
+        document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // Clear input
+    function clearInput(id) {
+        document.getElementById(id).value = '';
+        const outputId = id.replace('input', 'output');
+        const output = document.getElementById(outputId);
+        if (output) output.innerText = '';
+    }
+
+    // Copy output
+    function copyOutput() {
+        const activePanel = document.querySelector('.tool-panel.active');
+        const output = activePanel.querySelector('.output-area');
+        if (output && output.innerText) {
+            navigator.clipboard.writeText(output.innerText);
+            showToast();
+        }
+    }
+
+    // Toast
+    function showToast() {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // JSON Format
+    function formatJSON() {
+        const input = document.getElementById('json-format-input').value;
+        const indent = parseInt(document.getElementById('json-indent').value);
+        const output = document.getElementById('json-format-output');
+        try {
+            const obj = JSON.parse(input);
+            output.innerText = JSON.stringify(obj, null, indent === 0 ? '\t' : indent);
+            output.style.color = '#7ee787';
+        } catch (e) {
+            output.innerText = '❌ JSON 格式错误：\n' + e.message;
+            output.style.color = '#ff7b72';
+        }
+    }
+
+    // JSON Minify
+    function minifyJSON() {
+        const input = document.getElementById('json-format-input').value;
+        const output = document.getElementById('json-format-output');
+        try {
+            const obj = JSON.parse(input);
+            output.innerText = JSON.stringify(obj);
+            output.style.color = '#7ee787';
+        } catch (e) {
+            output.innerText = '❌ JSON 格式错误：\n' + e.message;
+            output.style.color = '#ff7b72';
+        }
+    }
+
+    // JSON Validate
+    function validateJSON() {
+        const input = document.getElementById('json-validate-input').value;
+        const output = document.getElementById('json-validate-output');
+        try {
+            JSON.parse(input);
+            output.innerText = '✅ JSON 格式正确！';
+            output.style.color = '#7ee787';
+        } catch (e) {
+            output.innerText = '❌ JSON 格式错误：\n' + e.message;
+            output.style.color = '#ff7b72';
+        }
+    }
+
+    // Base64 Encode
+    function base64Encode() {
+        const input = document.getElementById('base64-input').value;
+        const output = document.getElementById('base64-output');
+        output.innerText = btoa(unescape(encodeURIComponent(input)));
+    }
+
+    // Base64 Decode
+    function base64Decode() {
+        const input = document.getElementById('base64-input').value;
+        const output = document.getElementById('base64-output');
+        try {
+            output.innerText = decodeURIComponent(escape(atob(input)));
+        } catch (e) {
+            output.innerText = '❌ 解码失败：' + e.message;
+        }
+    }
+
+    // URL Encode
+    function urlEncode() {
+        const input = document.getElementById('url-input').value;
+        const output = document.getElementById('url-output');
+        output.innerText = encodeURIComponent(input);
+    }
+
+    // URL Decode
+    function urlDecode() {
+        const input = document.getElementById('url-input').value;
+        const output = document.getElementById('url-output');
+        try {
+            output.innerText = decodeURIComponent(input);
+        } catch (e) {
+            output.innerText = '❌ 解码失败：' + e.message;
+        }
+    }
+
+    // Hash calculation (simple implementation)
+    async function calculateHash() {
+        const input = document.getElementById('hash-input').value;
+        const algo = document.getElementById('hash-algo').value;
+        const output = document.getElementById('hash-output');
+
+        if (!input) {
+            output.innerText = '';
+            return;
+        }
+
+        try {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(input);
+            const hashBuffer = await crypto.subtle.digest(algo.toUpperCase(), data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            output.innerText = hashHex;
+        } catch (e) {
+            output.innerText = '计算失败：' + e.message;
+        }
+    }
+
+    // Diff
+    function compareText() {
+        const text1 = document.getElementById('diff-input1').value;
+        const text2 = document.getElementById('diff-input2').value;
+        const output = document.getElementById('diff-output');
+
+        if (text1 === text2) {
+            output.innerText = '✅ 两段文本完全相同';
+            return;
+        }
+
+        const lines1 = text1.split('\n');
+        const lines2 = text2.split('\n');
+        let result = '';
+
+        // Simple line-by-line comparison
+        const maxLen = Math.max(lines1.length, lines2.length);
+        for (let i = 0; i < maxLen; i++) {
+            const l1 = lines1[i] || '';
+            const l2 = lines2[i] || '';
+            if (l1 !== l2) {
+                result += `第 ${i + 1} 行不同:\n`;
+                if (l1) result += `- ${l1}\n`;
+                if (l2) result += `+ ${l2}\n`;
+                result += '\n';
+            }
+        }
+
+        output.innerText = result || '文本相同';
+    }
+</script>
+
+</body>
+</html>
