@@ -126,14 +126,14 @@
         /* Site Grid */
         .site-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
         }
 
         .site-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 1.5rem;
+            padding: 1rem;
             border-radius: 8px;
             transition: all 0.2s;
             text-decoration: none;
@@ -148,26 +148,27 @@
         }
 
         .site-card .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
         }
 
         .site-card h3 {
-            margin: 0 0 0.5rem;
+            margin: 0 0 0.4rem;
             color: var(--accent-color);
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         .site-card p {
             margin: 0;
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
         }
 
         .site-card .url {
             display: inline-block;
-            margin-top: 1rem;
-            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             font-family: monospace;
         }
@@ -264,6 +265,10 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .site-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
         @media (max-width: 768px) {
             .logo { font-size: 2rem; }
             nav { gap: 1rem; }
