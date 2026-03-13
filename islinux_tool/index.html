@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>开发者工具箱 | isLinux - 纯前端在线工具</title>
-    <meta name="description" content="JSON 格式化、代码压缩、加解密工具，纯前端运行，数据不上传服务器，保护您的隐私。">
+    <title data-i18n="page-title">开发者工具箱 | isLinux - 纯前端在线工具</title>
+    <meta name="description" data-i18n="page-desc" content="JSON 格式化、代码压缩、加解密工具，纯前端运行，数据不上传服务器，保护您的隐私。">
     <style>
+        .lang-switcher {
+            position: absolute; top: 1rem; right: 1rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .lang-switcher label { color: var(--text-muted); font-size: 0.85rem; }
+        .lang-switcher select {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 4px; color: var(--text-color); padding: 0.4rem 0.8rem;
+            font-size: 0.9rem; cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .lang-switcher { position: static; justify-content: center; margin-bottom: 1rem; }
+        }
         :root {
             --bg-color: #0d1117;
             --text-color: #c9d1d9;
@@ -334,11 +347,18 @@
 <body>
 
 <header>
-    <h1 class="logo">🛠️ Tool.isLinux.com</h1>
-    <p class="tagline">开发者纯前端工具箱</p>
-    <span class="privacy-badge">🔒 所有数据处理均在浏览器本地完成，不上传服务器</span>
+    <div class="lang-switcher">
+        <label data-i18n="lang-label">语言</label>
+        <select id="lang-switcher">
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+    <h1 class="logo" data-i18n="logo">🛠️ Tool.isLinux.com</h1>
+    <p class="tagline" data-i18n="tagline">开发者纯前端工具箱</p>
+    <span class="privacy-badge" data-i18n="privacy-badge">🔒 所有数据处理均在浏览器本地完成，不上传服务器</span>
     <br>
-    <a href="https://islinux.com" class="back-link">← 返回主站</a>
+    <a href="https://islinux.com" class="back-link" data-i18n="back-home">← 返回主站</a>
 </header>
 
 <div class="container">
@@ -346,33 +366,33 @@
     <div class="tool-grid">
         <div class="tool-card active" onclick="showTool('json-format')">
             <div class="tool-icon">📝</div>
-            <h3>JSON 格式化</h3>
-            <p>格式化、压缩、验证 JSON 数据</p>
+            <h3 data-i18n="tool-json-format">JSON 格式化</h3>
+            <p data-i18n="tool-json-format-desc">格式化、压缩、验证 JSON 数据</p>
         </div>
         <div class="tool-card" onclick="showTool('json-validate')">
             <div class="tool-icon">✅</div>
-            <h3>JSON 验证</h3>
-            <p>检查 JSON 格式是否正确</p>
+            <h3 data-i18n="tool-json-validate">JSON 验证</h3>
+            <p data-i18n="tool-json-validate-desc">检查 JSON 格式是否正确</p>
         </div>
         <div class="tool-card" onclick="showTool('base64')">
             <div class="tool-icon">🔐</div>
-            <h3>Base64 编解码</h3>
-            <p>Base64 编码和解码工具</p>
+            <h3 data-i18n="tool-base64">Base64 编解码</h3>
+            <p data-i18n="tool-base64-desc">Base64 编码和解码工具</p>
         </div>
         <div class="tool-card" onclick="showTool('url-encode')">
             <div class="tool-icon">🔗</div>
-            <h3>URL 编解码</h3>
-            <p>URL Encode 和 Decode</p>
+            <h3 data-i18n="tool-url-encode">URL 编解码</h3>
+            <p data-i18n="tool-url-encode-desc">URL Encode 和 Decode</p>
         </div>
         <div class="tool-card" onclick="showTool('hash')">
             <div class="tool-icon">🔑</div>
-            <h3>哈希计算</h3>
-            <p>MD5、SHA1、SHA256 计算</p>
+            <h3 data-i18n="tool-hash">哈希计算</h3>
+            <p data-i18n="tool-hash-desc">MD5、SHA1、SHA256 计算</p>
         </div>
         <div class="tool-card" onclick="showTool('diff')">
             <div class="tool-icon">📊</div>
-            <h3>文本对比</h3>
-            <p>比较两段文本的差异</p>
+            <h3 data-i18n="tool-diff">文本对比</h3>
+            <p data-i18n="tool-diff-desc">比较两段文本的差异</p>
         </div>
     </div>
 
@@ -491,7 +511,7 @@
 
     <!-- Article Section -->
     <section class="article-section">
-        <h2 class="section-title">📚 相关文章</h2>
+        <h2 class="section-title" data-i18n="related-articles">📚 相关文章</h2>
         <a href="/articles/json-privacy-guide.html" class="article-card">
             <h3>🔒 如何本地离线处理 JSON 格式化以保护商业机密</h3>
             <p>在数据泄露频发的时代，保护敏感数据从选择正确的工具开始。了解在线工具的风险和本地处理的最佳实践。</p>
@@ -500,8 +520,10 @@
 </div>
 
 <footer>
-    <p>&copy; 2026 Tool.isLinux.com | <a href="index.html" style="color: inherit;">首页</a> | <a href="about.html" style="color: inherit;">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;">隐私</a> | <a href="https://islinux.com" style="color: inherit;">返回主站</a></p>
+    <p><span data-i18n="footer-text">&copy; 2026 Tool.isLinux.com</span> | <a href="index.html" style="color: inherit;" data-i18n="nav-home">首页</a> | <a href="about.html" style="color: inherit;" data-i18n="nav-about">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;" data-i18n="nav-privacy">隐私</a> | <a href="https://islinux.com" style="color: inherit;" data-i18n="back-home">返回主站</a></p>
 </footer>
+
+<script src="i18n.js"></script>
 
 <div class="toast" id="toast">✅ 已复制到剪贴板</div>
 

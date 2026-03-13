@@ -3,9 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Prompts | isLinux - 开发者专用提示词库</title>
-    <meta name="description" content="专为开发者打造的 AI 提示词库，涵盖代码生成、调试、文档编写、Shell 脚本等场景。">
+    <title data-i18n="page-title">AI Prompts | isLinux - 开发者专用提示词库</title>
+    <meta name="description" data-i18n="page-desc" content="专为开发者打造的 AI 提示词库，涵盖代码生成、调试、文档编写、Shell 脚本等场景。">
     <style>
+        .lang-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .lang-switcher label { color: var(--text-muted); font-size: 0.85rem; }
+        .lang-switcher select {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 4px; color: var(--text-color); padding: 0.4rem 0.8rem;
+            font-size: 0.9rem; cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .lang-switcher { position: static; justify-content: center; margin-bottom: 1rem; }
+        }
         :root {
             --bg-color: #0d1117;
             --text-color: #c9d1d9;
@@ -304,9 +321,16 @@
 <body>
 
 <header>
-    <h1 class="logo">🤖 AI.isLinux.com</h1>
-    <p class="tagline">开发者专用 AI 提示词库</p>
-    <a href="https://islinux.com" class="back-link">← 返回主站</a>
+    <div class="lang-switcher">
+        <label data-i18n="lang-label">语言</label>
+        <select id="lang-switcher">
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+    <h1 class="logo" data-i18n="logo">🤖 AI.isLinux.com</h1>
+    <p class="tagline" data-i18n="tagline">开发者专用 AI 提示词库</p>
+    <a href="https://islinux.com" class="back-link" data-i18n="back-home">← 返回主站</a>
 </header>
 
 <div class="container">
@@ -317,13 +341,13 @@
 
     <!-- Category Tabs -->
     <div class="category-tabs">
-        <button class="category-tab active" data-category="all">全部</button>
-        <button class="category-tab" data-category="shell">Shell 脚本</button>
-        <button class="category-tab" data-category="code">代码生成</button>
-        <button class="category-tab" data-category="debug">调试</button>
-        <button class="category-tab" data-category="doc">文档</button>
-        <button class="category-tab" data-category="sql">SQL</button>
-        <button class="category-tab" data-category="git">Git</button>
+        <button class="category-tab active" data-category="all" data-i18n="cat-all">全部</button>
+        <button class="category-tab" data-category="shell" data-i18n="cat-shell">Shell 脚本</button>
+        <button class="category-tab" data-category="code" data-i18n="cat-code">代码生成</button>
+        <button class="category-tab" data-category="debug" data-i18n="cat-debug">调试</button>
+        <button class="category-tab" data-category="doc" data-i18n="cat-doc">文档</button>
+        <button class="category-tab" data-category="sql" data-i18n="cat-sql">SQL</button>
+        <button class="category-tab" data-category="git" data-i18n="cat-git">Git</button>
     </div>
 
     <!-- Prompt Grid -->
@@ -504,7 +528,7 @@
 
     <!-- Article Section -->
     <section class="article-section">
-        <h2 class="section-title">📚 相关文章</h2>
+        <h2 class="section-title" data-i18n="related-articles">📚 相关文章</h2>
         <a href="/articles/prompt-engineering-shell.html" class="article-card">
             <h3>AI Prompt Engineering: 如何写出完美的 Shell 脚本生成指令</h3>
             <p>掌握提示词工程，让 AI 帮你写出高质量、安全的 Bash 脚本。包含完整模板、实战示例和进阶技巧。</p>
@@ -513,11 +537,12 @@
 </div>
 
 <footer>
-    <p>&copy; 2026 AI.isLinux.com | <a href="index.html" style="color: inherit;">首页</a> | <a href="about.html" style="color: inherit;">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;">隐私</a> | <a href="https://islinux.com" style="color: inherit;">返回主站</a></p>
+    <p><span data-i18n="footer-text">&copy; 2026 AI.isLinux.com</span> | <a href="index.html" style="color: inherit;" data-i18n="nav-home">首页</a> | <a href="about.html" style="color: inherit;" data-i18n="nav-about">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;" data-i18n="nav-privacy">隐私</a> | <a href="https://islinux.com" style="color: inherit;" data-i18n="back-home">返回主站</a></p>
 </footer>
 
-<div class="toast" id="toast">✅ 已复制到剪贴板</div>
+<div class="toast" id="toast" data-i18n="copy-success">✅ 已复制到剪贴板</div>
 
+<script src="i18n.js"></script>
 <script>
     // Copy function
     function copyText(id) {

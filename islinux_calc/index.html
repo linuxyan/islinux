@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>开发者计算器 | isLinux - 金融/效率计算工具</title>
-    <meta name="description" content="专为开发者设计的计算器工具，包含时薪换算、房贷计算、汇率转换、投资收益等实用功能。">
+    <title data-i18n="page-title">开发者计算器 | isLinux - 金融/效率计算工具</title>
+    <meta name="description" data-i18n="page-desc" content="专为开发者设计的计算器工具，包含时薪换算、房贷计算、汇率转换、投资收益等实用功能。">
     <style>
+        .lang-switcher {
+            position: absolute; top: 1rem; right: 1rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .lang-switcher label { color: var(--text-muted); font-size: 0.85rem; }
+        .lang-switcher select {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 4px; color: var(--text-color); padding: 0.4rem 0.8rem;
+            font-size: 0.9rem; cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .lang-switcher { position: static; justify-content: center; margin-bottom: 1rem; }
+        }
         :root {
             --bg-color: #0d1117;
             --text-color: #c9d1d9;
@@ -292,19 +305,26 @@
 <body>
 
 <header>
-    <h1 class="logo">💰 Calc.isLinux.com</h1>
-    <p class="tagline">开发者金融/效率计算器</p>
-    <a href="https://islinux.com" class="back-link">← 返回主站</a>
+    <div class="lang-switcher">
+        <label data-i18n="lang-label">语言</label>
+        <select id="lang-switcher">
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+    <h1 class="logo" data-i18n="logo">💰 Calc.isLinux.com</h1>
+    <p class="tagline" data-i18n="tagline">开发者金融/效率计算器</p>
+    <a href="https://islinux.com" class="back-link" data-i18n="back-home">← 返回主站</a>
 </header>
 
 <div class="container">
     <!-- Calculator Tabs -->
     <div class="calc-tabs">
-        <button class="calc-tab active" onclick="showCalc('hourly')">时薪换算</button>
-        <button class="calc-tab" onclick="showCalc('mortgage')">房贷计算</button>
-        <button class="calc-tab" onclick="showCalc('currency')">汇率转换</button>
-        <button class="calc-tab" onclick="showCalc('investment')">投资收益</button>
-        <button class="calc-tab" onclick="showCalc('freelance')">自由职业报价</button>
+        <button class="calc-tab active" onclick="showCalc('hourly')" data-i18n="tab-hourly">时薪换算</button>
+        <button class="calc-tab" onclick="showCalc('mortgage')" data-i18n="tab-mortgage">房贷计算</button>
+        <button class="calc-tab" onclick="showCalc('currency')" data-i18n="tab-currency">汇率转换</button>
+        <button class="calc-tab" onclick="showCalc('investment')" data-i18n="tab-investment">投资收益</button>
+        <button class="calc-tab" onclick="showCalc('freelance')" data-i18n="tab-freelance">自由职业报价</button>
     </div>
 
     <!-- Hourly Rate Calculator -->
@@ -517,7 +537,7 @@
 
     <!-- Article Section -->
     <section class="article-section">
-        <h2 class="section-title">📚 相关文章</h2>
+        <h2 class="section-title" data-i18n="related-articles">📚 相关文章</h2>
         <a href="/articles/freelancer-rate-calculator.html" class="article-card">
             <h3>💼 自由职业者项目报价策略与时薪计算器</h3>
             <p>科学计算你的真实时薪，避免报价过低。包含隐性成本清单、报价方法、谈判技巧和合同要点。</p>
@@ -526,8 +546,10 @@
 </div>
 
 <footer>
-    <p>&copy; 2026 Calc.isLinux.com | <a href="index.html" style="color: inherit;">首页</a> | <a href="about.html" style="color: inherit;">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;">隐私</a> | <a href="https://islinux.com" style="color: inherit;">返回主站</a></p>
+    <p><span data-i18n="footer-text">&copy; 2026 Calc.isLinux.com</span> | <a href="index.html" style="color: inherit;" data-i18n="nav-home">首页</a> | <a href="about.html" style="color: inherit;" data-i18n="nav-about">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;" data-i18n="nav-privacy">隐私</a> | <a href="https://islinux.com" style="color: inherit;" data-i18n="back-home">返回主站</a></p>
 </footer>
+
+<script src="i18n.js"></script>
 
 <script>
     // Show calculator
