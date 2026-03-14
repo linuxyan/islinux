@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Prompt Engineering: Shell 脚本生成指令 | isLinux</title>
+    <title>AI Prompt Engineering: Shell Script Generation | isLinux</title>
+    <meta name="description" content="Master prompt engineering to help AI write high-quality, safe Bash scripts. Complete templates, examples, and advanced techniques.">
+    <meta name="keywords" content="AI prompts, prompt engineering, shell scripts, bash, automation">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://ai.islinux.com/articles/prompt-engineering-shell.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="AI Prompt Engineering: Shell Script Generation | isLinux">
+    <meta property="og:description" content="Master prompt engineering for Shell script generation.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ai.islinux.com/articles/prompt-engineering-shell.html">
+
     <style>
         :root { --bg-color: #0d1117; --text-color: #c9d1d9; --accent-color: #58a6ff; --card-bg: #161b22; --border-color: #30363d; --text-muted: #8b949e; --code-bg: #000; }
         * { box-sizing: border-box; }
@@ -31,63 +42,63 @@
     </style>
 </head>
 <body>
-<header><a href="../index.html" class="back-link">← 返回首页</a></header>
+<header><a href="../index.html" class="back-link">← Back to Home</a></header>
 <div class="container">
     <article>
-        <h1>🤖 AI Prompt Engineering: 如何写出完美的 Shell 脚本生成指令</h1>
-        <div class="meta">阅读时长：约 18 分钟</div>
+        <h1>🤖 AI Prompt Engineering: How to Write Perfect Shell Script Generation Prompts</h1>
+        <div class="meta">18 min read</div>
 
-        <div class="blockquote">掌握提示词工程，让 AI 帮你写出高质量、安全的 Bash 脚本</div>
+        <div class="blockquote">Master prompt engineering to let AI help you write high-quality, safe Bash scripts</div>
 
-        <h2>什么是 Prompt Engineering？</h2>
-        <p>Prompt Engineering（提示词工程）是指通过精心设计的输入提示，引导 AI 模型生成更准确、更有用的输出结果。</p>
+        <h2>What is Prompt Engineering?</h2>
+        <p>Prompt Engineering refers to guiding AI models to generate more accurate and useful output results through carefully designed input prompts.</p>
 
-        <h2>Shell 脚本生成的核心要素</h2>
-        <h3>1. 角色设定</h3>
-        <p>明确 AI 的角色，让它以专业视角思考：</p>
-        <pre><code>作为拥有 10 年经验的 Linux 系统管理员...
-作为 DevOps 专家，擅长自动化脚本...
-作为安全工程师，专注于脚本安全性...</code></pre>
+        <h2>Core Elements of Shell Script Generation</h2>
+        <h3>1. Role Setting</h3>
+        <p>Define AI's role to let it think from a professional perspective:</p>
+        <pre><code>As a Linux system administrator with 10 years of experience...
+As a DevOps expert specializing in automation scripts...
+As a security engineer focusing on script security...</code></pre>
 
-        <h3>2. 任务描述</h3>
+        <h3>2. Task Description</h3>
         <table>
-            <tr><th>要素</th><th>示例</th></tr>
-            <tr><td>目标</td><td>备份 /var/www 目录</td></tr>
-            <tr><td>约束</td><td>不超过 50 行代码</td></tr>
-            <tr><td>格式</td><td>使用 Bash 4.0+ 语法</td></tr>
-            <tr><td>输出</td><td>生成完整可执行脚本</td></tr>
+            <tr><th>Element</th><th>Example</th></tr>
+            <tr><td>Goal</td><td>Backup /var/www directory</td></tr>
+            <tr><td>Constraints</td><td>No more than 50 lines of code</td></tr>
+            <tr><td>Format</td><td>Use Bash 4.0+ syntax</td></tr>
+            <tr><td>Output</td><td>Generate complete executable script</td></tr>
         </table>
 
-        <h3>3. 安全要求</h3>
-        <pre><code>请确保脚本：
-- 验证输入参数
-- 检查命令执行结果
-- 不使用 eval
-- 正确处理特殊字符
-- 包含错误处理</code></pre>
+        <h3>3. Security Requirements</h3>
+        <pre><code>Please ensure the script:
+- Validates input parameters
+- Checks command execution results
+- Does not use eval
+- Properly handles special characters
+- Includes error handling</code></pre>
 
-        <h2>完整 Prompt 模板</h2>
-        <h3>模板一：系统管理脚本</h3>
-        <pre><code>作为高级 Linux 运维专家，请编写一个 [任务描述] 脚本。
+        <h2>Complete Prompt Templates</h2>
+        <h3>Template 1: System Administration Script</h3>
+        <pre><code>As a senior Linux operations expert, please write a [task description] script.
 
-具体要求：
-1. 使用 Bash 4.0+ 语法
-2. 包含参数验证
-3. 实现错误处理（set -euo pipefail）
-4. 添加详细注释说明每个步骤
-5. 遵循 ShellCheck 最佳实践
-6. 包含使用示例
+Specific requirements:
+1. Use Bash 4.0+ syntax
+2. Include parameter validation
+3. Implement error handling (set -euo pipefail)
+4. Add detailed comments explaining each step
+5. Follow ShellCheck best practices
+6. Include usage examples
 
-请输出完整的、可直接运行的脚本代码。</code></pre>
+Please output the complete, directly runnable script code.</code></pre>
 
-        <h2>实战示例：数据库备份脚本</h2>
+        <h2>Practical Example: Database Backup Script</h2>
         <pre><code>#!/bin/bash
 #===============================================================================
-# 脚本名称：mysql_backup.sh
-# 功能描述：MySQL 数据库生产环境备份脚本
+# Script Name: mysql_backup.sh
+# Description: MySQL database production environment backup script
 #===============================================================================
 
-set -euo pipefail  # 严格错误处理
+set -euo pipefail  # Strict error handling
 
 BACKUP_DIR="${1:-${MYSQL_BACKUP_DIR:-/backup/mysql}}"
 RETENTION_DAYS="${MYSQL_RETENTION_DAYS:-7}"
@@ -103,47 +114,47 @@ error_exit() {
 
 check_prerequisites() {
     if [[ -z "${MYSQL_PWD:-}" ]]; then
-        error_exit "MYSQL_PWD 环境变量未设置"
+        error_exit "MYSQL_PWD environment variable not set"
     fi
     if ! command -v mysqldump &>/dev/null; then
-        error_exit "mysqldump 命令未找到"
+        error_exit "mysqldump command not found"
     fi
 }
 
 perform_backup() {
     local timestamp=$(date '+%Y%m%d_%H%M%S')
     local backup_file="${BACKUP_DIR}/backup_${timestamp}.sql.gz"
-    log "开始备份数据库..."
+    log "Starting database backup..."
     mysqldump -u "$MYSQL_USER" --all-databases | gzip > "$backup_file"
-    log "备份完成：$backup_file"
+    log "Backup completed: $backup_file"
 }
 
 main() {
-    log "MySQL 备份任务开始"
+    log "MySQL backup task started"
     check_prerequisites
     perform_backup
-    log "备份任务成功完成"
+    log "Backup task completed successfully"
 }
 
 main "$@"</code></pre>
 
-        <h2>进阶技巧</h2>
-        <h3>1. 少样本学习（Few-Shot Learning）</h3>
-        <p>给 AI 提供示例，让它理解你的期望。</p>
+        <h2>Advanced Techniques</h2>
+        <h3>1. Few-Shot Learning</h3>
+        <p>Provide examples to AI to help it understand your expectations.</p>
 
-        <h3>2. 链式思考（Chain of Thought）</h3>
-        <p>让 AI 分步骤思考：1) 分析需求 2) 设计结构 3) 编写代码 4) 添加错误处理 5) 补充注释</p>
+        <h3>2. Chain of Thought</h3>
+        <p>Let AI think step by step: 1) Analyze requirements 2) Design structure 3) Write code 4) Add error handling 5) Add comments</p>
 
-        <h2>结语</h2>
-        <p>掌握 Prompt Engineering 可以大幅提升你的 Shell 脚本开发效率。记住：具体胜于模糊，安全优先，迭代优化，人工审核。</p>
+        <h2>Conclusion</h2>
+        <p>Mastering Prompt Engineering can significantly improve your Shell script development efficiency. Remember: Specific over vague, security first, iterative optimization, manual review.</p>
 
         <hr style="border-color: var(--border-color); margin: 2rem 0;">
-        <p><strong>相关阅读：</strong></p>
+        <p><strong>Related Reading:</strong></p>
         <ul>
-            <li><a href="../../islinux_root/articles/linux-productivity-tools-2026.html" style="color: var(--accent-color);">Linux 生产力工具推荐</a></li>
+            <li><a href="../../islinux_root/articles/linux-productivity-tools-2026.html" style="color: var(--accent-color);">Linux Productivity Tools Guide</a></li>
         </ul>
     </article>
 </div>
-<footer><p>&copy; 2026 isLinux.com</p><p><a href="../index.html">返回首页</a></p></footer>
+<footer><p>&copy; 2026 isLinux.com</p><p><a href="../index.html">Back to Home</a></p></footer>
 </body>
 </html>

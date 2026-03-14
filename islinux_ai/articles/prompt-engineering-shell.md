@@ -1,382 +1,382 @@
-# AI Prompt Engineering: 如何写出完美的 Shell 脚本生成指令
+# AI Prompt Engineering: How to Write Perfect Shell Script Generation Prompts
 
-> 掌握提示词工程，让 AI 帮你写出高质量、安全的 Bash 脚本
+> Master prompt engineering to let AI help you write high-quality, safe Bash scripts
 
-## 什么是 Prompt Engineering？
+## What is Prompt Engineering?
 
-Prompt Engineering（提示词工程）是指通过精心设计的输入提示，引导 AI 模型生成更准确、更有用的输出结果。
+Prompt Engineering refers to guiding AI models to generate more accurate and useful output results through carefully designed input prompts.
 
-### 为什么重要？
-
-```
-❌ 糟糕的提示词：
-"写一个备份脚本"
-
-✅ 优秀的提示词：
-"作为高级 Linux 运维工程师，请编写一个生产环境的 MySQL 数据库备份脚本。
-要求：1) 使用 mysqldump 2) 自动压缩 3) 保留 7 天备份 4) 错误日志记录 5) 包含详细注释"
-```
-
-## Shell 脚本生成的核心要素
-
-### 1. 角色设定
-
-明确 AI 的角色，让它以专业视角思考：
+### Why is it Important?
 
 ```
-作为拥有 10 年经验的 Linux 系统管理员...
-作为 DevOps 专家，擅长自动化脚本...
-作为安全工程师，专注于脚本安全性...
+❌ Poor prompt:
+"Write a backup script"
+
+✅ Excellent prompt:
+"As a senior Linux operations engineer, please write a MySQL database backup script for production environment.
+Requirements: 1) Use mysqldump 2) Auto-compress 3) Keep 7 days of backups 4) Error logging 5) Include detailed comments"
 ```
 
-### 2. 任务描述
+## Core Elements of Shell Script Generation
 
-清晰、具体地描述需求：
+### 1. Role Setting
 
-| 要素 | 示例 |
-|------|------|
-| 目标 | "备份 /var/www 目录" |
-| 约束 | "不超过 50 行代码" |
-| 格式 | "使用 Bash 4.0+ 语法" |
-| 输出 | "生成完整可执行脚本" |
-
-### 3. 安全要求
-
-Shell 脚本涉及系统操作，必须强调安全：
+Define AI's role to let it think from a professional perspective:
 
 ```
-请确保脚本：
-- 验证输入参数
-- 检查命令执行结果
-- 不使用 eval
-- 正确处理特殊字符
-- 包含错误处理
+As a Linux system administrator with 10 years of experience...
+As a DevOps expert specializing in automation scripts...
+As a security engineer focusing on script security...
 ```
 
-### 4. 注释规范
+### 2. Task Description
+
+Clearly and specifically describe requirements:
+
+| Element | Example |
+|---------|---------|
+| Goal | "Backup /var/www directory" |
+| Constraints | "No more than 50 lines of code" |
+| Format | "Use Bash 4.0+ syntax" |
+| Output | "Generate complete executable script" |
+
+### 3. Security Requirements
+
+Shell scripts involve system operations, security must be emphasized:
 
 ```
-要求：
-- 每个函数都有文档字符串
-- 关键步骤添加行内注释
-- 包含使用示例
+Please ensure the script:
+- Validates input parameters
+- Checks command execution results
+- Does not use eval
+- Properly handles special characters
+- Includes error handling
 ```
 
-## 完整 Prompt 模板
-
-### 模板一：系统管理脚本
+### 4. Comment Standards
 
 ```
-作为高级 Linux 运维专家，请编写一个 [任务描述] 脚本。
-
-具体要求：
-1. 使用 Bash 4.0+ 语法
-2. 包含参数验证
-3. 实现错误处理（set -euo pipefail）
-4. 添加详细注释说明每个步骤
-5. 遵循 ShellCheck 最佳实践
-6. 包含使用示例
-
-脚本需要实现以下功能：
-- [功能 1]
-- [功能 2]
-- [功能 3]
-
-请输出完整的、可直接运行的脚本代码。
+Requirements:
+- Every function has a docstring
+- Add inline comments for key steps
+- Include usage examples
 ```
 
-### 模板二：自动化部署脚本
+## Complete Prompt Templates
+
+### Template 1: System Administration Script
 
 ```
-你是一位 DevOps 工程师，擅长 CI/CD 流程设计。
+As a senior Linux operations expert, please write a [task description] script.
 
-请编写一个自动化部署脚本，要求：
+Specific requirements:
+1. Use Bash 4.0+ syntax
+2. Include parameter validation
+3. Implement error handling (set -euo pipefail)
+4. Add detailed comments explaining each step
+5. Follow ShellCheck best practices
+6. Include usage examples
 
-技术栈：
-- 运行环境：Ubuntu 22.04
-- 部署目标：Docker 容器
-- 配置管理：环境变量 + ConfigMap
+The script needs to implement the following functions:
+- [Function 1]
+- [Function 2]
+- [Function 3]
 
-功能需求：
-1. 拉取最新代码
-2. 构建 Docker 镜像
-3. 停止旧容器
-4. 启动新容器
-5. 健康检查
-
-安全要求：
-- 验证 Docker 是否安装
-- 检查端口占用
-- 回滚机制
-
-请生成完整的部署脚本，并附带使用说明。
+Please output the complete, directly runnable script code.
 ```
 
-### 模板三：日志分析脚本
+### Template 2: Automation Deployment Script
 
 ```
-作为数据分析师和 Linux 专家，请帮我编写一个日志分析脚本。
+You are a DevOps engineer specializing in CI/CD pipeline design.
 
-输入：Nginx access.log 文件
-输出：Top 10 IP、Top 10 URL、状态码统计
+Please write an automated deployment script with requirements:
 
-要求：
-1. 使用 awk、sort、uniq 等标准工具
-2. 支持大文件流式处理
-3. 输出格式化的表格
-4. 可选：生成 JSON 格式报告
+Tech stack:
+- Runtime environment: Ubuntu 22.04
+- Deployment target: Docker containers
+- Configuration management: Environment variables + ConfigMap
 
-请提供两种实现：
-- 一行命令版本
-- 完整脚本版本
+Functional requirements:
+1. Pull latest code
+2. Build Docker image
+3. Stop old container
+4. Start new container
+5. Health check
+
+Security requirements:
+- Verify Docker installation
+- Check port occupancy
+- Rollback mechanism
+
+Please generate the complete deployment script with usage instructions.
 ```
 
-## 实战示例
+### Template 3: Log Analysis Script
 
-### 示例一：数据库备份脚本
-
-**Prompt**：
 ```
-作为高级 Linux 运维工程师，请编写一个生产环境的 MySQL 数据库备份脚本。
+As a data analyst and Linux expert, please help me write a log analysis script.
 
-环境信息：
+Input: Nginx access.log file
+Output: Top 10 IPs, Top 10 URLs, status code statistics
+
+Requirements:
+1. Use standard tools like awk, sort, uniq
+2. Support streaming processing for large files
+3. Output formatted tables
+4. Optional: Generate JSON format report
+
+Please provide two implementations:
+- One-liner command version
+- Complete script version
+```
+
+## Practical Examples
+
+### Example 1: Database Backup Script
+
+**Prompt**:
+```
+As a senior Linux operations engineer, please write a MySQL database backup script for production environment.
+
+Environment information:
 - MySQL 8.0
-- 备份存储：/backup/mysql
-- 保留策略：7 天
-- 压缩方式：gzip
+- Backup storage: /backup/mysql
+- Retention policy: 7 days
+- Compression: gzip
 
-功能要求：
-1. 支持全量备份
-2. 自动删除过期备份
-3. 记录备份日志
-4. 失败时发送告警（邮件）
-5. 支持自定义备份目录
+Functional requirements:
+1. Support full backup
+2. Auto-delete expired backups
+3. Log backup operations
+4. Send alerts on failure (email)
+5. Support custom backup directory
 
-安全要求：
-- 从环境变量读取密码
-- 验证磁盘空间
-- 检查 MySQL 服务状态
+Security requirements:
+- Read password from environment variables
+- Verify disk space
+- Check MySQL service status
 
-请生成完整脚本，包含详细注释和使用说明。
+Please generate the complete script with detailed comments and usage instructions.
 ```
 
-**AI 生成结果**：
+**AI Generated Result**:
 ```bash
 #!/bin/bash
 #===============================================================================
-# 脚本名称：mysql_backup.sh
-# 功能描述：MySQL 数据库生产环境备份脚本
-# 使用方式：./mysql_backup.sh [备份目录]
+# Script Name: mysql_backup.sh
+# Description: MySQL database production environment backup script
+# Usage: ./mysql_backup.sh [backup directory]
 #===============================================================================
 
-set -euo pipefail  # 严格错误处理
+set -euo pipefail  # Strict error handling
 
-# 配置项（可通过环境变量覆盖）
+# Configuration (can be overridden by environment variables)
 BACKUP_DIR="${1:-${MYSQL_BACKUP_DIR:-/backup/mysql}}"
 RETENTION_DAYS="${MYSQL_RETENTION_DAYS:-7}"
 MYSQL_USER="${MYSQL_USER:-backup}"
 LOG_FILE="/var/log/mysql_backup.log"
 
 #-------------------------------------------------------------------------------
-# 日志函数
+# Log function
 #-------------------------------------------------------------------------------
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
 }
 
 #-------------------------------------------------------------------------------
-# 错误处理函数
+# Error handling function
 #-------------------------------------------------------------------------------
 error_exit() {
     log "ERROR: $*"
-    # 这里可以添加邮件告警逻辑
+    # Add email alert logic here
     exit 1
 }
 
 #-------------------------------------------------------------------------------
-# 前置检查
+# Prerequisites check
 #-------------------------------------------------------------------------------
 check_prerequisites() {
-    # 检查 MySQL 密码是否设置
+    # Check if MySQL password is set
     if [[ -z "${MYSQL_PWD:-}" ]]; then
-        error_exit "MYSQL_PWD 环境变量未设置"
+        error_exit "MYSQL_PWD environment variable not set"
     fi
 
-    # 检查 mysqldump 是否可用
+    # Check if mysqldump is available
     if ! command -v mysqldump &>/dev/null; then
-        error_exit "mysqldump 命令未找到"
+        error_exit "mysqldump command not found"
     fi
 
-    # 检查磁盘空间（至少需要 1GB）
+    # Check disk space (at least 1GB required)
     local available_space
     available_space=$(df -P "$BACKUP_DIR" | awk 'NR==2 {print $4}')
     if [[ "$available_space" -lt 1048576 ]]; then
-        error_exit "磁盘空间不足（需要至少 1GB）"
+        error_exit "Insufficient disk space (at least 1GB required)"
     fi
 }
 
 #-------------------------------------------------------------------------------
-# 主备份函数
+# Main backup function
 #-------------------------------------------------------------------------------
 perform_backup() {
     local timestamp
     timestamp=$(date '+%Y%m%d_%H%M%S')
     local backup_file="${BACKUP_DIR}/backup_${timestamp}.sql.gz"
 
-    log "开始备份数据库..."
+    log "Starting database backup..."
 
-    # 获取所有数据库列表
+    # Get list of all databases
     local databases
     databases=$(mysql -u "$MYSQL_USER" -e "SHOW DATABASES;" | grep -Ev "(Database|information_schema|performance_schema)")
 
     for db in $databases; do
-        log "备份数据库：$db"
+        log "Backing up database: $db"
         mysqldump -u "$MYSQL_USER" --databases "$db" | gzip >> "$backup_file"
     done
 
-    log "备份完成：$backup_file"
+    log "Backup completed: $backup_file"
 }
 
 #-------------------------------------------------------------------------------
-# 清理过期备份
+# Clean up expired backups
 #-------------------------------------------------------------------------------
 cleanup_old_backups() {
-    log "清理 ${RETENTION_DAYS} 天前的备份..."
+    log "Cleaning up backups older than ${RETENTION_DAYS} days..."
     find "$BACKUP_DIR" -name "backup_*.sql.gz" -mtime +${RETENTION_DAYS} -delete
-    log "清理完成"
+    log "Cleanup completed"
 }
 
 #-------------------------------------------------------------------------------
-# 主程序
+# Main program
 #-------------------------------------------------------------------------------
 main() {
     log "=========================================="
-    log "MySQL 备份任务开始"
+    log "MySQL backup task started"
     log "=========================================="
 
     check_prerequisites
     perform_backup
     cleanup_old_backups
 
-    log "备份任务成功完成"
+    log "Backup task completed successfully"
 }
 
 main "$@"
 ```
 
-### 示例二：服务监控脚本
+### Example 2: Service Monitoring Script
 
-**Prompt**：
+**Prompt**:
 ```
-作为 SRE 工程师，请编写一个服务健康检查脚本。
+As an SRE engineer, please write a service health check script.
 
-监控目标：
-- Nginx 服务状态
-- MySQL 连接数
-- 磁盘使用率
-- 内存使用率
-- CPU 负载
+Monitoring targets:
+- Nginx service status
+- MySQL connections
+- Disk usage
+- Memory usage
+- CPU load
 
-输出要求：
-- 终端彩色输出
-- JSON 格式报告（可选）
-- 超过阈值时告警
+Output requirements:
+- Colored terminal output
+- JSON format report (optional)
+- Alert when thresholds exceeded
 
-阈值设置：
-- 磁盘：85%
-- 内存：90%
-- CPU 负载：2.0（1 分钟）
+Threshold settings:
+- Disk: 85%
+- Memory: 90%
+- CPU load: 2.0 (1 minute)
 ```
 
-## 进阶技巧
+## Advanced Techniques
 
-### 1. 少样本学习（Few-Shot Learning）
+### 1. Few-Shot Learning
 
-给 AI 提供示例，让它理解你的期望：
+Provide examples to AI to help it understand your expectations:
 
 ```
-参考以下脚本风格：
+Refer to the following script style:
 
-示例 1：
+Example 1:
 ```bash
-# 函数命名使用下划线
-# 变量使用大写
-# 每个函数前有注释块
+# Function naming uses underscores
+# Variables use uppercase
+# Each function has a comment block
 ```
 
-请按照相同风格编写...
+Please write in the same style...
 ```
 
-### 2. 链式思考（Chain of Thought）
+### 2. Chain of Thought
 
-让 AI 分步骤思考：
-
-```
-请按以下步骤完成任务：
-1. 首先分析需求，列出关键点
-2. 设计脚本结构
-3. 编写核心函数
-4. 添加错误处理
-5. 补充注释和文档
-```
-
-### 3. 约束条件
-
-明确限制可以避免 AI 生成不切实际的代码：
+Let AI think step by step:
 
 ```
-约束条件：
-- 只能使用 POSIX 兼容命令
-- 不依赖外部工具（除了标准 coreutils）
-- 脚本不超过 100 行
-- 兼容 Bash 3.2+
+Please complete the task following these steps:
+1. First analyze requirements, list key points
+2. Design script structure
+3. Write core functions
+4. Add error handling
+5. Add comments and documentation
 ```
 
-## 常见错误及避免方法
+### 3. Constraints
 
-### 1. 过于模糊
-
-```
-❌ "写个脚本处理文件"
-✅ "写一个脚本，将 /var/log 下所有 .log 文件压缩并移动到 /archive"
-```
-
-### 2. 忽略错误处理
+Clear limitations can prevent AI from generating unrealistic code:
 
 ```
-❌ 不提及错误处理
-✅ 明确要求 "使用 set -euo pipefail，每个命令检查返回值"
+Constraints:
+- Only use POSIX compatible commands
+- No external tool dependencies (except standard coreutils)
+- Script should not exceed 100 lines
+- Compatible with Bash 3.2+
 ```
 
-### 3. 缺少安全考虑
+## Common Errors and How to Avoid Them
+
+### 1. Too Vague
 
 ```
-❌ 直接生成可执行代码
-✅ 要求 "验证所有输入，转义特殊字符，不使用 eval"
+❌ "Write a script to process files"
+✅ "Write a script to compress all .log files under /var/log and move them to /archive"
 ```
 
-## 推荐的 AI 工具
+### 2. Ignoring Error Handling
 
-| 工具 | 特点 | 适用场景 |
-|------|------|----------|
-| Claude | 代码质量高，注释详细 | 复杂脚本生成 |
-| GPT-4 | 通用性强 | 日常任务 |
-| Cursor | IDE 集成 | 项目开发 |
+```
+❌ No mention of error handling
+✅ Require "Use set -euo pipefail, check return value for every command"
+```
 
-## 结语
+### 3. Missing Security Considerations
 
-掌握 Prompt Engineering 可以大幅提升你的 Shell 脚本开发效率。记住：
+```
+❌ Directly generate executable code
+✅ Require "Validate all input, escape special characters, do not use eval"
+```
 
-1. **具体胜于模糊** - 详细描述需求
-2. **安全优先** - 始终要求错误处理
-3. **迭代优化** - 根据结果调整提示词
-4. **人工审核** - AI 生成的代码需要审查
+## Recommended AI Tools
+
+| Tool | Features | Use Cases |
+|------|----------|-----------|
+| Claude | High code quality, detailed comments | Complex script generation |
+| GPT-4 | Strong generalization | Daily tasks |
+| Cursor | IDE integration | Project development |
+
+## Conclusion
+
+Mastering Prompt Engineering can significantly improve your Shell script development efficiency. Remember:
+
+1. **Specific over vague** - Describe requirements in detail
+2. **Security first** - Always require error handling
+3. **Iterative optimization** - Adjust prompts based on results
+4. **Manual review** - AI-generated code needs review
 
 ---
 
-**相关工具**：
-- [Shell 脚本在线编辑器](https://tool.islinux.com)
-- [Bash 语法检查工具](https://tool.islinux.com/shellcheck)
+**Related Tools**:
+- [Online Shell Script Editor](https://tool.islinux.com)
+- [Bash Syntax Checker](https://tool.islinux.com/shellcheck)
 
-**相关阅读**：
-- [Linux 生产力工具推荐](https://islinux.com/articles/linux-productivity-tools-2026)
+**Related Reading**:
+- [Linux Productivity Tools Guide](https://islinux.com/articles/linux-productivity-tools-2026)

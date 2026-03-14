@@ -1,278 +1,280 @@
-# 自由职业者项目报价策略与时薪计算器
+# Freelancer Project Pricing Strategy and Hourly Rate Calculator
 
-> 科学计算你的真实时薪，避免报价过低，让每一小时工作都获得合理回报
+> Scientifically calculate your real hourly rate, avoid underpricing, and ensure every hour of work receives fair compensation
 
-## 为什么需要计算时薪？
+## Why Calculate Hourly Rate?
 
-### 常见误区
+### Common Misconceptions
 
-许多自由职业者在报价时只考虑：
-- ❌ 客户预算
-- ❌ 竞争对手价格
-- ❌ 拍脑袋决定
+Many freelancers only consider the following when pricing:
+- ❌ Client budget
+- ❌ Competitor prices
+- ❌ Guessing
 
-却忽略了：
-- ✅ 实际工作时间
-- ✅ 隐性成本（社保、设备、办公场地）
-- ✅ 非计费时间（学习、营销、行政）
-- ✅ 税费和保险
+But ignore:
+- ✅ Actual working hours
+- ✅ Hidden costs (social security, equipment, office space)
+- ✅ Non-billable time (learning, marketing, administration)
+- ✅ Taxes and insurance
 
-### 真实案例
+### Real Case Study
 
-小王接了一个网站开发项目：
-- 报价：¥10,000
-- 预估时间：2 周
-- 实际花费：6 周（需求变更、Bug 修复、沟通成本）
+Xiao Wang took a website development project:
+- Quote: ¥10,000
+- Estimated time: 2 weeks
+- Actual time: 6 weeks (requirement changes, bug fixes, communication costs)
 
-**表面时薪**：¥10,000 ÷ (14 天 × 8 小时) = ¥89/小时
+**Surface hourly rate**: ¥10,000 ÷ (14 days × 8 hours) = ¥89/hour
 
-**实际时薪**：¥10,000 ÷ (42 天 × 10 小时) = ¥24/小时
+**Actual hourly rate**: ¥10,000 ÷ (42 days × 10 hours) = ¥24/hour
 
-远低于预期！
+Far below expectations!
 
-## 时薪计算公式
+## Hourly Rate Formula
 
-### 基础公式
+### Basic Formula
 
 ```
-目标年薪
-时薪 = ──────────────────────────────
-       (年工作周 - 休假周) × 周工作小时 × 计费利用率
+Target Annual Salary
+Hourly Rate = ─────────────────────────────────────
+              (Working Weeks - Vacation Weeks) × Weekly Hours × Billable Utilization
 ```
 
-### 计费利用率（Billable Utilization）
+### Billable Utilization
 
-自由职业者不可能 100% 时间都在计费项目上：
+Freelancers cannot spend 100% of their time on billable projects:
 
-| 活动 | 占比 |
-|------|------|
-| 实际项目开发 | 50-60% |
-| 客户沟通 | 10-15% |
-| 学习与研究 | 10-15% |
-| 营销与获客 | 10-15% |
-| 行政事务 | 5-10% |
+| Activity | Percentage |
+|----------|------------|
+| Actual project development | 50-60% |
+| Client communication | 10-15% |
+| Learning and research | 10-15% |
+| Marketing and client acquisition | 10-15% |
+| Administrative tasks | 5-10% |
 
-**实际计费利用率**：约 60%
+**Actual billable utilization**: Approximately 60%
 
-### 完整计算示例
+### Complete Calculation Example
 
-假设目标：
-- 目标年收入：¥300,000
-- 年工作周：52 周 - 4 周休假 = 48 周
-- 周工作小时：40 小时
-- 计费利用率：60%
+Assuming targets:
+- Target annual income: ¥300,000
+- Working weeks per year: 52 weeks - 4 weeks vacation = 48 weeks
+- Weekly working hours: 40 hours
+- Billable utilization: 60%
 
 ```
            ¥300,000
-时薪 = ────────────────────────── = ¥260/小时
-       48 × 40 × 0.60
+Hourly Rate = ────────────────────────── = ¥260/hour
+              48 × 40 × 0.60
 ```
 
-## 项目报价方法
+## Project Pricing Methods
 
-### 方法一：时薪法
-
-```
-项目报价 = 预估工时 × 时薪 × 风险系数
-```
-
-风险系数建议：
-- 熟悉的项目类型：1.2
-- 有一定挑战：1.5
-- 全新领域：2.0
-
-### 方法二：价值法
-
-根据项目为客户创造的价值定价：
+### Method 1: Hourly Rate Method
 
 ```
-如果项目能为客户带来 ¥500,000 收益
-报价 ¥50,000-100,000 是合理的（10-20% 价值分成）
+Project Quote = Estimated Hours × Hourly Rate × Risk Coefficient
 ```
 
-### 方法三：市场法
+Risk coefficient recommendations:
+- Familiar project type: 1.2
+- Somewhat challenging: 1.5
+- New domain: 2.0
 
-参考市场行情，但不盲目低价竞争：
+### Method 2: Value-Based Pricing
 
-| 级别 | 时薪范围（CNY） |
-|------|----------------|
-| 初级开发者 | ¥150-300 |
-| 中级开发者 | ¥300-600 |
-| 高级开发者 | ¥600-1200 |
-| 专家/顾问 | ¥1200-3000+ |
+Price based on the value created for the client:
 
-## 隐性成本清单
+```
+If the project can bring ¥500,000 revenue to the client
+A quote of ¥50,000-100,000 is reasonable (10-20% value share)
+```
 
-### 必须考虑的成本
+### Method 3: Market-Based Pricing
+
+Reference market rates, but don't engage in low-price competition:
+
+| Level | Hourly Rate Range (CNY) |
+|-------|------------------------|
+| Junior Developer | ¥150-300 |
+| Mid-Level Developer | ¥300-600 |
+| Senior Developer | ¥600-1200 |
+| Expert/Consultant | ¥1200-3000+ |
+
+## Hidden Costs Checklist
+
+### Costs That Must Be Considered
 
 ```
 ┌─────────────────────────────────────────┐
-│  隐性成本项目（年）                      │
+│  Hidden Cost Items (Annual)             │
 ├─────────────────────────────────────────┤
-│  社保 + 公积金：¥30,000-60,000          │
-│  商业保险：¥5,000-10,000                │
-│  设备折旧：¥10,000-20,000               │
-│  办公场地：¥0-30,000（在家可忽略）       │
-│  软件订阅：¥5,000-15,000                │
-│  学习培训：¥5,000-20,000                │
-│  营销推广：¥10,000-50,000               │
-│  税费：收入的 3-10%                      │
+│  Social Security + Housing Fund:        │
+│     ¥30,000-60,000                      │
+│  Commercial Insurance: ¥5,000-10,000    │
+│  Equipment Depreciation: ¥10,000-20,000 │
+│  Office Space: ¥0-30,000                │
+│     (negligible if working from home)   │
+│  Software Subscriptions: ¥5,000-15,000  │
+│  Learning & Training: ¥5,000-20,000     │
+│  Marketing: ¥10,000-50,000              │
+│  Taxes: 3-10% of income                 │
 ├─────────────────────────────────────────┤
-│  合计：约 ¥65,000-205,000/年            │
+│  Total: Approximately ¥65,000-205,000/year │
 └─────────────────────────────────────────┘
 ```
 
-### 带薪休假成本
+### Paid Vacation Costs
 
-全职员工有带薪年假，自由职业者需要自己承担：
-
-```
-年假成本 = 日薪 × 休假天数
-```
-
-如果日薪 ¥2000，休假 15 天，成本为 ¥30,000
-
-## 报价策略
-
-### 1. 阶梯报价法
-
-提供不同档位的报价，让客户选择：
+Full-time employees have paid annual leave, freelancers need to bear this themselves:
 
 ```
-基础版：¥20,000
-  - 核心功能
-  - 2 周交付
-  - 1 个月维护
-
-标准版：¥35,000
-  - 全部功能
-  - 3 周交付
-  - 3 个月维护
-  - 2 次修改
-
-高级版：¥50,000
-  - 全部功能 + 定制
-  - 4 周交付
-  - 6 个月维护
-  - 无限修改
-  - 优先支持
+Vacation Cost = Daily Rate × Vacation Days
 ```
 
-### 2. 预付款策略
+If daily rate is ¥2000 and 15 days vacation, cost is ¥30,000
+
+## Pricing Strategies
+
+### 1. Tiered Pricing
+
+Provide different tiers for clients to choose:
+
+```
+Basic: ¥20,000
+  - Core features
+  - 2 weeks delivery
+  - 1 month maintenance
+
+Standard: ¥35,000
+  - All features
+  - 3 weeks delivery
+  - 3 months maintenance
+  - 2 revisions
+
+Premium: ¥50,000
+  - All features + customization
+  - 4 weeks delivery
+  - 6 months maintenance
+  - Unlimited revisions
+  - Priority support
+```
+
+### 2. Advance Payment Strategy
 
 ```
 ┌──────────────────────────────────────┐
-│  付款条款                             │
+│  Payment Terms                       │
 ├──────────────────────────────────────┤
-│  签约预付：50%                        │
-│  中期验收：30%                        │
-│  交付尾款：20%                        │
+│  Signing advance payment: 50%        │
+│  Mid-term acceptance: 30%            │
+│  Final payment on delivery: 20%      │
 └──────────────────────────────────────┘
 ```
 
-**为什么重要？**
-- 降低客户违约风险
-- 筛选诚意客户
-- 改善现金流
+**Why is this important?**
+- Reduce client default risk
+- Filter serious clients
+- Improve cash flow
 
-### 3. 变更管理
+### 3. Change Management
 
-在合同中明确变更条款：
-
-```
-变更条款示例：
-- 需求变更需书面确认
-- 变更导致工时增加 >10%，重新报价
-- 变更部分按 ¥XXX/小时计费
-```
-
-## 实用计算工具
-
-### 快速估算表
-
-| 项目类型 | 工时范围 | 建议报价（中级） |
-|----------|----------|-----------------|
-| 企业官网 | 40-80h | ¥20,000-50,000 |
-| 电商网站 | 80-200h | ¥50,000-150,000 |
-| 小程序 | 60-150h | ¥30,000-100,000 |
-| API 开发 | 20-60h | ¥10,000-40,000 |
-| 技术咨询 | 按小时 | ¥800-2000/h |
-
-### 报价检查清单
-
-在发送报价前，确认：
-
-- [ ] 已充分了解需求
-- [ ] 已考虑所有隐性成本
-- [ ] 已添加风险缓冲（20-30%）
-- [ ] 明确了交付范围
-- [ ] 规定了修改次数
-- [ ] 定义了验收标准
-- [ ] 包含付款条款
-- [ ] 有变更管理条款
-
-## 谈判技巧
-
-### 客户说"太贵了"怎么办？
-
-**错误回应**：
-- "那你能给多少？"（自降身价）
-- "好吧，我给你打折"（贬低价值）
-
-**正确回应**：
-- "我理解预算考虑。这个报价基于 X、Y、Z 功能。如果预算有限，我们可以讨论减少哪些功能？"
-- "让我解释一下这个价格包含的价值..."
-
-### 价值锚定
-
-先展示高价值，再报价：
+Clearly define change terms in the contract:
 
 ```
-❌ "这个项目 ¥50,000"
-
-✅ "这个系统将帮助您：
-   - 节省 2 个人力，年省 ¥200,000
-   - 提升 30% 效率
-   - 降低 50% 错误率
-
-   投资回报：6 个月内回本
-
-   项目开发费用：¥50,000"
+Change clause example:
+- Requirement changes require written confirmation
+- If changes cause >10% increase in hours, re-quote
+- Change portions billed at ¥XXX/hour
 ```
 
-## 合同要点
+## Practical Calculation Tools
 
-### 必备条款
+### Quick Estimation Table
 
-1. **工作范围**（Scope of Work）
-2. **交付时间表**
-3. **付款条款**
-4. **知识产权归属**
-5. **保密条款**
-6. **违约责任**
-7. **争议解决**
+| Project Type | Hours Range | Suggested Quote (Mid-level) |
+|--------------|-------------|----------------------------|
+| Corporate Website | 40-80h | ¥20,000-50,000 |
+| E-commerce Website | 80-200h | ¥50,000-150,000 |
+| Mini Program | 60-150h | ¥30,000-100,000 |
+| API Development | 20-60h | ¥10,000-40,000 |
+| Technical Consulting | Per hour | ¥800-2000/h |
 
-### 推荐工具
+### Quote Checklist
 
-- 合同模板：[PandaDoc](https://pandadoc.com)、[DocuSign](https://docusign.com)
-- 时间追踪：[Toggl](https://toggl.com)、[Clockify](https://clockify.me)
-- 发票管理：[FreshBooks](https://freshbooks.com)
+Before sending a quote, confirm:
 
-## 结语
+- [ ] Fully understood requirements
+- [ ] All hidden costs considered
+- [ ] Risk buffer added (20-30%)
+- [ ] Delivery scope defined
+- [ ] Number of revisions specified
+- [ ] Acceptance criteria defined
+- [ ] Payment terms included
+- [ ] Change management terms included
 
-正确的报价策略是自由职业成功的基石。记住：
+## Negotiation Skills
 
-1. **不要低价竞争** - 低价吸引的是价格敏感客户，不是优质客户
-2. **透明沟通** - 让客户理解你的价值
-3. **持续学习** - 提升技能，提高单位时间价值
-4. **建立品牌** - 口碑带来溢价能力
+### What to Do When Client Says "Too Expensive"?
+
+**Wrong responses**:
+- "So how much can you offer?" (undermines your value)
+- "Okay, I'll give you a discount" (devalues your work)
+
+**Correct responses**:
+- "I understand budget considerations. This quote is based on X, Y, Z features. If budget is limited, we can discuss which features to reduce?"
+- "Let me explain the value this price includes..."
+
+### Value Anchoring
+
+Show high value first, then quote:
+
+```
+❌ "This project is ¥50,000"
+
+✅ "This system will help you:
+   - Save 2 manpower positions, annual savings ¥200,000
+   - Improve efficiency by 30%
+   - Reduce error rate by 50%
+
+   ROI: Break even within 6 months
+
+   Project development cost: ¥50,000"
+```
+
+## Contract Key Points
+
+### Essential Clauses
+
+1. **Scope of Work**
+2. **Delivery Timeline**
+3. **Payment Terms**
+4. **Intellectual Property Rights**
+5. **Confidentiality Clause**
+6. **Breach of Contract Liability**
+7. **Dispute Resolution**
+
+### Recommended Tools
+
+- Contract templates: [PandaDoc](https://pandadoc.com), [DocuSign](https://docusign.com)
+- Time tracking: [Toggl](https://toggl.com), [Clockify](https://clockify.me)
+- Invoice management: [FreshBooks](https://freshbooks.com)
+
+## Conclusion
+
+Correct pricing strategy is the cornerstone of freelancing success. Remember:
+
+1. **Don't compete on low prices** - Low prices attract price-sensitive clients, not quality clients
+2. **Transparent communication** - Help clients understand your value
+3. **Continuous learning** - Improve skills, increase value per hour
+4. **Build brand** - Reputation brings premium pricing ability
 
 ---
 
-**相关工具**：
-- [时薪换算月薪计算器](https://calc.islinux.com/hourly-rate)
-- [房贷计算器](https://calc.islinux.com/mortgage)
-- [汇率计算器](https://calc.islinux.com/currency)
+**Related Tools**:
+- [Hourly to Monthly Calculator](https://calc.islinux.com/hourly-rate)
+- [Mortgage Calculator](https://calc.islinux.com/mortgage)
+- [Currency Converter](https://calc.islinux.com/currency)
 
-**相关阅读**：
-- [新加坡 VPS 选购指南](https://islinux.com/articles/vps-singapore-review)
+**Related Reading**:
+- [Singapore VPS Buying Guide](https://islinux.com/articles/vps-singapore-review)

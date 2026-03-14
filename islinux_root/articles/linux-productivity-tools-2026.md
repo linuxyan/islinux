@@ -1,58 +1,58 @@
-# 2026 现代 Linux 生产力工具推荐
+# Modern Linux Productivity Tools for 2026
 
-> 本文更新于 2026 年 3 月，为你精选最适合开发者的 Linux 效率工具
+> Updated March 2026, featuring the best Linux productivity tools for developers
 
-## 引言
+## Introduction
 
-作为一名 Linux 开发者，选择合适的工具可以大幅提升工作效率。2026 年的今天，Linux 生态已经涌现出众多优秀的生产力工具。本文将为你详细介绍各类工具的使用场景和安装方法。
+As a Linux developer, choosing the right tools can significantly improve your productivity. In 2026, the Linux ecosystem has seen an emergence of numerous excellent productivity tools. This article will详细介绍 the usage scenarios and installation methods for various tools.
 
-## 一、终端增强工具
+## 1. Terminal Enhancement Tools
 
 ### 1.1 Zsh + Oh My Zsh
 
-传统的 Bash 虽然强大，但 Zsh 提供了更智能的自动补全和主题定制能力。
+While traditional Bash is powerful, Zsh provides smarter auto-completion and theme customization capabilities.
 
 ```bash
-# Ubuntu/Debian 安装
+# Ubuntu/Debian installation
 sudo apt install zsh -y
 
-# 安装 Oh My Zsh
+# Install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-推荐主题：`agnoster`、`powerlevel10k`
+Recommended themes: `agnoster`, `powerlevel10k`
 
-### 1.2 Tmux - 终端复用神器
+### 1.2 Tmux - Terminal Multiplexer
 
-Tmux 允许你在单个终端窗口中运行多个会话，支持会话持久化。
+Tmux allows you to run multiple sessions in a single terminal window, supporting session persistence.
 
 ```bash
-# 常用命令
-tmux new -s mysession      # 创建新会话
-tmux attach -t mysession   # 附加到会话
-tmux ls                    # 列出所有会话
+# Common commands
+tmux new -s mysession      # Create new session
+tmux attach -t mysession   # Attach to session
+tmux ls                    # List all sessions
 ```
 
-### 1.3 Alacritty / Kitty - GPU 加速终端
+### 1.3 Alacritty / Kitty - GPU Accelerated Terminal
 
-现代终端模拟器，利用 GPU 渲染实现极致流畅的滚动体验。
+Modern terminal emulators that use GPU rendering for extremely smooth scrolling experience.
 
 ```bash
-# Alacritty 安装
+# Alacritty installation
 sudo apt install alacritty -y
 
-# Kitty 安装
+# Kitty installation
 sudo apt install kitty -y
 ```
 
-## 二、代码编辑与 IDE
+## 2. Code Editors and IDEs
 
 ### 2.1 Neovim
 
-Neovim 是 Vim 的现代分支，支持 Lua 配置和 LSP 原生集成。
+Neovim is a modern fork of Vim, supporting Lua configuration and native LSP integration.
 
 ```lua
--- 推荐配置：使用 lazy.nvim 包管理器
+-- Recommended configuration: using lazy.nvim package manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 require("lazy").setup({
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -62,172 +62,172 @@ require("lazy").setup({
 
 ### 2.2 VS Code
 
-对于需要图形界面的开发者，VS Code 提供了丰富的插件生态。
+For developers who need a GUI, VS Code offers a rich plugin ecosystem.
 
-必装插件：
-- Remote-SSH：远程服务器开发
-- Docker：容器管理
-- GitLens：Git 增强
+Essential plugins:
+- Remote-SSH: Remote server development
+- Docker: Container management
+- GitLens: Git enhancements
 
-## 三、系统监控与诊断
+## 3. System Monitoring and Diagnostics
 
 ### 3.1 htop / btop
 
 ```bash
-# btop 安装 - 现代化系统监控
+# btop installation - Modern system monitor
 sudo apt install btop -y
 ```
 
-btop 提供实时 CPU、内存、磁盘、网络监控，界面炫酷。
+btop provides real-time CPU, memory, disk, and network monitoring with a sleek interface.
 
-### 3.2 ncdu - 磁盘空间分析
+### 3.2 ncdu - Disk Space Analyzer
 
 ```bash
 sudo apt install ncdu -y
-ncdu /  # 分析根目录磁盘使用
+ncdu /  # Analyze root directory disk usage
 ```
 
-### 3.3 jq - JSON 处理神器
+### 3.3 jq - JSON Processing Tool
 
 ```bash
-# 安装
+# Installation
 sudo apt install jq -y
 
-# 使用示例
+# Usage example
 curl -s https://api.example.com/data | jq '.users[].name'
 ```
 
-## 四、开发效率工具
+## 4. Development Efficiency Tools
 
-### 4.1 ripgrep - 极速代码搜索
+### 4.1 ripgrep - Ultra-fast Code Search
 
 ```bash
-# 安装
+# Installation
 sudo apt install ripgrep -y
 
-# 使用
+# Usage
 rg "function_name" --type rust
 ```
 
-### 4.2 fd - find 的现代替代
+### 4.2 fd - Modern Alternative to find
 
 ```bash
-# 安装
+# Installation
 sudo apt install fd-find -y
 
-# 使用
-fd "*.rs"  # 查找所有 Rust 文件
+# Usage
+fd "*.rs"  # Find all Rust files
 ```
 
-### 4.3 bat - cat 的增强版
+### 4.3 bat - Enhanced cat
 
 ```bash
-# 安装
+# Installation
 sudo apt install bat -y
 
-# 使用（自动语法高亮）
+# Usage (automatic syntax highlighting)
 bat main.rs
 ```
 
-## 五、网络工具
+## 5. Network Tools
 
-### 5.1 httpie - 人性化 HTTP 客户端
+### 5.1 httpie - Human-friendly HTTP Client
 
 ```bash
-# 安装
+# Installation
 pip install httpie
 
-# 使用
+# Usage
 http GET https://api.github.com/users/octocat
 ```
 
-### 5.2 mtr - 网络诊断
+### 5.2 mtr - Network Diagnostics
 
 ```bash
-# 实时追踪网络路由
+# Real-time network route tracing
 mtr google.com
 ```
 
-## 六、备份与同步
+## 6. Backup and Synchronization
 
 ### 6.1 rsync
 
 ```bash
-# 本地备份
+# Local backup
 rsync -avh --delete /source/ /backup/
 
-# 远程同步
+# Remote synchronization
 rsync -avh -e ssh /source/ user@remote:/backup/
 ```
 
-### 6.2 restic - 现代备份工具
+### 6.2 restic - Modern Backup Tool
 
 ```bash
-# 安装
+# Installation
 sudo apt install restic -y
 
-# 初始化仓库
+# Initialize repository
 restic init --repo /backup/restic
 
-# 备份
+# Backup
 restic backup --repo /backup/restic /home/user
 ```
 
-## 七、容器与虚拟化
+## 7. Containers and Virtualization
 
 ### 7.1 Docker
 
 ```bash
-# 安装 Docker
+# Install Docker
 curl -fsSL https://get.docker.com | sh
 
-# 常用命令
+# Common commands
 docker run -d --name nginx nginx:latest
 docker ps
 docker logs -f nginx
 ```
 
-### 7.2 Podman - 无守护进程容器
+### 7.2 Podman - Daemonless Containers
 
 ```bash
-# 安装
+# Installation
 sudo apt install podman -y
 
-# 使用（与 Docker 命令兼容）
+# Usage (Docker command compatible)
 podman run -d nginx
 ```
 
-## 八、性能优化建议
+## 8. Performance Optimization Tips
 
-### 8.1 系统启动优化
+### 8.1 Boot Optimization
 
 ```bash
-# 查看启动耗时
+# Check boot time
 systemd-analyze
 
-# 查看最慢服务
+# Check slowest services
 systemd-analyze blame
 ```
 
-### 8.2 内存优化
+### 8.2 Memory Optimization
 
 ```bash
-# 清理缓存
+# Clear cache
 sudo sync; sudo echo 3 > /proc/sys/vm/drop_caches
 
-# 增加 Swap
+# Add Swap
 sudo fallocate -l 4G /swapfile
 sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
 ```
 
-## 结语
+## Conclusion
 
-以上工具涵盖了 Linux 开发的各个场景。建议根据实际需求选择性安装，避免工具过剩影响系统性能。记住，最好的工具是你真正会用并能融入工作流的那些。
+The tools above cover various Linux development scenarios. We recommend selective installation based on actual needs to avoid tool overload affecting system performance. Remember, the best tools are the ones you actually use and can integrate into your workflow.
 
 ---
 
-**相关阅读**：
-- [AI 提示词工程指南](https://ai.islinux.com/articles/prompt-engineering)
-- [开发者财务计算器](https://calc.islinux.com)
+**Related Reading**:
+- [AI Prompt Engineering Guide](https://ai.islinux.com/articles/prompt-engineering)
+- [Developer Financial Calculator](https://calc.islinux.com)

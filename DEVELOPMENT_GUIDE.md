@@ -1,98 +1,65 @@
-# isLinux 开发要点指南
+# isLinux Development Guide
 
-> 本文档记录所有页面开发时必须注意的关键要素，确保 Google AdSense 顺利过审并获得良好 SEO 排名。
-
----
-
-## 一、国际化 (i18n) - 必须项
-
-### 1.1 语言支持
-
-```
-✅ 必须支持的语言：
-- 中文 (zh) - 默认语言
-- 英文 (en) -  fallback 语言
-```
-
-### 1.2 实现要求
-
-每个页面必须包含：
-
-```html
-<!-- 1. 语言切换器 (右上角) -->
-<div class="lang-switcher">
-    <label data-i18n="lang-label">语言</label>
-    <select id="lang-switcher">
-        <option value="zh">中文</option>
-        <option value="en">English</option>
-    </select>
-</div>
-
-<!-- 2. HTML lang 属性 -->
-<html lang="zh-CN">  <!-- 或 en -->
-
-<!-- 3. 可翻译的 meta 标签 -->
-<title data-i18n="page-title">...</title>
-<meta name="description" data-i18n="page-desc" content="...">
-
-<!-- 4. 引入 i18n.js -->
-<script src="i18n.js"></script>
-```
-
-### 1.3 翻译键命名规范
-
-```javascript
-{
-    'page-title': '页面标题',
-    'page-desc': '页面描述 (meta)',
-    'logo': '站点 Logo',
-    'tagline': '站点标语',
-    'nav-*': '导航相关',
-    'tool-*': '工具相关',
-    'footer-text': '页脚文字',
-    'lang-label': '语言选择标签'
-}
-```
+> This document records key elements that must be considered during page development to ensure Google AdSense approval and achieve good SEO rankings.
 
 ---
 
-## 二、SEO 优化 - 核心项
+## 0. Language Usage Guidelines
 
-### 2.1 Meta 标签 (每页必备)
+### 0.1 Development Documentation & Communication
+- **Development guide, project docs, and team communication**: Use **Chinese** (中文)
+- **Developer conversations (Claude, team chats)**: Use **Chinese** (中文)
+- **Code comments**: Use **English** (consistent with international standards)
+
+### 0.2 User-Facing Content
+- **All webpage content**: Use **English** only (美国英语 spelling)
+- **Article content**: Use **English** only
+- **UI labels, buttons, forms**: Use **English** only
+- **Meta tags (title, description, keywords)**: Use **English** only
+
+### 0.3 Rationale
+- Chinese for development: Team efficiency, clearer communication
+- English for content: Google AdSense monetization, higher CPC from US/UK/CA/AU markets
+
+---
+
+## 1. SEO Optimization - Core Item
+
+### 1.1 Meta Tags (Required for Every Page)
 
 ```html
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- 页面标题 (50-60 字符) -->
-    <title>关键词 | 站点名 - 简短描述</title>
+    <!-- Page Title (50-60 characters) -->
+    <title>Keyword | Site Name - Short Description</title>
 
-    <!-- 页面描述 (150-160 字符) -->
-    <meta name="description" content="包含核心关键词的完整描述">
+    <!-- Page Description (150-160 characters) -->
+    <meta name="description" content="Complete description including core keywords">
 
-    <!-- 关键词 (可选) -->
+    <!-- Keywords (Optional) -->
     <meta name="keywords" content="keyword1, keyword2, keyword3">
 
-    <!-- 作者 -->
+    <!-- Author -->
     <meta name="author" content="isLinux Team">
 
-    <!-- Open Graph (社交媒体分享) -->
-    <meta property="og:title" content="页面标题">
-    <meta property="og:description" content="页面描述">
+    <!-- Open Graph (Social Media Sharing) -->
+    <meta property="og:title" content="Page Title">
+    <meta property="og:description" content="Page Description">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://islinux.com">
     <meta property="og:image" content="https://islinux.com/og-image.png">
 
-    <!-- Canonical URL (防止重复内容) -->
+    <!-- Canonical URL (Prevent Duplicate Content) -->
     <link rel="canonical" href="https://islinux.com/current-page">
 </head>
 ```
 
-### 2.2 结构化数据 (Schema.org)
+### 1.2 Structured Data (Schema.org)
 
 ```html
-<!-- 组织信息 -->
+<!-- Organization Information -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -100,16 +67,16 @@
     "name": "isLinux",
     "url": "https://islinux.com",
     "logo": "https://islinux.com/logo.png",
-    "description": "开发者全能工具基地"
+    "description": "Developer All-in-One Toolkit"
 }
 </script>
 
-<!-- 文章页面需要添加 Article schema -->
+<!-- Article Schema for Article Pages -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "文章标题",
+    "headline": "Article Title",
     "datePublished": "2026-03-13",
     "dateModified": "2026-03-13",
     "author": {
@@ -120,143 +87,203 @@
 </script>
 ```
 
-### 2.3 标题层级规范
+### 1.3 Heading Hierarchy
 
 ```html
-<h1>页面主标题 (仅一个)</h1>
-<h2>主要章节</h2>
-<h3>子章节</h3>
-<h4>小组块</h4>
+<h1>Page Main Title (Only One)</h1>
+<h2>Main Sections</h2>
+<h3>Subsections</h3>
+<h4>Small Blocks</h4>
 ```
 
-**注意**：
-- 每页只能有一个 `<h1>`
-- 标题必须按顺序使用 (h1→h2→h3)
-- 标题中应包含关键词
+**Notes**:
+- Only one `<h1>` per page
+- Headings must be used in order (h1→h2→h3)
+- Keywords should be included in headings
 
-### 2.4 内部链接策略
+### 1.4 Internal Linking Strategy
 
 ```html
-<!-- 相关文章/工具链接 -->
+<!-- Related Articles/Tools Links -->
 <section class="related-content">
-    <h2>相关内容</h2>
+    <h2>Related Content</h2>
     <ul>
-        <li><a href="/related-page-1">锚文本 1</a></li>
-        <li><a href="/related-page-2">锚文本 2</a></li>
+        <li><a href="/related-page-1">Anchor Text 1</a></li>
+        <li><a href="/related-page-2">Anchor Text 2</a></li>
     </ul>
 </section>
 ```
 
 ---
 
-## 三、Google AdSense 过审要素 - 关键项
+## 2. Google AdSense Approval Requirements - Critical Item
 
-### 3.1 必备页面 (缺一不可)
+### 2.1 Required Pages (All Must Exist)
 
-| 页面 | 路径 | 说明 |
-|------|------|------|
-| About Us | `/about.html` | 介绍团队、使命、服务 |
-| Privacy Policy | `/privacy.html` | 详细说明数据收集和使用 |
-| Contact Us | `/contact.html` | 提供有效联系方式 |
+| Page | Path | Description |
+|------|------|-------------|
+| About Us | `/about.html` | Introduce team, mission, services |
+| Privacy Policy | `/privacy.html` | Detailed data collection and usage |
+| Contact Us | `/contact.html` | Provide valid contact information |
 
-### 3.2 隐私政策必须包含
-
-```
-✅ 数据收集说明
-✅ Cookie 使用说明
-✅ 第三方服务披露 (AdSense, Analytics)
-✅ 用户权利说明 (GDPR)
-✅ 儿童隐私保护
-✅ 政策更新机制
-✅ 联系方式
-```
-
-### 3.3 内容质量要求
+### 2.2 Privacy Policy Must Include
 
 ```
-✅ 每页最少 800 字原创内容
-✅ 工具页必须配教程文章
-✅ 避免"内容单薄"拒审
-✅ 定期更新内容 (显示活跃度)
+✅ Data Collection Description
+✅ Cookie Usage Description
+✅ Third-Party Services Disclosure (AdSense, Analytics)
+✅ User Rights Description (GDPR)
+✅ Children's Privacy Protection
+✅ Policy Update Mechanism
+✅ Contact Information
 ```
 
-### 3.4 用户体验要求
+### 2.3 Content Quality Requirements
 
 ```
-✅ 页面加载速度 < 3 秒
-✅ 移动端完全适配
-✅ 无 intrusive 弹窗
-✅ 清晰的导航结构
-✅ 搜索功能
+✅ Minimum 800 words of original content per page
+✅ Tool pages must have tutorial articles
+✅ Avoid "thin content" rejection
+✅ Regular content updates (show activity)
+```
+
+### 2.4 User Experience Requirements
+
+```
+✅ Page load speed < 3 seconds
+✅ Full mobile responsiveness
+✅ No intrusive popups
+✅ Clear navigation structure
+✅ Search functionality
 ```
 
 ---
 
-## 四、页面性能优化
+## 3. Google AdSense English Content Monetization
 
-### 4.1 CSS 优化
+### 3.1 High CPC Keywords for English Content
+
+| Category | Keywords | Avg CPC | Competition |
+|----------|----------|---------|-------------|
+| Cloud Hosting | cloud hosting, vps, dedicated server | $2.50 - $15.00 | High |
+| Developer Tools | developer tools, IDE, code editor | $1.80 - $8.00 | Medium |
+| AI/ML | artificial intelligence, machine learning, prompts | $2.00 - $12.00 | High |
+| Cybersecurity | cybersecurity, encryption, data protection | $3.00 - $18.00 | High |
+| Finance Tech | fintech, investment calculator, mortgage | $4.00 - $25.00 | High |
+| Linux/DevOps | linux, devops, kubernetes, docker | $1.50 - $10.00 | Medium |
+
+### 3.2 English Content Strategy
+
+```
+✅ Target US/UK/CA/AU markets (highest CPC)
+✅ Use American English spelling (optimize, color, program)
+✅ Write for Western developer audience
+✅ Include region-specific examples and references
+✅ Optimize for Google.com (not regional Google sites)
+```
+
+### 3.3 Ad Placement Best Practices
+
+```
+✅ Above the fold: 728x90 leaderboard
+✅ Sidebar: 300x600 half-page
+✅ In-content: 300x250 medium rectangle
+✅ Footer: 728x90 or 970x250
+✅ Maintain 30% text-to-ad ratio
+✅ Never place ads near clickable elements (accidental clicks)
+```
+
+### 3.4 AdSense Policy Compliance
+
+```
+✅ No copyrighted content without permission
+✅ No adult or offensive content
+✅ No hacking/cracking tutorials
+✅ No drug-related content
+✅ Original content only (no AI-generated without editing)
+✅ Clear content categorization
+✅ Functional navigation (no dead ends)
+```
+
+### 3.5 Revenue Optimization Tips
+
+```
+✅ Update content regularly (fresh content = higher rankings)
+✅ Target long-tail keywords (lower competition)
+✅ Build backlinks from reputable tech sites
+✅ Optimize for Core Web Vitals (Google ranking factor)
+✅ Use Google AdSense Auto Ads (after approval)
+✅ Monitor performance in Google AdSense dashboard
+✅ A/B test ad placements
+```
+
+---
+
+## 4. Page Performance Optimization
+
+### 4.1 CSS Optimization
 
 ```html
-<!-- 关键 CSS 内联 -->
+<!-- Inline Critical CSS -->
 <style>
-    /* 首屏关键样式 */
+    /* First-screen critical styles */
 </style>
 
-<!-- 非关键 CSS 异步加载 -->
+<!-- Load Non-Critical CSS Asynchronously -->
 <link rel="preload" href="styles.css" as="style" onload="this.rel='stylesheet'">
 ```
 
-### 4.2 JavaScript 优化
+### 4.2 JavaScript Optimization
 
 ```html
-<!-- 非关键 JS 延迟加载 -->
+<!-- Defer Non-Critical JS -->
 <script src="non-critical.js" defer></script>
 
-<!-- 分析脚本异步加载 -->
+<!-- Async Load Analytics Scripts -->
 <script async src="analytics.js"></script>
 ```
 
-### 4.3 图片优化
+### 4.3 Image Optimization
 
 ```html
-<!-- 响应式图片 -->
+<!-- Responsive Images -->
 <img src="image.jpg"
      srcset="image-480.jpg 480w, image-800.jpg 800w"
      sizes="(max-width: 600px) 480px, 800px"
-     alt="描述性文字"
+     alt="Descriptive text"
      loading="lazy"
      width="800" height="600">
 ```
 
 ---
 
-## 五、广告位预留
+## 5. Ad Slot Placement
 
-### 5.1 标准广告位
+### 5.1 Standard Ad Slots
 
 ```html
-<!-- 顶部横幅 (728x90 或 970x250) -->
+<!-- Top Banner (728x90 or 970x250) -->
 <div class="ad-slot ad-top">
-    <!-- AdSense 代码 -->
+    <!-- AdSense Code -->
 </div>
 
-<!-- 侧边栏 (300x600 或 300x250) -->
+<!-- Sidebar (300x600 or 300x250) -->
 <div class="ad-slot ad-sidebar">
-    <!-- AdSense 代码 -->
+    <!-- AdSense Code -->
 </div>
 
-<!-- 内容中 (300x250) -->
+<!-- In-Content (300x250) -->
 <div class="ad-slot ad-in-content">
-    <!-- AdSense 代码 -->
+    <!-- AdSense Code -->
 </div>
 
-<!-- 底部横幅 (728x90 或 970x250) -->
+<!-- Bottom Banner (728x90 or 970x250) -->
 <div class="ad-slot ad-bottom">
-    <!-- AdSense 代码 -->
+    <!-- AdSense Code -->
 </div>
 ```
 
-### 5.2 广告位样式
+### 5.2 Ad Slot Styling
 
 ```css
 .ad-slot {
@@ -272,123 +299,121 @@
 
 ---
 
-## 六、安全检查清单
+## 6. Pre-Launch Checklist
 
-### 6.1 发布前检查
-
-```
-□ i18n 模块已集成
-□ 语言切换器可用
-□ meta 标签完整
-□ title 长度 50-60 字符
-□ description 长度 150-160 字符
-□ h1 标签唯一
-□ 移动端适配正常
-□ 页面加载 < 3 秒
-□ 所有链接有效
-□ 图片有 alt 属性
-□ Schema 结构化数据正确
-□ Canonical URL 设置
-```
-
-### 6.2 AdSense 申请前检查
+### 6.1 Before Publishing
 
 ```
-□ About 页面存在且内容充实
-□ Privacy Policy 完整合规
-□ Contact 页面有有效邮箱
-□ 每页内容 > 800 字
-□ 无版权争议内容
-□ 网站运行稳定 (至少 2 周)
-□ 有原创内容 (非 AI 生成)
-□ 导航清晰易用
+□ Meta tags complete
+□ Title length 50-60 characters
+□ Description length 150-160 characters
+□ Single h1 tag
+□ Mobile responsive
+□ Page load < 3 seconds
+□ All links working
+□ Images have alt attributes
+□ Schema structured data correct
+□ Canonical URL set
 ```
 
----
-
-## 七、内容策略
-
-### 7.1 关键词矩阵
-
-| 类别 | 关键词 | CPC | 竞争度 |
-|------|--------|-----|--------|
-| Linux | linux commands, bash scripting | 中 | 高 |
-| VPS | singapore vps, cloud hosting | 高 | 中 |
-| AI | ai prompts, chatgpt prompts | 中 | 高 |
-| 工具 | json formatter, base64 decode | 低 | 低 |
-| 财务 | mortgage calculator, hourly rate | 高 | 中 |
-
-### 7.2 内容更新频率
+### 6.2 Before AdSense Application
 
 ```
-✅ 技术文章：每周 1-2 篇
-✅ 工具更新：每月 1 次
-✅ 数据更新：实时/每日
+□ About page exists with substantial content
+□ Privacy Policy complete and compliant
+□ Contact page has valid email
+□ Each page has > 800 words
+□ No copyright-infringing content
+□ Website stable for at least 2 weeks
+□ Original content (not purely AI-generated)
+□ Clear navigation
+□ English content throughout
 ```
 
 ---
 
-## 八、监控与分析
+## 7. Content Strategy
 
-### 8.1 必须集成的工具
+### 7.1 Keyword Matrix
+
+| Category | Keywords | CPC | Competition |
+|----------|----------|-----|-------------|
+| Linux | linux commands, bash scripting | Medium | High |
+| VPS | singapore vps, cloud hosting | High | Medium |
+| AI | ai prompts, chatgpt prompts | Medium | High |
+| Tools | json formatter, base64 decode | Low | Low |
+| Finance | mortgage calculator, hourly rate | High | Medium |
+
+### 7.2 Content Update Frequency
+
+```
+✅ Technical Articles: 1-2 per week
+✅ Tool Updates: Once per month
+✅ Data Updates: Real-time / Daily
+```
+
+---
+
+## 8. Monitoring and Analytics
+
+### 8.1 Required Integrations
 
 ```html
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
 
-<!-- Google Search Console 验证 -->
+<!-- Google Search Console Verification -->
 <meta name="google-site-verification" content="verification-code">
 ```
 
-### 8.2 核心指标
+### 8.2 Core Metrics
 
-| 指标 | 目标值 |
-|------|--------|
-| 页面加载时间 | < 3s |
-| 跳出率 | < 50% |
-| 平均停留时间 | > 2 分钟 |
-| 移动端流量占比 | > 40% |
-| 自然搜索流量 | > 60% |
+| Metric | Target |
+|--------|--------|
+| Page Load Time | < 3s |
+| Bounce Rate | < 50% |
+| Average Time on Page | > 2 minutes |
+| Mobile Traffic Share | > 40% |
+| Organic Search Traffic | > 60% |
 
 ---
 
-## 九、模板示例
+## 9. Template Example
 
-### 9.1 标准页面模板
+### 9.1 Standard Page Template
 
 ```html
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="page-title">页面标题 | isLinux</title>
-    <meta name="description" data-i18n="page-desc" content="页面描述">
+    <title>Page Title | isLinux</title>
+    <meta name="description" content="Page description">
     <link rel="canonical" href="https://islinux.com/page-url">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="页面标题">
-    <meta property="og:description" content="页面描述">
+    <meta property="og:title" content="Page Title">
+    <meta property="og:description" content="Page Description">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://islinux.com/page-url">
 
     <!-- Schema -->
     <script type="application/ld+json">{...}</script>
 
-    <!-- 关键 CSS -->
+    <!-- Critical CSS -->
     <style>...</style>
 </head>
 <body>
     <header>
-        <div class="lang-switcher">...</div>
         <nav>...</nav>
     </header>
 
     <main>
-        <h1>页面主标题</h1>
-        <article>内容...</article>
+        <h1>Page Main Title</h1>
+        <article>Content...</article>
 
-        <!-- 广告位 -->
+        <!-- Ad Slot -->
         <div class="ad-slot ad-in-content"></div>
     </main>
 
@@ -397,54 +422,34 @@
         <a href="/privacy.html">Privacy</a>
         <a href="/contact.html">Contact</a>
     </footer>
-
-    <script src="i18n.js"></script>
 </body>
 </html>
 ```
 
 ---
 
-## 十、快速参考
+## 10. Quick Reference
 
-### 10.1 文件结构
+### 10.1 File Structure
 
 ```
 islinux/
-├── islinux_root/          # 主站
-│   ├── index.html         # 首页 (含 i18n)
-│   ├── about.html         # 关于我们
-│   ├── privacy.html       # 隐私政策
-│   ├── contact.html       # 联系我们
-│   ├── i18n.js           # 国际化模块
-│   └── articles/         # 文章
-├── islinux_ai/           # AI 子站
-├── islinux_tool/         # 工具站
-├── islinux_calc/         # 计算器站
-├── DEVELOPMENT_GUIDE.md  # 本文档
+├── islinux_root/          # Main Site
+│   ├── index.html         # Homepage (English only)
+│   ├── about.html         # About Us
+│   ├── privacy.html       # Privacy Policy
+│   ├── contact.html       # Contact Us
+│   └── articles/          # Articles
+├── islinux_ai/            # AI Subsite
+├── islinux_tool/          # Tools Subsite
+├── islinux_calc/          # Calculator Subsite
+├── DEVELOPMENT_GUIDE.md   # This Document
 └── islinux_project_guide.md
-```
-
-### 10.2 常用翻译键
-
-```javascript
-// 通用
-'lang-label', 'back-home', 'footer-text', 'related-articles'
-'nav-home', 'nav-about', 'nav-privacy'
-
-// 主站
-'site-title', 'tagline', 'sites-nav', 'quick-start'
-
-// 工具站
-'tool-json-format', 'tool-base64', 'tool-hash'
-
-// 计算器
-'tab-hourly', 'tab-mortgage', 'tab-currency'
 ```
 
 ---
 
-**文档更新记录**：
-- 2026-03-13: 初始版本，包含国际化、SEO、AdSense 要求
+**Document Update History**:
+- 2026-03-13: Updated to English-only, removed i18n, added AdSense monetization guidelines
 
-**维护者**：isLinux Team
+**Maintainer**: isLinux Team

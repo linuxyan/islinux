@@ -1,28 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="page-title">AI Prompts | isLinux - 开发者专用提示词库</title>
-    <meta name="description" data-i18n="page-desc" content="专为开发者打造的 AI 提示词库，涵盖代码生成、调试、文档编写、Shell 脚本等场景。">
+    <title>AI Prompts | isLinux - Developer Prompt Library</title>
+    <meta name="description" content="AI prompt library for developers: code generation, debugging, documentation, Shell scripts.">
+    <meta name="keywords" content="AI prompts, ChatGPT, developer tools, code generation, shell scripts">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://ai.islinux.com">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="AI Prompts | isLinux">
+    <meta property="og:description" content="AI prompt library for developers: code generation, debugging, documentation.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ai.islinux.com">
+
     <style>
-        .lang-switcher {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .lang-switcher label { color: var(--text-muted); font-size: 0.85rem; }
-        .lang-switcher select {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 4px; color: var(--text-color); padding: 0.4rem 0.8rem;
-            font-size: 0.9rem; cursor: pointer;
-        }
-        @media (max-width: 768px) {
-            .lang-switcher { position: static; justify-content: center; margin-bottom: 1rem; }
-        }
         :root {
             --bg-color: #0d1117;
             --text-color: #c9d1d9;
@@ -62,23 +55,6 @@
         .tagline {
             color: var(--text-muted);
             margin: 1rem 0;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .back-link:hover {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
         }
 
         /* Container */
@@ -212,16 +188,6 @@
             background: #2ea043;
         }
 
-        .btn-secondary {
-            background: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--text-color);
-        }
-
         /* Search */
         .search-box {
             max-width: 500px;
@@ -292,6 +258,11 @@
             font-size: 0.9rem;
         }
 
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
         /* Toast */
         .toast {
             position: fixed;
@@ -321,145 +292,138 @@
 <body>
 
 <header>
-    <div class="lang-switcher">
-        <label data-i18n="lang-label">语言</label>
-        <select id="lang-switcher">
-            <option value="zh">中文</option>
-            <option value="en">English</option>
-        </select>
-    </div>
-    <h1 class="logo" data-i18n="logo">🤖 AI.isLinux.com</h1>
-    <p class="tagline" data-i18n="tagline">开发者专用 AI 提示词库</p>
+    <h1 class="logo">🤖 AI.isLinux.com</h1>
+    <p class="tagline">Developer AI Prompt Library</p>
 </header>
 
 <div class="container">
     <!-- Search -->
     <div class="search-box">
-        <input type="text" class="search-input" id="searchInput" placeholder="搜索提示词...">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search prompts...">
     </div>
 
     <!-- Category Tabs -->
     <div class="category-tabs">
-        <button class="category-tab active" data-category="all" data-i18n="cat-all">全部</button>
-        <button class="category-tab" data-category="shell" data-i18n="cat-shell">Shell 脚本</button>
-        <button class="category-tab" data-category="code" data-i18n="cat-code">代码生成</button>
-        <button class="category-tab" data-category="debug" data-i18n="cat-debug">调试</button>
-        <button class="category-tab" data-category="doc" data-i18n="cat-doc">文档</button>
-        <button class="category-tab" data-category="sql" data-i18n="cat-sql">SQL</button>
-        <button class="category-tab" data-category="git" data-i18n="cat-git">Git</button>
+        <button class="category-tab active" data-category="all">All</button>
+        <button class="category-tab" data-category="shell">Shell Scripts</button>
+        <button class="category-tab" data-category="code">Code Generation</button>
+        <button class="category-tab" data-category="debug">Debugging</button>
+        <button class="category-tab" data-category="doc">Documentation</button>
+        <button class="category-tab" data-category="sql">SQL</button>
+        <button class="category-tab" data-category="git">Git</button>
     </div>
 
     <!-- Prompt Grid -->
     <div class="prompt-grid" id="promptGrid">
-        <!-- Shell 脚本 -->
+        <!-- Shell Script -->
         <div class="prompt-card" data-category="shell">
             <div class="prompt-header">
-                <h3 class="prompt-title">📜 Shell 脚本优化助手</h3>
+                <h3 class="prompt-title">📜 Shell Script Optimizer</h3>
                 <span class="prompt-category">Shell</span>
             </div>
             <div class="prompt-body">
-                <p class="prompt-description">让 AI 检查你的 Bash 脚本，找出安全隐患和性能问题。</p>
-                <code class="prompt-code" id="prompt1">请作为高级 Linux 运维专家，检查以下 Bash 脚本的安全性、可维护性和性能问题：
+                <p class="prompt-description">Let AI check your Bash scripts for security issues and performance problems.</p>
+                <code class="prompt-code" id="prompt1">Please act as a senior Linux operations expert and review the following Bash script for security, maintainability, and performance issues:
 
-1. 指出潜在的安全风险（如未引用的变量、命令注入风险）
-2. 提出性能优化建议
-3. 给出具体的改进代码
-4. 遵循 ShellCheck 最佳实践
+1. Point out potential security risks (e.g., unquoted variables, command injection risks)
+2. Suggest performance optimizations
+3. Provide specific improvement code
+4. Follow ShellCheck best practices
 
-脚本内容：
-[在此粘贴你的脚本]</code>
+Script content:
+[Paste your script here]</code>
                 <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt1')">📋 复制提示词</button>
+                    <button class="btn btn-primary" onclick="copyText('prompt1')">📋 Copy Prompt</button>
                 </div>
             </div>
         </div>
 
-        <!-- 代码生成 -->
+        <!-- Code Generation -->
         <div class="prompt-card" data-category="code">
             <div class="prompt-header">
-                <h3 class="prompt-title">💻 Python 函数生成器</h3>
-                <span class="prompt-category">代码生成</span>
+                <h3 class="prompt-title">💻 Python Function Generator</h3>
+                <span class="prompt-category">Code Generation</span>
             </div>
             <div class="prompt-body">
-                <p class="prompt-description">描述需求，让 AI 生成符合 PEP8 规范的 Python 代码。</p>
-                <code class="prompt-code" id="prompt2">请作为资深 Python 开发者，编写一个函数实现以下功能：
+                <p class="prompt-description">Describe your requirements and let AI generate PEP8-compliant Python code.</p>
+                <code class="prompt-code" id="prompt2">Please act as a senior Python developer and write a function to implement the following:
 
-功能描述：[详细描述]
+Function description: [Detailed description]
 
-要求：
-1. 遵循 PEP8 代码规范
-2. 添加完整的类型注解
-3. 包含详细的 docstring（Google 风格）
-4. 提供 2-3 个使用示例
-5. 考虑边界情况和错误处理
+Requirements:
+1. Follow PEP8 coding standards
+2. Add complete type annotations
+3. Include detailed docstring (Google style)
+4. Provide 2-3 usage examples
+5. Consider edge cases and error handling
 
-请输出完整的函数代码。</code>
+Please output the complete function code.</code>
                 <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt2')">📋 复制提示词</button>
+                    <button class="btn btn-primary" onclick="copyText('prompt2')">📋 Copy Prompt</button>
                 </div>
             </div>
         </div>
 
-        <!-- 调试 -->
+        <!-- Debugging -->
         <div class="prompt-card" data-category="debug">
             <div class="prompt-header">
-                <h3 class="prompt-title">🐛 代码调试助手</h3>
-                <span class="prompt-category">调试</span>
+                <h3 class="prompt-title">🐛 Code Debugging Assistant</h3>
+                <span class="prompt-category">Debugging</span>
             </div>
             <div class="prompt-body">
-                <p class="prompt-description">粘贴错误信息和代码，让 AI 帮你快速定位问题。</p>
-                <code class="prompt-code" id="prompt3">请帮我调试以下代码问题：
+                <p class="prompt-description">Paste error messages and code to let AI help you quickly identify issues.</p>
+                <code class="prompt-code" id="prompt3">Please help me debug the following code issue:
 
-错误信息：
-[粘贴完整的错误堆栈]
+Error message:
+[Paste complete error stack trace]
 
-相关代码：
-[粘贴代码]
+Related code:
+[Paste code]
 
-我已经尝试过：
-1. [尝试过的方法 1]
-2. [尝试过的方法 2]
+I have tried:
+1. [Attempted solution 1]
+2. [Attempted solution 2]
 
-环境信息：
-- 语言版本：
-- 操作系统：
-- 相关库版本：
+Environment information:
+- Language version:
+- Operating system:
+- Related library versions:
 
-请分析可能的原因并给出解决方案。</code>
+Please analyze possible causes and provide solutions.</code>
                 <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt3')">📋 复制提示词</button>
+                    <button class="btn btn-primary" onclick="copyText('prompt3')">📋 Copy Prompt</button>
                 </div>
             </div>
         </div>
 
-        <!-- 文档 -->
+        <!-- Documentation -->
         <div class="prompt-card" data-category="doc">
             <div class="prompt-header">
-                <h3 class="prompt-title">📖 README 生成器</h3>
-                <span class="prompt-category">文档</span>
+                <h3 class="prompt-title">📖 README Generator</h3>
+                <span class="prompt-category">Documentation</span>
             </div>
             <div class="prompt-body">
-                <p class="prompt-description">根据项目代码自动生成专业的 README 文档。</p>
-                <code class="prompt-code" id="prompt4">请为以下项目生成一个专业的 README.md 文件：
+                <p class="prompt-description">Automatically generate professional README documentation based on your project code.</p>
+                <code class="prompt-code" id="prompt4">Please generate a professional README.md file for the following project:
 
-项目名称：[名称]
-项目描述：[简短描述]
-主要功能：
-- [功能 1]
-- [功能 2]
+Project name: [Name]
+Project description: [Brief description]
+Main features:
+- [Feature 1]
+- [Feature 2]
 
-技术栈：[列出使用的技术]
-安装步骤：[简要说明]
-使用示例：[提供示例]
+Tech stack: [List technologies used]
+Installation steps: [Brief instructions]
+Usage examples: [Provide examples]
 
-要求：
-1. 使用 Markdown 格式
-2. 包含徽章（Badge）
-3. 包含目录
-4. 包含安装、使用、API 文档等章节
-5. 添加贡献指南和许可证说明</code>
+Requirements:
+1. Use Markdown format
+2. Include badges
+3. Include table of contents
+4. Include sections for installation, usage, API documentation
+5. Add contribution guidelines and license information</code>
                 <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt4')">📋 复制提示词</button>
+                    <button class="btn btn-primary" onclick="copyText('prompt4')">📋 Copy Prompt</button>
                 </div>
             </div>
         </div>
@@ -467,33 +431,33 @@
         <!-- SQL -->
         <div class="prompt-card" data-category="sql">
             <div class="prompt-header">
-                <h3 class="prompt-title">🗄️ SQL 查询优化</h3>
+                <h3 class="prompt-title">🗄️ SQL Query Optimizer</h3>
                 <span class="prompt-category">SQL</span>
             </div>
             <div class="prompt-body">
-                <p class="prompt-description">优化慢查询，让数据库性能提升。</p>
-                <code class="prompt-code" id="prompt5">请作为数据库专家，优化以下 SQL 查询：
+                <p class="prompt-description">Optimize slow queries to improve database performance.</p>
+                <code class="prompt-code" id="prompt5">Please act as a database expert and optimize the following SQL query:
 
-数据库类型：[MySQL/PostgreSQL/SQLite]
+Database type: [MySQL/PostgreSQL/SQLite]
 
-表结构：
-[描述表结构或提供 CREATE TABLE 语句]
+Table structure:
+[Describe table structure or provide CREATE TABLE statement]
 
-当前查询：
-[粘贴 SQL]
+Current query:
+[Paste SQL]
 
-问题描述：
-- 查询速度慢
-- 数据量：约 [X] 万行
-- 期望响应时间：[X]ms 以内
+Problem description:
+- Slow query performance
+- Data volume: approximately [X] rows
+- Expected response time: within [X] ms
 
-请：
-1. 分析查询性能瓶颈
-2. 提供优化后的 SQL
-3. 建议需要的索引
-4. 解释优化原理</code>
+Please:
+1. Analyze query performance bottlenecks
+2. Provide optimized SQL
+3. Suggest required indexes
+4. Explain the optimization principles</code>
                 <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt5')">📋 复制提示词</button>
+                    <button class="btn btn-primary" onclick="copyText('prompt5')">📋 Copy Prompt</button>
                 </div>
             </div>
         </div>
@@ -501,25 +465,25 @@
         <!-- Git -->
         <div class="prompt-card" data-category="git">
             <div class="prompt-header">
-                <h3 class="prompt-title">🔧 Git 提交信息生成</h3>
+                <h3 class="prompt-title">🔧 Git Commit Message Generator</h3>
                 <span class="prompt-category">Git</span>
             </div>
             <div class="prompt-body">
-                <p class="prompt-description">根据代码变更自动生成规范的 Commit Message。</p>
-                <code class="prompt-code" id="prompt6">请根据以下 Git 变更生成符合 Conventional Commits 规范的提交信息：
+                <p class="prompt-description">Automatically generate standardized commit messages based on code changes.</p>
+                <code class="prompt-code" id="prompt6">Please generate Conventional Commits-compliant commit messages based on the following Git changes:
 
-变更内容：
-[粘贴 git diff 或描述变更]
+Change content:
+[Paste git diff or describe changes]
 
-要求：
-1. 使用 Conventional Commits 格式（feat/fix/docs/style/refactor/perf/test/chore）
-2. 标题简洁明了（不超过 50 字符）
-3. 如有必要，添加详细的正文说明
-4. 如果有关联的 Issue，添加引用
+Requirements:
+1. Use Conventional Commits format (feat/fix/docs/style/refactor/perf/test/chore)
+2. Keep title concise (under 50 characters)
+3. Add detailed body description if necessary
+4. Reference related Issues if applicable
 
-请生成 3 个备选提交信息供选择。</code>
+Please generate 3 alternative commit messages for selection.</code>
                 <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt6')">📋 复制提示词</button>
+                    <button class="btn btn-primary" onclick="copyText('prompt6')">📋 Copy Prompt</button>
                 </div>
             </div>
         </div>
@@ -527,21 +491,20 @@
 
     <!-- Article Section -->
     <section class="article-section">
-        <h2 class="section-title" data-i18n="related-articles">📚 相关文章</h2>
+        <h2 class="section-title">📚 Related Articles</h2>
         <a href="/articles/prompt-engineering-shell.html" class="article-card">
-            <h3>AI Prompt Engineering: 如何写出完美的 Shell 脚本生成指令</h3>
-            <p>掌握提示词工程，让 AI 帮你写出高质量、安全的 Bash 脚本。包含完整模板、实战示例和进阶技巧。</p>
+            <h3>AI Prompt Engineering: How to Write Perfect Shell Script Generation Prompts</h3>
+            <p>Master prompt engineering to help AI write high-quality, safe Bash scripts. Includes complete templates, practical examples, and advanced techniques.</p>
         </a>
     </section>
 </div>
 
 <footer>
-    <p><span data-i18n="footer-text">&copy; 2026 AI.isLinux.com</span> | <a href="index.html" style="color: inherit;" data-i18n="nav-home">首页</a> | <a href="about.html" style="color: inherit;" data-i18n="nav-about">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;" data-i18n="nav-privacy">隐私</a> | <a href="https://islinux.com" style="color: inherit;" data-i18n="back-home">返回主站</a></p>
+    <p>&copy; 2026 AI.isLinux.com | <a href="index.html">Home</a> | <a href="about.html">About</a> | <a href="../islinux_root/privacy.html">Privacy</a> | <a href="https://islinux.com">Main Site</a></p>
 </footer>
 
-<div class="toast" id="toast" data-i18n="copy-success">✅ 已复制到剪贴板</div>
+<div class="toast" id="toast">✅ Copied to clipboard!</div>
 
-<script src="i18n.js"></script>
 <script>
     // Copy function
     function copyText(id) {

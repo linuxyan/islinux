@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="page-title">开发者工具箱 | isLinux - 纯前端在线工具</title>
-    <meta name="description" data-i18n="page-desc" content="JSON 格式化、代码压缩、加解密工具，纯前端运行，数据不上传服务器，保护您的隐私。">
+    <title>Developer Toolkit | isLinux - Client-side Tools</title>
+    <meta name="description" content="JSON formatter, code minifier, encryption tools - all running locally for privacy.">
+    <meta name="keywords" content="JSON formatter, base64, hash calculator, diff tool, developer tools">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://tool.islinux.com">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Developer Toolkit | isLinux">
+    <meta property="og:description" content="JSON formatter, code minifier, encryption - all running locally.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tool.islinux.com">
+
     <style>
-        .lang-switcher {
-            position: absolute; top: 1rem; right: 1rem;
-            display: flex; align-items: center; gap: 0.5rem;
-        }
-        .lang-switcher label { color: var(--text-muted); font-size: 0.85rem; }
-        .lang-switcher select {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 4px; color: var(--text-color); padding: 0.4rem 0.8rem;
-            font-size: 0.9rem; cursor: pointer;
-        }
-        @media (max-width: 768px) {
-            .lang-switcher { position: static; justify-content: center; margin-bottom: 1rem; }
-        }
         :root {
             --bg-color: #0d1117;
             --text-color: #c9d1d9;
@@ -68,23 +65,6 @@
             border-radius: 20px;
             font-size: 0.85rem;
             margin-top: 0.5rem;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .back-link:hover {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
         }
 
         /* Container */
@@ -325,6 +305,11 @@
             margin-top: 3rem;
         }
 
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
         /* Toast */
         .toast {
             position: fixed;
@@ -359,16 +344,9 @@
 <body>
 
 <header>
-    <div class="lang-switcher">
-        <label data-i18n="lang-label">语言</label>
-        <select id="lang-switcher">
-            <option value="zh">中文</option>
-            <option value="en">English</option>
-        </select>
-    </div>
-    <h1 class="logo" data-i18n="logo">🛠️ Tool.isLinux.com</h1>
-    <p class="tagline" data-i18n="tagline">开发者纯前端工具箱</p>
-    <span class="privacy-badge" data-i18n="privacy-badge">🔒 所有数据处理均在浏览器本地完成，不上传服务器</span>
+    <h1 class="logo">🛠️ Tool.isLinux.com</h1>
+    <p class="tagline">Developer Client-side Toolkit</p>
+    <span class="privacy-badge">🔒 All data processed locally, never uploaded</span>
 </header>
 
 <div class="container">
@@ -376,116 +354,116 @@
     <div class="tool-grid">
         <div class="tool-card active" onclick="showTool('json-format')">
             <div class="tool-icon">📝</div>
-            <h3 data-i18n="tool-json-format">JSON 格式化</h3>
-            <p data-i18n="tool-json-format-desc">格式化、压缩、验证 JSON 数据</p>
+            <h3>JSON Format</h3>
+            <p>Format, minify, validate JSON</p>
         </div>
         <div class="tool-card" onclick="showTool('json-validate')">
             <div class="tool-icon">✅</div>
-            <h3 data-i18n="tool-json-validate">JSON 验证</h3>
-            <p data-i18n="tool-json-validate-desc">检查 JSON 格式是否正确</p>
+            <h3>JSON Validate</h3>
+            <p>Check JSON syntax</p>
         </div>
         <div class="tool-card" onclick="showTool('base64')">
             <div class="tool-icon">🔐</div>
-            <h3 data-i18n="tool-base64">Base64 编解码</h3>
-            <p data-i18n="tool-base64-desc">Base64 编码和解码工具</p>
+            <h3>Base64</h3>
+            <p>Base64 encode/decode</p>
         </div>
         <div class="tool-card" onclick="showTool('url-encode')">
             <div class="tool-icon">🔗</div>
-            <h3 data-i18n="tool-url-encode">URL 编解码</h3>
-            <p data-i18n="tool-url-encode-desc">URL Encode 和 Decode</p>
+            <h3>URL Encode</h3>
+            <p>URL encode/decode</p>
         </div>
         <div class="tool-card" onclick="showTool('hash')">
             <div class="tool-icon">🔑</div>
-            <h3 data-i18n="tool-hash">哈希计算</h3>
-            <p data-i18n="tool-hash-desc">MD5、SHA1、SHA256 计算</p>
+            <h3>Hash</h3>
+            <p>MD5, SHA1, SHA256</p>
         </div>
         <div class="tool-card" onclick="showTool('diff')">
             <div class="tool-icon">📊</div>
-            <h3 data-i18n="tool-diff">文本对比</h3>
-            <p data-i18n="tool-diff-desc">比较两段文本的差异</p>
+            <h3>Diff</h3>
+            <p>Compare text differences</p>
         </div>
     </div>
 
     <!-- JSON Format Tool -->
     <div id="json-format" class="tool-panel active">
         <div class="panel-header">
-            <h2 class="panel-title">📝 JSON 格式化</h2>
+            <h2 class="panel-title">📝 JSON Formatter</h2>
             <div class="panel-actions">
-                <button class="btn btn-secondary" onclick="clearInput('json-format-input')">清空</button>
-                <button class="btn btn-primary" onclick="formatJSON()">格式化</button>
-                <button class="btn btn-secondary" onclick="minifyJSON()">压缩</button>
-                <button class="btn btn-secondary" onclick="copyOutput()">📋 复制</button>
+                <button class="btn btn-secondary" onclick="clearInput('json-format-input')">Clear</button>
+                <button class="btn btn-primary" onclick="formatJSON()">Format</button>
+                <button class="btn btn-secondary" onclick="minifyJSON()">Minify</button>
+                <button class="btn btn-secondary" onclick="copyOutput()">📋 Copy</button>
             </div>
         </div>
         <div class="options-row">
             <div class="option-item">
-                <label>缩进：</label>
+                <label>Indent:</label>
                 <select id="json-indent">
-                    <option value="2">2 空格</option>
-                    <option value="4" selected>4 空格</option>
+                    <option value="2">2 spaces</option>
+                    <option value="4" selected>4 spaces</option>
                     <option value="0">Tab</option>
                 </select>
             </div>
         </div>
-        <textarea id="json-format-input" placeholder="在此粘贴 JSON..."></textarea>
+        <textarea id="json-format-input" placeholder="Paste JSON here..."></textarea>
         <div class="output-area" id="json-format-output"></div>
     </div>
 
     <!-- JSON Validate Tool -->
     <div id="json-validate" class="tool-panel">
         <div class="panel-header">
-            <h2 class="panel-title">✅ JSON 验证</h2>
+            <h2 class="panel-title">✅ JSON Validator</h2>
             <div class="panel-actions">
-                <button class="btn btn-secondary" onclick="clearInput('json-validate-input')">清空</button>
-                <button class="btn btn-primary" onclick="validateJSON()">验证</button>
+                <button class="btn btn-secondary" onclick="clearInput('json-validate-input')">Clear</button>
+                <button class="btn btn-primary" onclick="validateJSON()">Validate</button>
             </div>
         </div>
-        <textarea id="json-validate-input" placeholder="在此粘贴要验证的 JSON..."></textarea>
+        <textarea id="json-validate-input" placeholder="Paste JSON to validate..."></textarea>
         <div class="output-area" id="json-validate-output"></div>
     </div>
 
     <!-- Base64 Tool -->
     <div id="base64" class="tool-panel">
         <div class="panel-header">
-            <h2 class="panel-title">🔐 Base64 编解码</h2>
+            <h2 class="panel-title">🔐 Base64 Encoder/Decoder</h2>
             <div class="panel-actions">
-                <button class="btn btn-secondary" onclick="clearInput('base64-input')">清空</button>
-                <button class="btn btn-primary" onclick="base64Encode()">编码</button>
-                <button class="btn btn-secondary" onclick="base64Decode()">解码</button>
-                <button class="btn btn-secondary" onclick="copyOutput()">📋 复制</button>
+                <button class="btn btn-secondary" onclick="clearInput('base64-input')">Clear</button>
+                <button class="btn btn-primary" onclick="base64Encode()">Encode</button>
+                <button class="btn btn-secondary" onclick="base64Decode()">Decode</button>
+                <button class="btn btn-secondary" onclick="copyOutput()">📋 Copy</button>
             </div>
         </div>
-        <textarea id="base64-input" placeholder="输入要编码或解码的文本..."></textarea>
+        <textarea id="base64-input" placeholder="Enter text to encode or decode..."></textarea>
         <div class="output-area" id="base64-output"></div>
     </div>
 
     <!-- URL Encode Tool -->
     <div id="url-encode" class="tool-panel">
         <div class="panel-header">
-            <h2 class="panel-title">🔗 URL 编解码</h2>
+            <h2 class="panel-title">🔗 URL Encoder/Decoder</h2>
             <div class="panel-actions">
-                <button class="btn btn-secondary" onclick="clearInput('url-input')">清空</button>
+                <button class="btn btn-secondary" onclick="clearInput('url-input')">Clear</button>
                 <button class="btn btn-primary" onclick="urlEncode()">Encode</button>
                 <button class="btn btn-secondary" onclick="urlDecode()">Decode</button>
-                <button class="btn btn-secondary" onclick="copyOutput()">📋 复制</button>
+                <button class="btn btn-secondary" onclick="copyOutput()">📋 Copy</button>
             </div>
         </div>
-        <textarea id="url-input" placeholder="输入要编码或解码的 URL..."></textarea>
+        <textarea id="url-input" placeholder="Enter URL to encode or decode..."></textarea>
         <div class="output-area" id="url-output"></div>
     </div>
 
     <!-- Hash Tool -->
     <div id="hash" class="tool-panel">
         <div class="panel-header">
-            <h2 class="panel-title">🔑 哈希计算</h2>
+            <h2 class="panel-title">🔑 Hash Calculator</h2>
             <div class="panel-actions">
-                <button class="btn btn-secondary" onclick="clearInput('hash-input')">清空</button>
-                <button class="btn btn-secondary" onclick="copyOutput()">📋 复制</button>
+                <button class="btn btn-secondary" onclick="clearInput('hash-input')">Clear</button>
+                <button class="btn btn-secondary" onclick="copyOutput()">📋 Copy</button>
             </div>
         </div>
         <div class="options-row">
             <div class="option-item">
-                <label>算法：</label>
+                <label>Algorithm:</label>
                 <select id="hash-algo" onchange="calculateHash()">
                     <option value="md5">MD5</option>
                     <option value="sha1">SHA1</option>
@@ -493,27 +471,27 @@
                 </select>
             </div>
         </div>
-        <textarea id="hash-input" placeholder="输入要计算哈希的文本..." oninput="calculateHash()"></textarea>
+        <textarea id="hash-input" placeholder="Enter text to calculate hash..." oninput="calculateHash()"></textarea>
         <div class="output-area" id="hash-output"></div>
     </div>
 
     <!-- Diff Tool -->
     <div id="diff" class="tool-panel">
         <div class="panel-header">
-            <h2 class="panel-title">📊 文本对比</h2>
+            <h2 class="panel-title">📊 Text Diff</h2>
             <div class="panel-actions">
-                <button class="btn btn-secondary" onclick="clearInput('diff-input1'); clearInput('diff-input2')">清空</button>
-                <button class="btn btn-primary" onclick="compareText()">对比</button>
+                <button class="btn btn-secondary" onclick="clearInput('diff-input1'); clearInput('diff-input2')">Clear</button>
+                <button class="btn btn-primary" onclick="compareText()">Compare</button>
             </div>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
             <div>
-                <label>原文本 A：</label>
-                <textarea id="diff-input1" style="min-height: 150px;" placeholder="文本 A..."></textarea>
+                <label>Text A:</label>
+                <textarea id="diff-input1" style="min-height: 150px;" placeholder="Text A..."></textarea>
             </div>
             <div>
-                <label>原文本 B：</label>
-                <textarea id="diff-input2" style="min-height: 150px;" placeholder="文本 B..."></textarea>
+                <label>Text B:</label>
+                <textarea id="diff-input2" style="min-height: 150px;" placeholder="Text B..."></textarea>
             </div>
         </div>
         <div class="output-area" id="diff-output"></div>
@@ -521,21 +499,19 @@
 
     <!-- Article Section -->
     <section class="article-section">
-        <h2 class="section-title" data-i18n="related-articles">📚 相关文章</h2>
+        <h2 class="section-title">📚 Related Articles</h2>
         <a href="/articles/json-privacy-guide.html" class="article-card">
-            <h3>🔒 如何本地离线处理 JSON 格式化以保护商业机密</h3>
-            <p>在数据泄露频发的时代，保护敏感数据从选择正确的工具开始。了解在线工具的风险和本地处理的最佳实践。</p>
+            <h3>🔒 How to Locally Process JSON Formatting to Protect Trade Secrets</h3>
+            <p>In an era of frequent data breaches, protect sensitive data by choosing the right tools. Learn about online tool risks and local processing best practices.</p>
         </a>
     </section>
 </div>
 
 <footer>
-    <p><span data-i18n="footer-text">&copy; 2026 Tool.isLinux.com</span> | <a href="index.html" style="color: inherit;" data-i18n="nav-home">首页</a> | <a href="about.html" style="color: inherit;" data-i18n="nav-about">关于</a> | <a href="../islinux_root/privacy.html" style="color: inherit;" data-i18n="nav-privacy">隐私</a> | <a href="https://islinux.com" style="color: inherit;" data-i18n="back-home">返回主站</a></p>
+    <p>&copy; 2026 Tool.isLinux.com | <a href="index.html">Home</a> | <a href="about.html">About</a> | <a href="../islinux_root/privacy.html">Privacy</a> | <a href="https://islinux.com">Main Site</a></p>
 </footer>
 
-<script src="i18n.js"></script>
-
-<div class="toast" id="toast">✅ 已复制到剪贴板</div>
+<div class="toast" id="toast">✅ Copied to clipboard!</div>
 
 <script>
     // Show tool
@@ -581,7 +557,7 @@
             output.innerText = JSON.stringify(obj, null, indent === 0 ? '\t' : indent);
             output.style.color = '#7ee787';
         } catch (e) {
-            output.innerText = '❌ JSON 格式错误：\n' + e.message;
+            output.innerText = '❌ Invalid JSON:\n' + e.message;
             output.style.color = '#ff7b72';
         }
     }
@@ -595,7 +571,7 @@
             output.innerText = JSON.stringify(obj);
             output.style.color = '#7ee787';
         } catch (e) {
-            output.innerText = '❌ JSON 格式错误：\n' + e.message;
+            output.innerText = '❌ Invalid JSON:\n' + e.message;
             output.style.color = '#ff7b72';
         }
     }
@@ -606,10 +582,10 @@
         const output = document.getElementById('json-validate-output');
         try {
             JSON.parse(input);
-            output.innerText = '✅ JSON 格式正确！';
+            output.innerText = '✅ Valid JSON!';
             output.style.color = '#7ee787';
         } catch (e) {
-            output.innerText = '❌ JSON 格式错误：\n' + e.message;
+            output.innerText = '❌ Invalid JSON:\n' + e.message;
             output.style.color = '#ff7b72';
         }
     }
@@ -628,7 +604,7 @@
         try {
             output.innerText = decodeURIComponent(escape(atob(input)));
         } catch (e) {
-            output.innerText = '❌ 解码失败：' + e.message;
+            output.innerText = '❌ Decode failed: ' + e.message;
         }
     }
 
@@ -646,11 +622,11 @@
         try {
             output.innerText = decodeURIComponent(input);
         } catch (e) {
-            output.innerText = '❌ 解码失败：' + e.message;
+            output.innerText = '❌ Decode failed: ' + e.message;
         }
     }
 
-    // Hash calculation (simple implementation)
+    // Hash calculation
     async function calculateHash() {
         const input = document.getElementById('hash-input').value;
         const algo = document.getElementById('hash-algo').value;
@@ -669,7 +645,7 @@
             const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
             output.innerText = hashHex;
         } catch (e) {
-            output.innerText = '计算失败：' + e.message;
+            output.innerText = 'Calculation failed: ' + e.message;
         }
     }
 
@@ -680,7 +656,7 @@
         const output = document.getElementById('diff-output');
 
         if (text1 === text2) {
-            output.innerText = '✅ 两段文本完全相同';
+            output.innerText = '✅ Texts are identical';
             return;
         }
 
@@ -694,14 +670,14 @@
             const l1 = lines1[i] || '';
             const l2 = lines2[i] || '';
             if (l1 !== l2) {
-                result += `第 ${i + 1} 行不同:\n`;
+                result += `Line ${i + 1} differs:\n`;
                 if (l1) result += `- ${l1}\n`;
                 if (l2) result += `+ ${l2}\n`;
                 result += '\n';
             }
         }
 
-        output.innerText = result || '文本相同';
+        output.innerText = result || 'Texts are identical';
     }
 </script>
 

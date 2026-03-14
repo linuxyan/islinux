@@ -1,95 +1,145 @@
-# 🚀 项目全局提示词：isLinux 矩阵站群开发计划
+# Project Guide: isLinux Matrix Site Network
 
-## 1. 项目概览 (Project Overview)
+## 0. Language Usage Guidelines (语言使用规范)
 
-**核心域名**：islinux.com (顶级域名，具有强技术背书感)
+### 0.1 开发文档与沟通 (Development & Communication)
+- **开发指南、项目文档、团队沟通**: 使用 **中文**
+- **与 AI 助手 (Claude) 的对话**: 使用 **中文**
+- **代码注释**: 使用 **英文** (符合国际标准)
 
-**项目目标**：建立一个以 Linux 为核心的开发者全能矩阵站，通过提供工具和内容，接入 Google AdSense 实现每月覆盖服务器成本并产生被动收益。
+### 0.2 面向用户的内容 (User-Facing Content)
+- **所有网页内容**: 仅使用 **英文** (美国英语拼写)
+- **文章内容**: 仅使用 **英文**
+- **UI 标签、按钮、表单**: 仅使用 **英文**
+- **Meta 标签 (title, description, keywords)**: 仅使用 **英文**
 
-**部署环境**：新加坡云服务器 (VPS)，Nginx 环境，支持 HTTPS/HSTS。
-
-### 1.1 站点矩阵
-
-| 站点地址 | 定位 | 核心功能 | 对应代码文件夹 |
-|----------|------|----------|--------|
-| islinux.com | 主站/门户 | Linux 命令百科、技术博客、流量导航、SEO 护城河 | 对应文件夹为islinux_root |
-| ai.islinux.com | AI 子站 | AI 提示词 (Prompts) 库、开发者专项指令卡片 | 对应文件夹为islinux_ai |
-| tool.islinux.com | 工具子站 | 纯前端工具 (JSON 格式化、加解密、代码压缩) | 对应文件夹为islinux_tool |
-| calc.islinux.com | 计算子站 | 金融/效率计算器 (时薪转换、房贷、汇率) |
-对应文件夹为islinux_calc |
----
-
-## 2. 技术规范 (Technical Stack)
-
-### 2.1 前端技术
-- **技术栈**：原生 HTML5 / CSS3 / JavaScript (追求极速加载与 SEO 友好)
-- **移动端**：完全适配移动端
-
-### 2.2 服务端
-- **Web 服务器**：Nginx (反向代理、多站点虚拟主机配置)
-
-### 2.3 安全性
-- 全站强制 HTTPS (SSL 证书)
-- 开启 HSTS (Strict-Transport-Security)
-- 纯前端处理敏感数据（JSON/加密），保护用户隐私，增加 AdSense 信任度
+### 0.3 原因说明
+- 中文开发：团队沟通效率高，表达清晰
+- 英文内容：Google AdSense 变现，获取美国/英国/加拿大/澳大利亚市场的高 CPC 收益
 
 ---
 
-## 3. SEO 与变现策略 (SEO & Monetization)
+## 1. Project Overview
 
-### 3.1 内容策略
-- **内容为王**：每个工具页必须配以 800+ 字的科普/教程长文，解决"内容单薄"导致的拒审问题
+**Core Domain**: islinux.com (Top-level domain with strong technical credibility)
 
-### 3.2 核心关键词矩阵
-| 关键词类别 | 说明 |
-|------------|------|
-| Linux 实战命令 | High Traffic |
-| 数据隐私与本地处理 | Security |
-| 新加坡 VPS/云服务测评 | High CPC |
-| AI 提示词工程 | Trend |
-| 开发者财务计算 | High CPC |
+**Project Goal**: Build a developer-focused matrix site network centered on Linux, providing tools and content to generate passive income through Google AdSense while covering server costs.
 
-### 3.3 过审标准
-- 必备页面：About Us、Privacy Policy、Contact Us
+**Deployment Environment**: Singapore VPS, Nginx environment with HTTPS/HSTS support.
 
----
+### 1.1 Site Matrix
 
-## 4. 视觉风格指南 (UI/UX Style)
-
-| 属性 | 值 |
-|------|-----|
-| **色调** | 深色模式 (GitHub Dark Style / Terminal Style) |
-| **背景色** | `#0d1117` |
-| **主文字** | `#c9d1d9` |
-| **强调色** | `#238636` (Linux 绿) |
-| **体验** | 极简主义，拒绝弹窗，代码块高亮，复制按钮一键触发 |
+| Site URL | Positioning | Core Features | Code Folder |
+|----------|-------------|---------------|-------------|
+| islinux.com | Main Site/Portal | Linux command reference, tech blog, traffic navigation, SEO moat | islinux_root |
+| ai.islinux.com | AI Subsite | AI Prompt library, developer-specific prompt cards | islinux_ai |
+| tool.islinux.com | Tools Subsite | Pure frontend tools (JSON formatter, encryption, code minifier) | islinux_tool |
+| calc.islinux.com | Calculator Subsite | Financial/efficiency calculators (hourly rate, mortgage, currency) | islinux_calc |
 
 ---
 
-## 5. 国际化策略 (Internationalization)
+## 2. Technical Stack
 
-| 配置项 | 说明 |
-|--------|------|
-| **检测机制** | 基于原生 `navigator.language` 实现浏览器语言自适应 |
-| **Fallback** | 默认语言设为英文 (en)，优先支持 zh, en |
-| **实现方式** | 数据绑定 (`data-i18n`) + JSON 语言字典 |
-| **目标市场** | 通过多语言 Meta 标签抢占全球 High-CPC 广告市场 |
+### 2.1 Frontend
+- **Tech Stack**: Native HTML5 / CSS3 / JavaScript (for fastest loading and SEO friendliness)
+- **Mobile**: Fully responsive mobile design
+
+### 2.2 Backend
+- **Web Server**: Nginx (reverse proxy, multi-site virtual host configuration)
+
+### 2.3 Security
+- Full-site HTTPS with SSL certificate
+- HSTS enabled (Strict-Transport-Security)
+- Pure frontend processing for sensitive data (JSON/encryption) to protect user privacy and increase AdSense trust
 
 ---
 
-## 6. SEO 与内容规划 (过审关键)
+## 3. SEO & Monetization Strategy
 
-### 6.1 核心文章计划 (首批 5 篇)
+### 3.1 Content Strategy
+- **Content is King**: Every tool page must have an 800+ word educational/tutorial article to avoid "thin content" rejection
 
-| 类别 | 文章标题 | 目标子站 |
-|------|----------|----------|
-| High Traffic | 《2026 现代 Linux 生产力工具推荐》 | Linux 命令词库 |
-| Privacy | 《如何本地离线处理 JSON 格式化以保护商业机密》 | tool 子站 |
-| High CPC | 《新加坡云服务器延迟测评与开发者选购指南》 | 服务器租赁广告 |
-| Trend | 《AI Prompt Engineering: 如何写出完美的 Shell 脚本生成指令》 | ai 子站 |
-| Finance | 《自由职业者项目报价策略与时薪计算器》 | calc 子站 |
+### 3.2 Core Keyword Matrix
+| Keyword Category | Description |
+|------------------|-------------|
+| Linux practical commands | High Traffic |
+| Data privacy & local processing | Security |
+| Singapore VPS/Cloud hosting reviews | High CPC |
+| AI Prompt Engineering | Trending |
+| Developer financial calculations | High CPC |
 
-### 6.2 法律与合规 (必读项)
+### 3.3 Approval Requirements
+- Required pages: About Us, Privacy Policy, Contact Us
+- All content in English for Google AdSense
 
-- **Privacy Policy**：明确说明"工具站所有数据均在浏览器本地处理，不上传服务器"
-- **About Us**：展示站点专业性
+---
+
+## 4. Visual Style Guide (UI/UX)
+
+| Attribute | Value |
+|-----------|-------|
+| **Theme** | Dark Mode (GitHub Dark Style / Terminal Style) |
+| **Background** | `#0d1117` |
+| **Primary Text** | `#c9d1d9` |
+| **Accent Color** | `#238636` (Linux Green) |
+| **Experience** | Minimalist, no popups, code syntax highlighting, one-click copy buttons |
+
+---
+
+## 5. SEO & Content Planning (Approval Critical)
+
+### 5.1 Core Article Plan (First 5 Articles)
+
+| Category | Article Title | Target Subsite |
+|----------|---------------|----------------|
+| High Traffic | "Modern Linux Productivity Tools for 2026" | Linux Command Library |
+| Privacy | "How to Locally Process JSON Formatting to Protect Trade Secrets" | Tool Subsite |
+| High CPC | "Singapore Cloud Server Latency Review and Developer Buying Guide" | Server Hosting Ads |
+| Trending | "AI Prompt Engineering: How to Write Perfect Shell Script Generation Prompts" | AI Subsite |
+| Finance | "Freelancer Project Pricing Strategy and Hourly Rate Calculator" | Calculator Subsite |
+
+### 5.2 Legal & Compliance (Required)
+
+- **Privacy Policy**: Clearly state "All tool data is processed locally in the browser, not uploaded to servers"
+- **About Us**: Showcase site professionalism and team credibility
+
+---
+
+## 6. Google AdSense English Content Guidelines
+
+### 6.1 Target Markets
+- Primary: United States, United Kingdom, Canada, Australia (highest CPC rates)
+- Language: American English throughout (optimize, color, program spelling)
+
+### 6.2 High-Value Content Categories
+1. **Cloud & Hosting** - VPS reviews, cloud hosting comparisons
+2. **Developer Tools** - IDE comparisons, productivity tools
+3. **AI & Machine Learning** - Prompt engineering, AI tutorials
+4. **Cybersecurity** - Data privacy, encryption guides
+5. **Financial Technology** - Calculators, investment tools
+
+### 6.3 Content Best Practices
+- Write original, in-depth content (minimum 800 words per page)
+- Include practical examples and code snippets
+- Use proper heading hierarchy (H1, H2, H3)
+- Add internal links between related content
+- Include schema.org structured data
+- Optimize meta titles and descriptions
+
+---
+
+**Last Updated**: 2026-03-14
+**Maintainer**: isLinux Team
+
+---
+
+## 语言规范说明 (Language Policy)
+
+| 文档类型 | 使用语言 | 说明 |
+|----------|----------|------|
+| 开发指南 (DEVELOPMENT_GUIDE.md) | 中文 | 便于团队理解和维护 |
+| 项目说明 (islinux_project_guide.md) | 中文 | 便于团队沟通和协作 |
+| 代码注释 | 英文 | 符合国际编码规范 |
+| 所有网页内容 | 英文 | Google AdSense 变现，面向欧美市场 |
+| 文章内容 | 英文 | 高 CPC 关键词，美元结算收益 |
+| UI/UX 文案 | 英文 | 面向全球开发者用户 |

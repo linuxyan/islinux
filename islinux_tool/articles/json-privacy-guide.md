@@ -1,53 +1,53 @@
-# 如何本地离线处理 JSON 格式化以保护商业机密
+# How to Locally Process JSON Formatting to Protect Trade Secrets
 
-> 在数据泄露频发的时代，保护敏感数据从选择正确的工具开始
+> In an era of frequent data breaches, protecting sensitive data starts with choosing the right tools
 
-## 为什么需要本地 JSON 处理？
+## Why Local JSON Processing?
 
-### 数据安全风险
+### Data Security Risks
 
-许多在线 JSON 格式化工具会将你的数据上传到服务器处理。这意味着：
+Many online JSON formatting tools upload your data to servers for processing. This means:
 
-- **API 密钥可能泄露**：配置文件中的敏感信息可能被记录
-- **商业数据外泄**：客户数据、交易记录可能被第三方获取
-- **合规风险**：违反 GDPR、数据安全法等隐私保护法规
+- **API Keys May Leak**: Sensitive information in configuration files may be logged
+- **Business Data Leakage**: Customer data, transaction records may be obtained by third parties
+- **Compliance Risks**: Violation of privacy protection regulations like GDPR, Data Security Law
 
-### 真实案例
+### Real Cases
 
-2024 年，某知名在线 JSON 工具被曝出记录用户提交的数据，并在后台分析用于广告定向。这意味着开发者的配置文件、API 密钥等敏感信息可能已经泄露。
+In 2024, a well-known online JSON tool was exposed for logging user-submitted data and analyzing it in the background for ad targeting. This means developers' configuration files, API keys, and other sensitive information may have been leaked.
 
-## 本地处理的优势
+## Advantages of Local Processing
 
-### 1. 零数据传输
+### 1. Zero Data Transmission
 
 ```
 ┌─────────────────┐
-│   你的浏览器    │
+│   Your Browser  │
 │  ┌───────────┐  │
-│  │ JSON 处理  │  │  ← 所有操作在本地完成
-│  │   引擎    │  │
+│  │  JSON     │  │  ← All operations completed locally
+│  │ Processor │  │
 │  └───────────┘  │
 └─────────────────┘
        ↓
-    不离开浏览器
+    Never leaves browser
 ```
 
-### 2. 即时响应
+### 2. Instant Response
 
-无需等待网络传输，大型 JSON 文件也能秒级处理。
+No need to wait for network transmission, even large JSON files can be processed in seconds.
 
-### 3. 离线可用
+### 3. Offline Availability
 
-即使没有网络连接，也能正常工作。
+Works even without an internet connection.
 
-## JSON 格式化最佳实践
+## JSON Formatting Best Practices
 
-### 1. 敏感数据脱敏
+### 1. Sensitive Data Redaction
 
-在格式化之前，先对敏感字段进行脱敏处理：
+Before formatting, redact sensitive fields first:
 
 ```javascript
-// 示例：脱敏函数
+// Example: Redaction function
 function sanitizeJSON(data) {
   const sensitive = ['password', 'token', 'api_key', 'secret'];
   return JSON.parse(data, (key, value) => {
@@ -59,7 +59,7 @@ function sanitizeJSON(data) {
 }
 ```
 
-### 2. 验证 JSON 结构
+### 2. Validate JSON Structure
 
 ```javascript
 function validateJSON(str) {
@@ -67,127 +67,127 @@ function validateJSON(str) {
     JSON.parse(str);
     return true;
   } catch (e) {
-    console.error('JSON 错误：', e.message);
+    console.error('JSON Error:', e.message);
     return false;
   }
 }
 ```
 
-### 3. 格式化选项
+### 3. Formatting Options
 
 ```javascript
-// 标准格式化（4 空格缩进）
+// Standard formatting (4 space indent)
 JSON.stringify(obj, null, 4);
 
-// 紧凑格式（单行）
+// Compact format (single line)
 JSON.stringify(obj);
 
-// 自定义缩进（2 空格）
+// Custom indent (2 spaces)
 JSON.stringify(obj, null, 2);
 ```
 
-## 常见 JSON 错误及处理
+## Common JSON Errors and Handling
 
-### 1. 尾随逗号
+### 1. Trailing Commas
 
 ```json
-// ❌ 错误
+// ❌ Wrong
 {
   "name": "test",
   "value": 123,
 }
 
-// ✅ 正确
+// ✅ Correct
 {
   "name": "test",
   "value": 123
 }
 ```
 
-### 2. 单引号问题
+### 2. Single Quote Issue
 
 ```json
-// ❌ 错误（JavaScript 允许但 JSON 不允许）
+// ❌ Wrong (JavaScript allows but JSON doesn't)
 { 'name': 'test' }
 
-// ✅ 正确
+// ✅ Correct
 { "name": "test" }
 ```
 
-### 3. 特殊字符转义
+### 3. Special Character Escaping
 
 ```json
-// ✅ 正确处理换行和引号
+// ✅ Correctly handle newlines and quotes
 {
-  "description": "这是一行文字\n包含\"引号\""
+  "description": "This is text\nwith \"quotes\""
 }
 ```
 
-## 安全处理 JSON 的 checklist
+## Checklist for Secure JSON Processing
 
-- [ ] 确认工具在本地运行，不发送数据到服务器
-- [ ] 检查浏览器开发者工具 Network 标签，确认无外发请求
-- [ ] 对包含敏感信息的 JSON 进行脱敏
-- [ ] 验证 JSON 格式正确性
-- [ ] 保存格式化前的原始数据备份
+- [ ] Confirm tool runs locally, doesn't send data to server
+- [ ] Check browser DevTools Network tab, confirm no outbound requests
+- [ ] Redact sensitive information in JSON
+- [ ] Verify JSON format correctness
+- [ ] Save backup of original data before formatting
 
-## 推荐工具
+## Recommended Tools
 
-### islinux.com 在线工具
+### islinux.com Online Tools
 
-本站提供的 [JSON 格式化工具](/) 完全在浏览器本地运行：
+The [JSON Formatter](/) provided by this site runs entirely in your browser locally:
 
 ```javascript
-// 核心处理逻辑
+// Core processing logic
 function formatJSON(input) {
   try {
     const obj = JSON.parse(input);
     return JSON.stringify(obj, null, 4);
   } catch (e) {
-    throw new Error('无效的 JSON 格式');
+    throw new Error('Invalid JSON format');
   }
 }
-// 无服务器请求，纯客户端处理
+// No server requests, pure client-side processing
 ```
 
-### 本地命令行工具
+### Local Command Line Tools
 
 ```bash
-# 使用 jq 格式化
+# Format using jq
 cat data.json | jq '.'
 
-# 使用 Python
+# Using Python
 python -m json.tool data.json
 ```
 
-## 企业级 JSON 安全策略
+## Enterprise JSON Security Strategy
 
-### 1. 制定数据分类政策
+### 1. Establish Data Classification Policy
 
-| 数据级别 | 处理方式 |
-|---------|---------|
-| 公开数据 | 可使用在线工具 |
-| 内部数据 | 仅限本地工具 |
-| 机密数据 | 专用安全环境处理 |
+| Data Level | Processing Method |
+|------------|-------------------|
+| Public Data | Online tools can be used |
+| Internal Data | Local tools only |
+| Confidential Data | Process in dedicated secure environment |
 
-### 2. 员工培训
+### 2. Employee Training
 
-定期对开发团队进行数据安全培训，提高安全意识。
+Regularly conduct data security training for development teams to raise security awareness.
 
-### 3. 审计日志
+### 3. Audit Logs
 
-记录所有敏感数据的访问和处理操作。
+Record all access and processing operations for sensitive data.
 
-## 结语
+## Conclusion
 
-数据安全无小事。选择本地 JSON 处理工具，是保护你和你的客户数据的第一步。记住：如果服务是免费的，那你可能就是产品——你的数据可能正在被收集和出售。
+Data security is no small matter. Choosing a local JSON processing tool is the first step in protecting your and your customers' data. Remember: If the service is free, you might be the product—your data may be being collected and sold.
 
 ---
 
-**相关工具**：
-- [JSON 格式化工具](/) - 本站提供的纯前端 JSON 处理工具
-- [代码压缩工具](/minify.html) - CSS/JS 压缩
-- [加解密工具](/crypto.html) - 本地加密解密
+**Related Tools**:
+- [JSON Formatter](/) - Pure frontend JSON processing tool provided by this site
+- [Code Minifier](/minify.html) - CSS/JS minification
+- [Encryption/Decryption Tool](/crypto.html) - Local encryption and decryption
 
-**相关阅读**：
-- [新加坡 VPS 安全配置指南](https://islinux.com/articles/vps-security)
+**Related Reading**:
+- [Singapore VPS Security Configuration Guide](https://islinux.com/articles/vps-security)
