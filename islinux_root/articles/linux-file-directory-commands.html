@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux File and Directory Commands | isLinux</title>
+    <meta name="description" content="Essential Linux file and directory management commands: mkdir, cp, mv, rm, ls, find and more.">
+    <meta name="keywords" content="linux file commands, mkdir, cp, mv, rm, ls, find, linux directory commands">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://islinux.com/articles/linux-file-directory-commands.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux File and Directory Commands | isLinux">
+    <meta property="og:description" content="Essential Linux file and directory management commands for developers.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://islinux.com/articles/linux-file-directory-commands.html">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.8;
+        }
+        header { padding: 2rem 1rem; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .back-link {
+            display: inline-block; color: var(--text-color); text-decoration: none;
+            padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem;
+        }
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
+        .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        article h2 { color: var(--accent-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-top: 2.5rem; }
+        article h3 { color: #fff; margin-top: 1.5rem; }
+        article p { margin: 1rem 0; }
+        article ul, article ol { margin: 1rem 0; padding-left: 2rem; }
+        article li { margin: 0.5rem 0; }
+        pre { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 1.5rem 0; }
+        code { font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #7ee787; }
+        :not(pre) > code { background: rgba(110, 118, 129, 0.4); padding: 0.2rem 0.4rem; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid var(--border-color); padding: 0.8rem; text-align: left; }
+        th { background: var(--card-bg); color: #fff; }
+        tr:nth-child(even) { background: rgba(110, 118, 129, 0.1); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); margin-top: 3rem; }
+        footer a { color: var(--text-color); text-decoration: none; }
+        footer a:hover { color: var(--accent-color); }
+    </style>
+</head>
+<body>
+<header>
+    <a href="../index.html" class="back-link">← Back to Home</a>
+</header>
+<div class="container">
+    <article>
+        <h1>📁 Essential Linux File and Directory Commands</h1>
+        <div class="meta">10 min read</div>
+
+        <h2>Introduction</h2>
+        <p>File and directory management is at the core of Linux system operations. Whether you're organizing project files, managing system configurations, or automating backups, mastering these commands is essential. This guide covers 10 fundamental commands for file and directory operations.</p>
+
+        <h2>1. mkdir - Create Directories</h2>
+        <p>Create new directories with various options.</p>
+        <pre><code># Create a single directory
+mkdir projects
+
+# Create multiple directories
+mkdir dir1 dir2 dir3
+
+# Create nested directories
+mkdir -p projects/backend/src
+
+# Create directory with permissions
+mkdir -m 750 secure_folder
+
+# Verbose output
+mkdir -v new_directory</code></pre>
+        <p><strong>Common Options:</strong></p>
+        <ul>
+            <li><code>-p</code>: Create parent directories</li>
+            <li><code>-m</code>: Set permissions</li>
+            <li><code>-v</code>: Verbose output</li>
+        </ul>
+
+        <h2>2. rmdir - Remove Empty Directories</h2>
+        <p>Remove empty directories only.</p>
+        <pre><code># Remove empty directory
+rmdir empty_folder
+
+# Remove multiple empty directories
+rmdir dir1 dir2 dir3
+
+# Remove nested empty directories
+rmdir -p parent/child/grandchild</code></pre>
+        <p><strong>Note:</strong> <code>rmdir</code> only works on empty directories. Use <code>rm -r</code> for non-empty directories.</p>
+
+        <h2>3. cp - Copy Files and Directories</h2>
+        <p>Copy files and directories with various options.</p>
+        <pre><code># Copy a file
+cp file.txt backup.txt
+
+# Copy to another directory
+cp file.txt /home/user/backup/
+
+# Copy directory recursively
+cp -r source_dir/ dest_dir/
+
+# Copy with verbose output
+cp -v file.txt /backup/
+
+# Copy preserving attributes
+cp -p important.txt backup/
+
+# Interactive copy
+cp -i file.txt existing.txt</code></pre>
+        <p><strong>Common Options:</strong></p>
+        <ul>
+            <li><code>-r</code>: Recursive copy</li>
+            <li><code>-p</code>: Preserve attributes</li>
+            <li><code>-v</code>: Verbose output</li>
+            <li><code>-i</code>: Interactive</li>
+            <li><code>-u</code>: Copy only when newer</li>
+        </ul>
+
+        <h2>4. mv - Move and Rename Files</h2>
+        <p>Move files/directories or rename them.</p>
+        <pre><code># Rename a file
+mv oldname.txt newname.txt
+
+# Move file to another directory
+mv file.txt /home/user/documents/
+
+# Move and rename
+mv file.txt /backup/file_backup.txt
+
+# Interactive move
+mv -i file.txt /existing/
+
+# Verbose output
+mv -v file.txt /backup/</code></pre>
+
+        <h2>5. rm - Remove Files and Directories</h2>
+        <p>Delete files and directories permanently.</p>
+        <pre><code># Remove a file
+rm file.txt
+
+# Remove multiple files
+rm file1.txt file2.txt
+
+# Remove directory and contents
+rm -r directory/
+
+# Force remove
+rm -f file.txt
+
+# Interactive remove
+rm -ri directory/
+
+# Verbose output
+rm -v file.txt</code></pre>
+        <p><strong>WARNING:</strong> <code>rm -rf</code> is dangerous. Always double-check the path!</p>
+
+        <h2>6. ls - List Directory Contents</h2>
+        <p>Display files and directories with various formats.</p>
+        <pre><code># Basic listing
+ls
+
+# Detailed listing
+ls -l
+
+# Show hidden files
+ls -a
+
+# Human-readable sizes
+ls -lh
+
+# Sort by time
+ls -lt
+
+# Sort by size
+ls -lS
+
+# Show inode numbers
+ls -li</code></pre>
+
+        <h2>7. cd - Change Directory</h2>
+        <p>Navigate between directories.</p>
+        <pre><code># Change to specific directory
+cd /var/log
+
+# Change to home directory
+cd
+
+# Change to parent directory
+cd ..
+
+# Change to previous directory
+cd -
+
+# Change using ~ shortcut
+cd ~/documents</code></pre>
+
+        <h2>8. pwd - Print Working Directory</h2>
+        <p>Display the current directory path.</p>
+        <pre><code># Show current directory
+pwd
+
+# Show resolved path (no symlinks)
+pwd -P
+
+# Show logical path
+pwd -L</code></pre>
+
+        <h2>9. ln - Create Links</h2>
+        <p>Create hard or symbolic links to files.</p>
+        <pre><code># Create symbolic link
+ln -s /path/to/file linkname
+
+# Create hard link
+ln file.txt hardlink.txt
+
+# Verbose output
+ln -sv source target</code></pre>
+
+        <h2>10. find - Search for Files</h2>
+        <p>Search for files with various criteria.</p>
+        <pre><code># Find by name
+find /home -name "*.txt"
+
+# Find by type (file)
+find /var -type f
+
+# Find by type (directory)
+find /var -type d
+
+# Find files larger than 100MB
+find / -size +100M
+
+# Find files modified in last 7 days
+find /home -mtime -7
+
+# Find and delete old logs
+find /var/log -name "*.log" -mtime +30 -delete</code></pre>
+
+        <h2>Quick Reference Table</h2>
+        <table>
+            <tr><th>Command</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td>mkdir</td><td>Create directory</td><td><code>mkdir -p a/b/c</code></td></tr>
+            <tr><td>rmdir</td><td>Remove empty dir</td><td><code>rmdir empty/</code></td></tr>
+            <tr><td>cp</td><td>Cop y files</td><td><code>cp -r src/ dest/</code></td></tr>
+            <tr><td>mv</td><td>Move/rename</td><td><code>mv old.txt new.txt</code></td></tr>
+            <tr><td>rm</td><td>Remove files</td><td><code>rm -rf folder/</code></td></tr>
+            <tr><td>ls</td><td>List contents</td><td><code>ls -lah</code></td></tr>
+            <tr><td>cd</td><td>Change directory</td><td><code>cd /var/log</code></td></tr>
+            <tr><td>pwd</td><td>Show path</td><td><code>pwd</code></td></tr>
+            <tr><td>ln</td><td>Create links</td><td><code>ln -s file link</code></td></tr>
+            <tr><td>find</td><td>Search files</td><td><code>find . -name "*.log"</code></td></tr>
+        </table>
+
+        <h2>Conclusion</h2>
+        <p>These 10 file and directory management commands form the foundation of Linux file operations. Master them to create and organize directory structures, copy, move, and delete files safely, navigate the filesystem efficiently, and search for files with complex criteria.</p>
+
+        <hr style="border-color: var(--border-color); margin: 2rem 0;">
+        <p><strong>Related Articles:</strong></p>
+        <ul>
+            <li><a href="linux-permission-commands.html" style="color: var(--accent-color);">Linux Permission Management Commands</a></li>
+            <li><a href="linux-file-content-commands.html" style="color: var(--accent-color);">Linux File Content Viewing Commands</a></li>
+            <li><a href="linux-productivity-tools-2026.html" style="color: var(--accent-color);">Modern Linux Productivity Tools for 2026</a></li>
+        </ul>
+    </article>
+</div>
+<footer>
+    <p>&copy; 2026 isLinux.com</p>
+    <p><a href="../index.html">Back to Home</a></p>
+</footer>
+</body>
+</html>

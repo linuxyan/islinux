@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Permission Management Commands | isLinux</title>
+    <meta name="description" content="Essential Linux permission commands: chmod, chown, chgrp, umask, sudo and more for file security.">
+    <meta name="keywords" content="linux permissions, chmod, chown, chgrp, umask, sudo, file security, linux commands">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://islinux.com/articles/linux-permission-commands.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux Permission Management Commands | isLinux">
+    <meta property="og:description" content="Essential Linux permission management commands for system security.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://islinux.com/articles/linux-permission-commands.html">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.8;
+        }
+        header { padding: 2rem 1rem; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .back-link {
+            display: inline-block; color: var(--text-color); text-decoration: none;
+            padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem;
+        }
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
+        .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        article h2 { color: var(--accent-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-top: 2.5rem; }
+        article h3 { color: #fff; margin-top: 1.5rem; }
+        article p { margin: 1rem 0; }
+        article ul, article ol { margin: 1rem 0; padding-left: 2rem; }
+        article li { margin: 0.5rem 0; }
+        pre { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 1.5rem 0; }
+        code { font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #7ee787; }
+        :not(pre) > code { background: rgba(110, 118, 129, 0.4); padding: 0.2rem 0.4rem; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid var(--border-color); padding: 0.8rem; text-align: left; }
+        th { background: var(--card-bg); color: #fff; }
+        tr:nth-child(even) { background: rgba(110, 118, 129, 0.1); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); margin-top: 3rem; }
+        footer a { color: var(--text-color); text-decoration: none; }
+        footer a:hover { color: var(--accent-color); }
+    </style>
+</head>
+<body>
+<header>
+    <a href="../index.html" class="back-link">← Back to Home</a>
+</header>
+<div class="container">
+    <article>
+        <h1>🔒 Essential Linux Permission Management Commands</h1>
+        <div class="meta">10 min read</div>
+
+        <h2>Introduction</h2>
+        <p>Linux file permissions are a core security feature that controls access to files and directories. Understanding and managing permissions is crucial for system security and proper file sharing. This guide covers 10 essential commands for permission management.</p>
+
+        <h2>1. chmod - Change File Permissions</h2>
+        <p>Modify file and directory access permissions.</p>
+        <pre><code># Symbolic mode
+chmod u+x script.sh           # Add execute for owner
+chmod g-w file.txt            # Remove write for group
+chmod o=r file.txt            # Set read-only for others
+chmod a+x script.sh           # Add execute for all
+
+# Numeric mode
+chmod 755 script.sh           # rwxr-xr-x
+chmod 644 file.txt            # rw-r--r--
+chmod 600 secret.txt          # rw-------
+chmod 777 public.txt          # rwxrwxrwx (use carefully!)
+
+# Recursive change
+chmod -R 755 directory/</code></pre>
+        <p><strong>Permission Values:</strong> 4=read, 2=write, 1=execute</p>
+
+        <h2>2. chown - Change File Ownership</h2>
+        <p>Change file and directory ownership.</p>
+        <pre><code># Change owner only
+chown john file.txt
+
+# Change owner and group
+chown john:developers file.txt
+
+# Change group only
+chown :developers file.txt
+
+# Recursive change
+chown -R john:developers /var/www/
+
+# Verbose output
+chown -v john:developers file.txt</code></pre>
+
+        <h2>3. chgrp - Change Group Ownership</h2>
+        <p>Change the group ownership of files.</p>
+        <pre><code># Change group
+chgrp developers file.txt
+
+# Recursive change
+chgrp -R developers /var/www/
+
+# Verbose output
+chgrp -v developers file.txt</code></pre>
+
+        <h2>4. umask - Set Default Permissions</h2>
+        <p>Control default permissions for new files.</p>
+        <pre><code># Show current umask
+umask
+
+# Show symbolic umask
+umask -S
+
+# Set umask
+umask 022    # Files: 644, Dirs: 755
+umask 002    # Files: 664, Dirs: 775
+umask 077    # Files: 600, Dirs: 700</code></pre>
+
+        <h2>5. ls -l - View Permissions</h2>
+        <p>Display file permissions in long format.</p>
+        <pre><code># Show permissions
+ls -l file.txt
+
+# Show numeric permissions
+ls -l --numeric-uid-gid file.txt
+
+# Show directory permissions
+ls -ld directory/
+
+# Show all files with permissions
+ls -la</code></pre>
+        <p><strong>Understanding:</strong> <code>-rwxr-xr-x</code> = owner(rwx), group(r-x), others(r-x)</p>
+
+        <h2>6. stat - Display File Status</h2>
+        <p>Show detailed file information including permissions.</p>
+        <pre><code># Show all file info
+stat file.txt
+
+# Show only permissions (octal)
+stat -c "%a" file.txt
+
+# Show permission symbolic
+stat -c "%A" file.txt
+
+# Show owner
+stat -c "%U" file.txt
+
+# Show group
+stat -c "%G" file.txt</code></pre>
+
+        <h2>7. sudo - Execute as Superuser</h2>
+        <p>Run commands with elevated privileges.</p>
+        <pre><code># Run single command as root
+sudo systemctl restart nginx
+
+# Run as different user
+sudo -u postgres psql
+
+# Edit file as root
+sudo vim /etc/hosts
+
+# List allowed commands
+sudo -l
+
+# Reset timestamp
+sudo -k
+
+# Interactive root shell
+sudo -i</code></pre>
+
+        <h2>8. su - Switch User</h2>
+        <p>Switch to another user account.</p>
+        <pre><code># Switch to root
+su
+
+# Switch to specific user
+su john
+
+# Switch with login shell
+su - john
+
+# Run command as another user
+su - john -c "whoami"</code></pre>
+
+        <h2>9. getfacl - Get File ACL</h2>
+        <p>View Access Control Lists for detailed permissions.</p>
+        <pre><code># View ACL
+getfacl file.txt
+
+# View directory ACL
+getfacl -d directory/
+
+# Save ACL to file
+getfacl file.txt > acl.txt</code></pre>
+
+        <h2>10. setfacl - Set File ACL</h2>
+        <p>Set Access Control Lists for granular permissions.</p>
+        <pre><code># Give user read-write access
+setfacl -m u:john:rw file.txt
+
+# Give group read access
+setfacl -m g:developers:r file.txt
+
+# Remove ACL entry
+setfacl -x u:john file.txt
+
+# Remove all ACL entries
+setfacl -b file.txt
+
+# Set default ACL for directory
+setfacl -d -m u:john:rwx /shared/</code></pre>
+
+        <h2>Quick Reference Table</h2>
+        <table>
+            <tr><th>Command</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td>chmod</td><td>Change permissions</td><td><code>chmod 755 file</code></td></tr>
+            <tr><td>chown</td><td>Change ownership</td><td><code>chown user:group file</code></td></tr>
+            <tr><td>chgrp</td><td>Change group</td><td><code>chgrp group file</code></td></tr>
+            <tr><td>umask</td><td>Default permissions</td><td><code>umask 022</code></td></tr>
+            <tr><td>ls -l</td><td>View permissions</td><td><code>ls -l file</code></td></tr>
+            <tr><td>stat</td><td>File status</td><td><code>stat file</code></td></tr>
+            <tr><td>sudo</td><td>Run as root</td><td><code>sudo command</code></td></tr>
+            <tr><td>su</td><td>Switch user</td><td><code>su - user</code></td></tr>
+            <tr><td>getfacl</td><td>Get ACL</td><td><code>getfacl file</code></td></tr>
+            <tr><td>setfacl</td><td>Set ACL</td><td><code>setfacl -m u:user:rw file</code></td></tr>
+        </table>
+
+        <h2>Conclusion</h2>
+        <p>These 10 permission management commands are essential for controlling file and directory access, managing ownership and groups, setting secure defaults, implementing granular access with ACLs, and executing privileged operations safely.</p>
+
+        <hr style="border-color: var(--border-color); margin: 2rem 0;">
+        <p><strong>Related Articles:</strong></p>
+        <ul>
+            <li><a href="linux-user-management-commands.html" style="color: var(--accent-color);">Linux User Management Commands</a></li>
+            <li><a href="linux-file-directory-commands.html" style="color: var(--accent-color);">Linux File and Directory Commands</a></li>
+            <li><a href="vps-singapore-review.html" style="color: var(--accent-color);">Singapore VPS Security Guide</a></li>
+        </ul>
+    </article>
+</div>
+<footer>
+    <p>&copy; 2026 isLinux.com</p>
+    <p><a href="../index.html">Back to Home</a></p>
+</footer>
+</body>
+</html>

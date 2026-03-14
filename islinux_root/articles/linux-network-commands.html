@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Network Commands | isLinux</title>
+    <meta name="description" content="Essential Linux network commands: ping, curl, wget, ssh, netstat, ss and more for network management.">
+    <meta name="keywords" content="linux network, ping, curl, wget, ssh, scp, netstat, ss, network commands">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://islinux.com/articles/linux-network-commands.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux Network Commands | isLinux">
+    <meta property="og:description" content="Essential Linux network commands for troubleshooting and management.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://islinux.com/articles/linux-network-commands.html">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.8;
+        }
+        header { padding: 2rem 1rem; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .back-link {
+            display: inline-block; color: var(--text-color); text-decoration: none;
+            padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem;
+        }
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
+        .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        article h2 { color: var(--accent-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-top: 2.5rem; }
+        article h3 { color: #fff; margin-top: 1.5rem; }
+        article p { margin: 1rem 0; }
+        article ul, article ol { margin: 1rem 0; padding-left: 2rem; }
+        article li { margin: 0.5rem 0; }
+        pre { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 1.5rem 0; }
+        code { font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #7ee787; }
+        :not(pre) > code { background: rgba(110, 118, 129, 0.4); padding: 0.2rem 0.4rem; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid var(--border-color); padding: 0.8rem; text-align: left; }
+        th { background: var(--card-bg); color: #fff; }
+        tr:nth-child(even) { background: rgba(110, 118, 129, 0.1); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); margin-top: 3rem; }
+        footer a { color: var(--text-color); text-decoration: none; }
+        footer a:hover { color: var(--accent-color); }
+    </style>
+</head>
+<body>
+<header>
+    <a href="../index.html" class="back-link">← Back to Home</a>
+</header>
+<div class="container">
+    <article>
+        <h1>🌐 Essential Linux Network Commands</h1>
+        <div class="meta">10 min read</div>
+
+        <h2>Introduction</h2>
+        <p>Network management is a critical skill for Linux system administrators and developers. From troubleshooting connectivity issues to monitoring network performance, these commands help you diagnose and resolve network problems. This guide covers 10 essential network commands.</p>
+
+        <h2>1. ping - Test Network Connectivity</h2>
+        <p>Check if a host is reachable and measure response time.</p>
+        <pre><code># Basic ping (Ctrl+C to stop)
+ping google.com
+
+# Send specific number of packets
+ping -c 4 google.com
+
+# Set interval between pings
+ping -i 2 google.com
+
+# Set timeout
+ping -W 5 google.com
+
+# Only show summary
+ping -q -c 5 google.com</code></pre>
+
+        <h2>2. curl - Transfer Data with URLs</h2>
+        <p>Download or upload data using various protocols.</p>
+        <pre><code># Basic GET request
+curl https://api.example.com/data
+
+# Save to file
+curl -o page.html https://example.com
+
+# Show headers only
+curl -I https://example.com
+
+# Follow redirects
+curl -L https://example.com
+
+# Send POST request
+curl -X POST -d "key=value" https://api.example.com
+
+# Send JSON data
+curl -H "Content-Type: application/json" \
+     -d '{"name":"test"}' https://api.example.com
+
+# Add custom headers
+curl -H "Authorization: Bearer token" https://api.example.com</code></pre>
+
+        <h2>3. wget - Download Files</h2>
+        <p>Download files from the web.</p>
+        <pre><code># Basic download
+wget https://example.com/file.zip
+
+# Save with different name
+wget -O myfile.zip https://example.com/file.zip
+
+# Resume interrupted download
+wget -c https://example.com/file.zip
+
+# Download in background
+wget -b https://example.com/largefile.zip
+
+# Download with rate limit
+wget --limit-rate=500k https://example.com/file.zip</code></pre>
+
+        <h2>4. netstat - Network Statistics</h2>
+        <p>Display network connections, routing tables, and interface statistics.</p>
+        <pre><code># Show all connections
+netstat -a
+
+# Show TCP connections
+netstat -t
+
+# Show listening ports
+netstat -l
+
+# Show numeric addresses
+netstat -n
+
+# Show all with numeric and process
+netstat -tulpn
+
+# Show routing table
+netstat -r</code></pre>
+        <p><strong>Note:</strong> <code>ss</code> command is the modern replacement.</p>
+
+        <h2>5. ss - Socket Statistics</h2>
+        <p>Fast alternative to netstat for socket statistics.</p>
+        <pre><code># Show all sockets
+ss -a
+
+# Show TCP sockets
+ss -t
+
+# Show listening sockets
+ss -l
+
+# Show numeric addresses
+ss -n
+
+# Show process information
+ss -tulpn
+
+# Filter by port
+ss -tulpn | grep :80</code></pre>
+
+        <h2>6. ip/ifconfig - Network Interface</h2>
+        <p>Configure and display network interface parameters.</p>
+        <pre><code># Show all interfaces (deprecated)
+ifconfig -a
+
+# Show specific interface
+ifconfig eth0
+
+# Modern replacement: ip command
+ip addr show           # Show all addresses
+ip addr show eth0      # Show specific interface
+ip link show           # Show all links
+ip link set eth0 up    # Bring interface up
+ip link set eth0 down  # Bring interface down
+ip route show          # Show routing table</code></pre>
+
+        <h2>7. nslookup/dig - DNS Lookup</h2>
+        <p>Query DNS servers for domain information.</p>
+        <pre><code># Basic DNS lookup
+nslookup google.com
+
+# Query specific DNS server
+nslookup google.com 8.8.8.8
+
+# Query MX records
+nslookup -type=mx google.com
+
+# Using dig (more detailed)
+dig google.com
+
+# Query specific record type
+dig google.com MX
+
+# Short output
+dig +short google.com
+
+# Trace DNS path
+dig +trace google.com</code></pre>
+
+        <h2>8. traceroute - Trace Network Path</h2>
+        <p>Show the route packets take to reach a host.</p>
+        <pre><code># Basic traceroute
+traceroute google.com
+
+# Use ICMP instead of UDP
+traceroute -I google.com
+
+# Set maximum TTL (hops)
+traceroute -m 20 google.com
+
+# Use TCP SYN packets
+traceroute -T -p 80 google.com
+
+# Modern alternative: mtr
+mtr google.com
+mtr -rw google.com  # Report mode</code></pre>
+
+        <h2>9. ssh - Secure Shell</h2>
+        <p>Connect to remote servers securely.</p>
+        <pre><code># Basic SSH connection
+ssh user@hostname
+
+# Specify port
+ssh -p 2222 user@hostname
+
+# Use specific identity file
+ssh -i ~/.ssh/id_rsa user@hostname
+
+# Enable verbose mode
+ssh -v user@hostname
+
+# Run remote command
+ssh user@hostname "ls -la"
+
+# Copy SSH key to server
+ssh-copy-id user@hostname
+
+# Create SSH tunnel
+ssh -L 8080:localhost:80 user@hostname</code></pre>
+
+        <h2>10. scp - Secure Copy</h2>
+        <p>Copy files between hosts securely.</p>
+        <pre><code># Copy file to remote server
+scp file.txt user@hostname:/home/user/
+
+# Copy file from remote server
+scp user@hostname:/home/user/file.txt .
+
+# Copy directory recursively
+scp -r directory/ user@hostname:/backup/
+
+# Specify port
+scp -P 2222 file.txt user@hostname:/home/user/
+
+# Preserve timestamps
+scp -p file.txt user@hostname:/home/user/
+
+# Show progress
+scp -v file.txt user@hostname:/home/user/</code></pre>
+
+        <h2>Quick Reference Table</h2>
+        <table>
+            <tr><th>Command</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td>ping</td><td>Test connectivity</td><td><code>ping -c 4 google.com</code></td></tr>
+            <tr><td>curl</td><td>Transfer data</td><td><code>curl -O file.zip</code></td></tr>
+            <tr><td>wget</td><td>Download files</td><td><code>wget url</code></td></tr>
+            <tr><td>netstat</td><td>Network stats</td><td><code>netstat -tulpn</code></td></tr>
+            <tr><td>ss</td><td>Socket stats</td><td><code>ss -tlnp</code></td></tr>
+            <tr><td>ip</td><td>Interface config</td><td><code>ip addr show</code></td></tr>
+            <tr><td>dig</td><td>DNS lookup</td><td><code>dig example.com</code></td></tr>
+            <tr><td>traceroute</td><td>Trace route</td><td><code>traceroute host</code></td></tr>
+            <tr><td>ssh</td><td>Remote shell</td><td><code>ssh user@host</code></td></tr>
+            <tr><td>scp</td><td>Secure copy</td><td><code>scp file user@host:/path</code></td></tr>
+        </table>
+
+        <h2>Conclusion</h2>
+        <p>These 10 network commands are essential for testing network connectivity, downloading and transferring files, diagnosing network issues, managing network interfaces, connecting to remote servers, and analyzing network traffic.</p>
+
+        <hr style="border-color: var(--border-color); margin: 2rem 0;">
+        <p><strong>Related Articles:</strong></p>
+        <ul>
+            <li><a href="linux-system-info-commands.html" style="color: var(--accent-color);">Linux System Information Commands</a></li>
+            <li><a href="linux-process-commands.html" style="color: var(--accent-color);">Linux Process Management Commands</a></li>
+            <li><a href="vps-singapore-review.html" style="color: var(--accent-color);">Singapore VPS Review</a></li>
+        </ul>
+    </article>
+</div>
+<footer>
+    <p>&copy; 2026 isLinux.com</p>
+    <p><a href="../index.html">Back to Home</a></p>
+</footer>
+</body>
+</html>

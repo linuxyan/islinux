@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Process Management Commands | isLinux</title>
+    <meta name="description" content="Essential Linux process management commands: ps, top, htop, kill, nice and more for system monitoring.">
+    <meta name="keywords" content="linux process, ps, top, htop, kill, nice, renice, process management, linux commands">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://islinux.com/articles/linux-process-commands.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux Process Management Commands | isLinux">
+    <meta property="og:description" content="Essential Linux process management commands for system administrators.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://islinux.com/articles/linux-process-commands.html">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.8;
+        }
+        header { padding: 2rem 1rem; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .back-link {
+            display: inline-block; color: var(--text-color); text-decoration: none;
+            padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem;
+        }
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
+        .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        article h2 { color: var(--accent-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-top: 2.5rem; }
+        article h3 { color: #fff; margin-top: 1.5rem; }
+        article p { margin: 1rem 0; }
+        article ul, article ol { margin: 1rem 0; padding-left: 2rem; }
+        article li { margin: 0.5rem 0; }
+        pre { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 1.5rem 0; }
+        code { font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #7ee787; }
+        :not(pre) > code { background: rgba(110, 118, 129, 0.4); padding: 0.2rem 0.4rem; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid var(--border-color); padding: 0.8rem; text-align: left; }
+        th { background: var(--card-bg); color: #fff; }
+        tr:nth-child(even) { background: rgba(110, 118, 129, 0.1); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); margin-top: 3rem; }
+        footer a { color: var(--text-color); text-decoration: none; }
+        footer a:hover { color: var(--accent-color); }
+    </style>
+</head>
+<body>
+<header>
+    <a href="../index.html" class="back-link">← Back to Home</a>
+</header>
+<div class="container">
+    <article>
+        <h1>⚡ Essential Linux Process Management Commands</h1>
+        <div class="meta">10 min read</div>
+
+        <h2>Introduction</h2>
+        <p>Process management is crucial for monitoring system performance, troubleshooting issues, and maintaining system stability. Understanding how to view, control, and manage processes is essential for every Linux user. This guide covers 10 essential commands for process management.</p>
+
+        <h2>1. ps - Display Running Processes</h2>
+        <p>Show information about active processes.</p>
+        <pre><code># Show processes for current user
+ps
+
+# Show all processes
+ps aux
+
+# Show processes in tree format
+ps auxf
+
+# Show specific user's processes
+ps -u john
+
+# Show processes by PID
+ps -p 1234
+
+# Show detailed format
+ps -eo pid,ppid,user,stat,pcpu,pmem,cmd</code></pre>
+        <p><strong>Common Options:</strong> -a=all users, -u=user format, -x=include no terminal</p>
+
+        <h2>2. top - Real-time Process Monitor</h2>
+        <p>Display dynamic real-time view of system processes.</p>
+        <pre><code># Start top
+top
+
+# Show processes for specific user
+top -u john
+
+# Set refresh delay (seconds)
+top -d 5</code></pre>
+        <p><strong>Interactive:</strong> P=sort CPU, M=sort memory, k=kill, q=quit, c=show command</p>
+
+        <h2>3. htop - Interactive Process Viewer</h2>
+        <p>Enhanced alternative to top with better UI.</p>
+        <pre><code># Start htop
+htop
+
+# Show specific user's processes
+htop -u john
+
+# Show specific process
+htop -p 1234</code></pre>
+        <p><strong>Interactive:</strong> F1=Help, F2=Setup, F3=Search, F5=Tree, F6=Sort, F9=Kill, F10=Quit</p>
+
+        <h2>4. kill - Terminate Processes</h2>
+        <p>Send signals to processes to terminate or control them.</p>
+        <pre><code># Send SIGTERM (graceful)
+kill 1234
+
+# Send SIGKILL (force)
+kill -9 1234
+
+# Send SIGHUP (reload config)
+kill -HUP 1234
+
+# Interactive kill
+kill -i 1234</code></pre>
+        <p><strong>Signals:</strong> SIGTERM(15)=graceful, SIGKILL(9)=force, SIGHUP(1)=reload</p>
+
+        <h2>5. killall - Kill by Name</h2>
+        <p>Kill processes by exact name.</p>
+        <pre><code># Kill all processes with name
+killall nginx
+
+# Kill with signal
+killall -9 nginx
+
+# Interactive kill
+killall -i nginx
+
+# Verbose output
+killall -v nginx</code></pre>
+
+        <h2>6. pkill - Kill by Pattern</h2>
+        <p>Kill processes matching pattern.</p>
+        <pre><code># Kill by name pattern
+pkill firefox
+
+# Kill by full command
+pkill -f "python server.py"
+
+# Kill by user
+pkill -u john
+
+# Kill with signal
+pkill -9 nginx
+
+# Test match (don't kill)
+pkill -l nginx</code></pre>
+
+        <h2>7. nice - Run with Priority</h2>
+        <p>Start a process with modified scheduling priority.</p>
+        <pre><code># Run with default nice value
+nice command
+
+# Run with high priority (needs root)
+nice -n -10 backup.sh
+
+# Run with low priority
+nice -n 19 long_task.sh</code></pre>
+        <p><strong>Nice Values:</strong> Range: -20 (highest) to 19 (lowest), Default: 0</p>
+
+        <h2>8. renice - Modify Priority</h2>
+        <p>Change priority of running processes.</p>
+        <pre><code># Change priority by PID
+renice 10 -p 1234
+
+# Change priority by user
+renice 5 -u john
+
+# Change priority by group
+renice 5 -g developers</code></pre>
+        <p><strong>Note:</strong> Only root can decrease nice value (increase priority).</p>
+
+        <h2>9. bg/fg - Job Control</h2>
+        <p>Manage background and foreground jobs.</p>
+        <pre><code># List jobs
+jobs
+
+# Send job to background
+bg %1
+
+# Bring job to foreground
+fg %1
+
+# Start job in background
+sleep 100 &
+
+# Suspend foreground job (Ctrl+Z)
+# Then resume in background
+bg</code></pre>
+
+        <h2>10. nohup - Run Immune to Hangups</h2>
+        <p>Run processes that continue after logout.</p>
+        <pre><code># Run command immune to hangups
+nohup command &
+
+# Run with output redirection
+nohup python app.py > output.log 2>&1 &
+
+# Run in background with nohup
+nohup ./backup.sh &
+
+# Check nohup output
+cat nohup.out</code></pre>
+
+        <h2>Quick Reference Table</h2>
+        <table>
+            <tr><th>Command</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td>ps</td><td>List processes</td><td><code>ps aux</code></td></tr>
+            <tr><td>top</td><td>Real-time monitor</td><td><code>top</code></td></tr>
+            <tr><td>htop</td><td>Enhanced monitor</td><td><code>htop</code></td></tr>
+            <tr><td>kill</td><td>Terminate by PID</td><td><code>kill 1234</code></td></tr>
+            <tr><td>killall</td><td>Kill by name</td><td><code>killall nginx</code></td></tr>
+            <tr><td>pkill</td><td>Kill by pattern</td><td><code>pkill -f script</code></td></tr>
+            <tr><td>nice</td><td>Set priority</td><td><code>nice -n 10 cmd</code></td></tr>
+            <tr><td>renice</td><td>Change priority</td><td><code>renice 5 -p 1234</code></td></tr>
+            <tr><td>bg/fg</td><td>Job control</td><td><code>fg %1</code></td></tr>
+            <tr><td>nohup</td><td>Immune to hangup</td><td><code>nohup cmd &</code></td></tr>
+        </table>
+
+        <h2>Conclusion</h2>
+        <p>These 10 process management commands enable you to view and monitor running processes, identify resource-intensive processes, terminate stuck or unwanted processes, control process priorities, manage background jobs, and run tasks that survive logout.</p>
+
+        <hr style="border-color: var(--border-color); margin: 2rem 0;">
+        <p><strong>Related Articles:</strong></p>
+        <ul>
+            <li><a href="linux-system-info-commands.html" style="color: var(--accent-color);">Linux System Information Commands</a></li>
+            <li><a href="linux-network-commands.html" style="color: var(--accent-color);">Linux Network Commands</a></li>
+            <li><a href="linux-productivity-tools-2026.html" style="color: var(--accent-color);">Modern Linux Productivity Tools for 2026</a></li>
+        </ul>
+    </article>
+</div>
+<footer>
+    <p>&copy; 2026 isLinux.com</p>
+    <p><a href="../index.html">Back to Home</a></p>
+</footer>
+</body>
+</html>

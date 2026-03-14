@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux System Information Commands | isLinux</title>
+    <meta name="description" content="Essential Linux system information commands: uname, lscpu, free, uptime, lspci, lsusb and more.">
+    <meta name="keywords" content="linux system info, uname, lscpu, free, uptime, lspci, lsusb, dmidecode, inxi">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://islinux.com/articles/linux-system-info-commands.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux System Information Commands | isLinux">
+    <meta property="og:description" content="Essential Linux commands for gathering system information.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://islinux.com/articles/linux-system-info-commands.html">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.8;
+        }
+        header { padding: 2rem 1rem; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .back-link {
+            display: inline-block; color: var(--text-color); text-decoration: none;
+            padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem;
+        }
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
+        .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        article h2 { color: var(--accent-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-top: 2.5rem; }
+        article h3 { color: #fff; margin-top: 1.5rem; }
+        article p { margin: 1rem 0; }
+        article ul, article ol { margin: 1rem 0; padding-left: 2rem; }
+        article li { margin: 0.5rem 0; }
+        pre { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 1.5rem 0; }
+        code { font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #7ee787; }
+        :not(pre) > code { background: rgba(110, 118, 129, 0.4); padding: 0.2rem 0.4rem; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid var(--border-color); padding: 0.8rem; text-align: left; }
+        th { background: var(--card-bg); color: #fff; }
+        tr:nth-child(even) { background: rgba(110, 118, 129, 0.1); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); margin-top: 3rem; }
+        footer a { color: var(--text-color); text-decoration: none; }
+        footer a:hover { color: var(--accent-color); }
+    </style>
+</head>
+<body>
+<header>
+    <a href="../index.html" class="back-link">← Back to Home</a>
+</header>
+<div class="container">
+    <article>
+        <h1>💻 Essential Linux System Information Commands</h1>
+        <div class="meta">10 min read</div>
+
+        <h2>Introduction</h2>
+        <p>Understanding your Linux system's hardware, kernel, and configuration is essential for troubleshooting, optimization, and documentation. This guide covers 10 essential commands for gathering comprehensive system information.</p>
+
+        <h2>1. uname - System Information</h2>
+        <p>Display kernel and system information.</p>
+        <pre><code># Show kernel name
+uname -s
+
+# Show kernel version
+uname -r
+
+# Show machine hardware
+uname -m
+
+# Show operating system
+uname -o
+
+# Show all information
+uname -a
+
+# Example output:
+# Linux hostname 5.15.0-91-generic x86_64 GNU/Linux</code></pre>
+        <p><strong>Options:</strong> -s=kernel name, -r=kernel release, -m=machine, -o=OS, -a=all</p>
+
+        <h2>2. hostname - System Hostname</h2>
+        <p>Display or set the system hostname.</p>
+        <pre><code># Show current hostname
+hostname
+
+# Show short hostname
+hostname -s
+
+# Show fully qualified domain name
+hostname -f
+
+# Show IP address
+hostname -I
+
+# Set hostname permanently
+sudo hostnamectl set-hostname newhostname
+
+# Show hostnamectl info
+hostnamectl status</code></pre>
+
+        <h2>3. lscpu - CPU Information</h2>
+        <p>Display detailed CPU architecture information.</p>
+        <pre><code># Show all CPU info
+lscpu
+
+# Show CPU cores
+lscpu | grep -E "^CPU\(s\):"
+
+# Show thread count
+lscpu | grep Thread
+
+# Show model name
+lscpu | grep "Model name"
+
+# Show cache info
+lscpu | grep -i cache
+
+# Output in JSON format
+lscpu -J
+
+# Output in parseable format
+lscpu -p</code></pre>
+
+        <h2>4. free - Memory Usage</h2>
+        <p>Display physical and swap memory usage.</p>
+        <pre><code># Show memory usage
+free
+
+# Show in human-readable format
+free -h
+
+# Show in megabytes
+free -m
+
+# Show total column
+free -t
+
+# Continuous monitoring (1 second)
+free -h -s 1</code></pre>
+        <p><strong>Understanding:</strong> total, used, free, shared, buff/cache, available</p>
+
+        <h2>5. top/htop - System Monitor</h2>
+        <p>Display real-time system and process information.</p>
+        <pre><code># Start top
+top
+
+# Show specific user
+top -u username
+
+# Sort by CPU (press P in top)
+top
+
+# Sort by memory (press M in top)
+top
+
+# Start htop (if installed)
+htop
+
+# htop with specific user
+htop -u username</code></pre>
+        <p><strong>Key Metrics:</strong> Load average, CPU usage, Memory usage, Swap usage</p>
+
+        <h2>6. uptime - System Uptime</h2>
+        <p>Show how long system has been running.</p>
+        <pre><code># Show uptime
+uptime
+
+# Show only uptime
+uptime -p
+
+# Show since boot time
+uptime -s
+
+# Show short format
+uptime -r</code></pre>
+
+        <h2>7. dmidecode - Hardware Information</h2>
+        <p>Display hardware components from DMI table.</p>
+        <pre><code># Show all hardware info
+sudo dmidecode
+
+# Show BIOS info
+sudo dmidecode -t bios
+
+# Show system info
+sudo dmidecode -t system
+
+# Show motherboard info
+sudo dmidecode -t baseboard
+
+# Show processor info
+sudo dmidecode -t processor
+
+# Show memory info
+sudo dmidecode -t memory</code></pre>
+
+        <h2>8. lspci - PCI Devices</h2>
+        <p>List PCI devices and hardware components.</p>
+        <pre><code># List all PCI devices
+lspci
+
+# Verbose output
+lspci -v
+
+# Very verbose
+lspci -vv
+
+# Show numeric IDs
+lspci -nn
+
+# Show kernel drivers
+lspci -k
+
+# Show device tree
+lspci -t
+
+# Show specific device
+lspci | grep -i vga
+lspci | grep -i audio</code></pre>
+
+        <h2>9. lsusb - USB Devices</h2>
+        <p>List USB devices connected to system.</p>
+        <pre><code># List all USB devices
+lsusb
+
+# Verbose output
+lsusb -v
+
+# Show device tree
+lsusb -t
+
+# Show specific bus
+lsusb -b 1</code></pre>
+
+        <h2>10. inxi - System Information Tool</h2>
+        <p>Comprehensive system information display.</p>
+        <pre><code># Install inxi
+sudo apt install inxi
+
+# Show full system info
+inxi -F
+
+# Show CPU info
+inxi -C
+
+# Show memory info
+inxi -m
+
+# Show disk info
+inxi -D
+
+# Show network info
+inxi -N
+
+# Show sensors (temp, fans)
+inxi -s</code></pre>
+
+        <h2>Quick Reference Table</h2>
+        <table>
+            <tr><th>Command</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td>uname</td><td>Kernel info</td><td><code>uname -a</code></td></tr>
+            <tr><td>hostname</td><td>System name</td><td><code>hostname -f</code></td></tr>
+            <tr><td>lscpu</td><td>CPU details</td><td><code>lscpu</code></td></tr>
+            <tr><td>free</td><td>Memory usage</td><td><code>free -h</code></td></tr>
+            <tr><td>top/htop</td><td>System monitor</td><td><code>top</code></td></tr>
+            <tr><td>uptime</td><td>System uptime</td><td><code>uptime -p</code></td></tr>
+            <tr><td>dmidecode</td><td>Hardware info</td><td><code>dmidecode -t system</code></td></tr>
+            <tr><td>lspci</td><td>PCI devices</td><td><code>lspci -v</code></td></tr>
+            <tr><td>lsusb</td><td>USB devices</td><td><code>lsusb -v</code></td></tr>
+            <tr><td>inxi</td><td>Full system info</td><td><code>inxi -F</code></td></tr>
+        </table>
+
+        <h2>Conclusion</h2>
+        <p>These 10 system information commands enable you to identify hardware components, monitor system resources, troubleshoot performance issues, document system configuration, and verify system specifications.</p>
+
+        <hr style="border-color: var(--border-color); margin: 2rem 0;">
+        <p><strong>Related Articles:</strong></p>
+        <ul>
+            <li><a href="linux-process-commands.html" style="color: var(--accent-color);">Linux Process Management Commands</a></li>
+            <li><a href="linux-disk-commands.html" style="color: var(--accent-color);">Linux Disk Management Commands</a></li>
+            <li><a href="linux-productivity-tools-2026.html" style="color: var(--accent-color);">Modern Linux Productivity Tools for 2026</a></li>
+        </ul>
+    </article>
+</div>
+<footer>
+    <p>&copy; 2026 isLinux.com</p>
+    <p><a href="../index.html">Back to Home</a></p>
+</footer>
+</body>
+</html>

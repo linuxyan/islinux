@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Disk Management Commands | isLinux</title>
+    <meta name="description" content="Essential Linux disk management commands: df, du, lsblk, fdisk, mount, fsck and more for storage management.">
+    <meta name="keywords" content="linux disk, df, du, lsblk, fdisk, mount, umask, fsck, disk management, linux commands">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://islinux.com/articles/linux-disk-commands.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux Disk Management Commands | isLinux">
+    <meta property="og:description" content="Essential Linux disk and storage management commands.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://islinux.com/articles/linux-disk-commands.html">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.8;
+        }
+        header { padding: 2rem 1rem; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .back-link {
+            display: inline-block; color: var(--text-color); text-decoration: none;
+            padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem;
+        }
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
+        .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        article h2 { color: var(--accent-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-top: 2.5rem; }
+        article h3 { color: #fff; margin-top: 1.5rem; }
+        article p { margin: 1rem 0; }
+        article ul, article ol { margin: 1rem 0; padding-left: 2rem; }
+        article li { margin: 0.5rem 0; }
+        pre { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 1.5rem 0; }
+        code { font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #7ee787; }
+        :not(pre) > code { background: rgba(110, 118, 129, 0.4); padding: 0.2rem 0.4rem; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid var(--border-color); padding: 0.8rem; text-align: left; }
+        th { background: var(--card-bg); color: #fff; }
+        tr:nth-child(even) { background: rgba(110, 118, 129, 0.1); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); margin-top: 3rem; }
+        footer a { color: var(--text-color); text-decoration: none; }
+        footer a:hover { color: var(--accent-color); }
+    </style>
+</head>
+<body>
+<header>
+    <a href="../index.html" class="back-link">← Back to Home</a>
+</header>
+<div class="container">
+    <article>
+        <h1>💾 Essential Linux Disk Management Commands</h1>
+        <div class="meta">10 min read</div>
+
+        <h2>Introduction</h2>
+        <p>Disk and storage management is crucial for maintaining system health, optimizing performance, and preventing data loss. From monitoring disk usage to managing partitions and filesystems, these commands help you effectively manage storage resources. This guide covers 10 essential disk management commands.</p>
+
+        <h2>1. df - Disk Space Usage</h2>
+        <p>Display disk space usage for filesystems.</p>
+        <pre><code># Show disk usage for all filesystems
+df
+
+# Show in human-readable format
+df -h
+
+# Show specific filesystem
+df -h /home
+
+# Show inode usage
+df -i
+
+# Show filesystem type
+df -T
+
+# Show total usage
+df -h --total</code></pre>
+
+        <h2>2. du - Disk Usage by Directory</h2>
+        <p>Estimate file and directory space usage.</p>
+        <pre><code># Show directory sizes
+du -sh /home/*
+
+# Show all files and directories
+du -ah /var/log
+
+# Show only total for directory
+du -sh /var/log
+
+# Show top 10 largest directories
+du -h --max-depth=1 / | sort -hr | head -10
+
+# Show inode usage
+du -in /home</code></pre>
+
+        <h2>3. lsblk - List Block Devices</h2>
+        <p>Display information about block devices.</p>
+        <pre><code># List all block devices
+lsblk
+
+# Show filesystem type
+lsblk -f
+
+# Show all devices including empty
+lsblk -a
+
+# Show device size and mount point
+lsblk -o NAME,SIZE,MOUNTPOINT
+
+# Show UUID and LABEL
+lsblk -o NAME,UUID,LABEL,SIZE
+
+# Show filesystem information
+lsblk -fs</code></pre>
+
+        <h2>4. fdisk - Partition Table Manipulator</h2>
+        <p>View and modify disk partitions.</p>
+        <pre><code># List all partitions
+sudo fdisk -l
+
+# List specific disk
+sudo fdisk -l /dev/sda
+
+# Open disk for editing
+sudo fdisk /dev/sda
+
+# Inside fdisk interactive mode:
+# p - Print partition table
+# n - New partition
+# d - Delete partition
+# w - Write changes
+# q - Quit without saving</code></pre>
+        <p><strong>WARNING:</strong> fdisk modifies disk partitions. Use with caution!</p>
+
+        <h2>5. mkfs - Create Filesystem</h2>
+        <p>Format a partition with a filesystem.</p>
+        <pre><code># Create ext4 filesystem
+sudo mkfs.ext4 /dev/sdb1
+
+# Create ext3 filesystem
+sudo mkfs.ext3 /dev/sdb1
+
+# Create XFS filesystem
+sudo mkfs.xfs /dev/sdb1
+
+# Create with label
+sudo mkfs.ext4 -L data /dev/sdb1
+
+# Check for bad blocks
+sudo mkfs.ext4 -c /dev/sdb1</code></pre>
+
+        <h2>6. mount - Mount Filesystems</h2>
+        <p>Mount filesystems to directory locations.</p>
+        <pre><code># Mount a device
+sudo mount /dev/sdb1 /mnt/data
+
+# Mount with filesystem type
+sudo mount -t ext4 /dev/sdb1 /mnt/data
+
+# Mount read-only
+sudo mount -o ro /dev/sdb1 /mnt/data
+
+# Remount with different options
+sudo mount -o remount,rw /mnt/data
+
+# Mount ISO image
+sudo mount -o loop image.iso /mnt/iso
+
+# Auto-mount from /etc/fstab
+sudo mount -a</code></pre>
+
+        <h2>7. umount - Unmount Filesystems</h2>
+        <p>Safely unmount filesystems.</p>
+        <pre><code># Unmount by mount point
+sudo umount /mnt/data
+
+# Unmount by device
+sudo umount /dev/sdb1
+
+# Lazy unmount (detach immediately)
+sudo umount -l /mnt/data
+
+# Force unmount
+sudo umount -f /mnt/data
+
+# Verbose unmount
+sudo umount -v /mnt/data</code></pre>
+
+        <h2>8. fsck - Filesystem Check</h2>
+        <p>Check and repair filesystem errors.</p>
+        <pre><code># Check filesystem (auto-fix)
+sudo fsck -y /dev/sdb1
+
+# Check ext4 filesystem
+sudo fsck.ext4 /dev/sdb1
+
+# Check with interactive repair
+sudo fsck -r /dev/sdb1
+
+# Check all filesystems in fstab
+sudo fsck -A
+
+# Force check even if clean
+sudo fsck -f /dev/sdb1</code></pre>
+        <p><strong>WARNING:</strong> Never run fsck on mounted filesystems!</p>
+
+        <h2>9. smartctl - SMART Disk Health</h2>
+        <p>Monitor disk health using SMART data.</p>
+        <pre><code># Check disk health
+sudo smartctl -H /dev/sda
+
+# Show all SMART info
+sudo smartctl -a /dev/sda
+
+# Run short self-test
+sudo smartctl -t short /dev/sda
+
+# Run long self-test
+sudo smartctl -t long /dev/sda
+
+# View test results
+sudo smartctl -l selftest /dev/sda
+
+# Enable SMART
+sudo smartctl -s on /dev/sda</code></pre>
+
+        <h2>10. lsof - List Open Files</h2>
+        <p>List open files and processes using them.</p>
+        <pre><code># Show all open files
+lsof
+
+# Show files in specific directory
+lsof +D /var/log
+
+# Show files by user
+lsof -u john
+
+# Show network connections
+lsof -i
+
+# Show processes using port
+lsof -i :80
+
+# Show files by process ID
+lsof -p 1234
+
+# Show deleted files still open
+lsof | grep deleted</code></pre>
+
+        <h2>Quick Reference Table</h2>
+        <table>
+            <tr><th>Command</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td>df</td><td>Disk usage</td><td><code>df -h</code></td></tr>
+            <tr><td>du</td><td>Directory size</td><td><code>du -sh /home</code></td></tr>
+            <tr><td>lsblk</td><td>List block devices</td><td><code>lsblk -f</code></td></tr>
+            <tr><td>fdisk</td><td>Partition tool</td><td><code>fdisk -l</code></td></tr>
+            <tr><td>mkfs</td><td>Create filesystem</td><td><code>mkfs.ext4 /dev/sda1</code></td></tr>
+            <tr><td>mount</td><td>Mount filesystem</td><td><code>mount /dev/sda1 /mnt</code></td></tr>
+            <tr><td>umount</td><td>Unmount filesystem</td><td><code>umount /mnt</code></td></tr>
+            <tr><td>fsck</td><td>Check filesystem</td><td><code>fsck -y /dev/sda1</code></td></tr>
+            <tr><td>smartctl</td><td>Disk health</td><td><code>smartctl -a /dev/sda</code></td></tr>
+            <tr><td>lsof</td><td>Open files</td><td><code>lsof -i :80</code></td></tr>
+        </table>
+
+        <h2>Conclusion</h2>
+        <p>These 10 disk management commands enable you to monitor disk space usage, manage partitions and filesystems, mount and unmount storage devices, check and repair filesystem errors, monitor disk health with SMART, and identify open files and processes.</p>
+
+        <hr style="border-color: var(--border-color); margin: 2rem 0;">
+        <p><strong>Related Articles:</strong></p>
+        <ul>
+            <li><a href="linux-system-info-commands.html" style="color: var(--accent-color);">Linux System Information Commands</a></li>
+            <li><a href="linux-process-commands.html" style="color: var(--accent-color);">Linux Process Management Commands</a></li>
+            <li><a href="linux-productivity-tools-2026.html" style="color: var(--accent-color);">Modern Linux Productivity Tools for 2026</a></li>
+        </ul>
+    </article>
+</div>
+<footer>
+    <p>&copy; 2026 isLinux.com</p>
+    <p><a href="../index.html">Back to Home</a></p>
+</footer>
+</body>
+</html>

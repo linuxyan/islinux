@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Text Processing Commands | isLinux</title>
+    <meta name="description" content="Essential Linux text processing commands: grep, sed, awk, cut, sort, uniq, tr and more for text manipulation.">
+    <meta name="keywords" content="linux text processing, grep, sed, awk, cut, sort, uniq, tr, wc, diff, text commands">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://islinux.com/articles/linux-text-processing-commands.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux Text Processing Commands | isLinux">
+    <meta property="og:description" content="Essential Linux text processing commands for data manipulation.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://islinux.com/articles/linux-text-processing-commands.html">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.8;
+        }
+        header { padding: 2rem 1rem; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .back-link {
+            display: inline-block; color: var(--text-color); text-decoration: none;
+            padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem;
+        }
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
+        .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        article h2 { color: var(--accent-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-top: 2.5rem; }
+        article h3 { color: #fff; margin-top: 1.5rem; }
+        article p { margin: 1rem 0; }
+        article ul, article ol { margin: 1rem 0; padding-left: 2rem; }
+        article li { margin: 0.5rem 0; }
+        pre { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 1.5rem 0; }
+        code { font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #7ee787; }
+        :not(pre) > code { background: rgba(110, 118, 129, 0.4); padding: 0.2rem 0.4rem; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { border: 1px solid var(--border-color); padding: 0.8rem; text-align: left; }
+        th { background: var(--card-bg); color: #fff; }
+        tr:nth-child(even) { background: rgba(110, 118, 129, 0.1); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); margin-top: 3rem; }
+        footer a { color: var(--text-color); text-decoration: none; }
+        footer a:hover { color: var(--accent-color); }
+    </style>
+</head>
+<body>
+<header>
+    <a href="../index.html" class="back-link">← Back to Home</a>
+</header>
+<div class="container">
+    <article>
+        <h1>📝 Essential Linux Text Processing Commands</h1>
+        <div class="meta">10 min read</div>
+
+        <h2>Introduction</h2>
+        <p>Text processing is a fundamental skill in Linux, essential for log analysis, data manipulation, configuration management, and automation. This guide covers 10 powerful commands for processing and manipulating text files.</p>
+
+        <h2>1. grep - Pattern Search</h2>
+        <p>Search for patterns in files using regular expressions.</p>
+        <pre><code># Basic search
+grep "error" file.txt
+
+# Case-insensitive search
+grep -i "error" file.txt
+
+# Invert match
+grep -v "debug" file.txt
+
+# Show line numbers
+grep -n "error" file.txt
+
+# Count matches
+grep -c "error" file.txt
+
+# Show context (3 lines)
+grep -C 3 "error" file.txt
+
+# Recursive search
+grep -r "function" /home/user/
+
+# Show only filenames
+grep -l "error" *.log
+
+# Extended regex
+grep -E "error|warning" file.txt</code></pre>
+
+        <h2>2. sed - Stream Editor</h2>
+        <p>Edit and transform text streams.</p>
+        <pre><code># Replace first occurrence
+sed 's/old/new/' file.txt
+
+# Replace all occurrences
+sed 's/old/new/g' file.txt
+
+# Replace from specific line
+sed '2s/old/new/' file.txt
+
+# Delete lines
+sed '5d' file.txt
+sed '1,10d' file.txt
+
+# Print specific lines
+sed -n '5p' file.txt
+
+# Insert before line
+sed '5i\New line' file.txt
+
+# Edit file in place
+sed -i 's/old/new/g' file.txt
+
+# Create backup while editing
+sed -i.bak 's/old/new/g' file.txt</code></pre>
+
+        <h2>3. awk - Pattern Scanning and Processing</h2>
+        <p>Powerful text processing and data extraction.</p>
+        <pre><code># Print first field
+awk '{print $1}' file.txt
+
+# Print specific fields
+awk '{print $1, $3}' file.txt
+
+# Print last field
+awk '{print $NF}' file.txt
+
+# Use custom delimiter
+awk -F: '{print $1}' /etc/passwd
+
+# Conditional printing
+awk '$1 > 100' file.txt
+
+# Arithmetic operations
+awk '{sum += $1} END {print sum}' file.txt
+awk '{avg += $1} END {print avg/NR}' file.txt
+
+# Format output
+awk '{printf "%-10s %5d\n", $1, $2}' file.txt</code></pre>
+
+        <h2>4. cut - Remove Sections</h2>
+        <p>Extract sections from each line of files.</p>
+        <pre><code># Extract first field (tab delimited)
+cut -f1 file.txt
+
+# Extract specific fields
+cut -f1,3,5 file.txt
+
+# Use custom delimiter
+cut -d: -f1 /etc/passwd
+cut -d, -f1,3 data.csv
+
+# Extract characters
+cut -c1-5 file.txt
+
+# Extract bytes
+cut -b1-10 file.txt</code></pre>
+
+        <h2>5. sort - Sort Lines</h2>
+        <p>Sort lines of text files.</p>
+        <pre><code># Basic sort
+sort file.txt
+
+# Reverse sort
+sort -r file.txt
+
+# Numeric sort
+sort -n file.txt
+
+# Human-readable numeric sort
+sort -h file.txt
+
+# Sort by specific field
+sort -t: -k2 /etc/passwd
+
+# Remove duplicates
+sort -u file.txt
+
+# Case-insensitive sort
+sort -f file.txt
+
+# Randomize order
+sort -R file.txt</code></pre>
+
+        <h2>6. uniq - Filter Duplicates</h2>
+        <p>Remove or report duplicate lines (requires sorted input).</p>
+        <pre><code># Remove adjacent duplicates
+uniq file.txt
+
+# Remove duplicates (with sorted)
+sort file.txt | uniq
+
+# Count occurrences
+sort file.txt | uniq -c
+
+# Show only duplicates
+sort file.txt | uniq -d
+
+# Show only unique lines
+sort file.txt | uniq -u
+
+# Case-insensitive
+sort file.txt | uniq -i</code></pre>
+
+        <h2>7. tr - Translate Characters</h2>
+        <p>Translate or delete characters.</p>
+        <pre><code># Convert lowercase to uppercase
+echo "hello" | tr 'a-z' 'A-Z'
+
+# Convert uppercase to lowercase
+echo "HELLO" | tr 'A-Z' 'a-z'
+
+# Delete characters
+echo "hello123" | tr -d '0-9'
+
+# Squeeze repeated characters
+echo "aaabbbccc" | tr -s 'a-z'
+
+# Replace characters
+echo "hello world" | tr ' ' '_'
+
+# Convert tabs to spaces
+tr '\t' ' ' < file.txt</code></pre>
+
+        <h2>8. wc - Word Count</h2>
+        <p>Count lines, words, and characters.</p>
+        <pre><code># Count lines, words, bytes
+wc file.txt
+
+# Count lines only
+wc -l file.txt
+
+# Count words only
+wc -w file.txt
+
+# Count characters only
+wc -m file.txt
+
+# Count bytes only
+wc -c file.txt
+
+# Combined with other commands
+grep -r "TODO" . | wc -l</code></pre>
+
+        <h2>9. head/tail - First/Last Lines</h2>
+        <p>View beginning or end of files.</p>
+        <pre><code># First 10 lines (default)
+head file.txt
+
+# First 20 lines
+head -n 20 file.txt
+
+# Last 10 lines (default)
+tail file.txt
+
+# Last 50 lines
+tail -n 50 file.txt
+
+# Follow file (log monitoring)
+tail -f /var/log/syslog
+
+# Follow with retry
+tail -F /var/log/application.log
+
+# Multiple files
+tail file1.txt file2.txt</code></pre>
+
+        <h2>10. diff/patch - Compare and Apply</h2>
+        <p>Compare files and apply patches.</p>
+        <pre><code># Compare two files
+diff file1.txt file2.txt
+
+# Unified format
+diff -u file1.txt file2.txt
+
+# Recursive directory comparison
+diff -r dir1/ dir2/
+
+# Ignore whitespace
+diff -w file1.txt file2.txt
+
+# Side-by-side comparison
+diff -y file1.txt file2.txt
+
+# Create patch file
+diff -u original.txt modified.txt > changes.patch
+
+# Apply patch
+patch original.txt < changes.patch
+
+# Reverse patch
+patch -R < changes.patch</code></pre>
+
+        <h2>Quick Reference Table</h2>
+        <table>
+            <tr><th>Command</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td>grep</td><td>Pattern search</td><td><code>grep "error" file.log</code></td></tr>
+            <tr><td>sed</td><td>Stream editor</td><td><code>sed 's/old/new/g' file</code></td></tr>
+            <tr><td>awk</td><td>Text processing</td><td><code>awk '{print $1}' file</code></td></tr>
+            <tr><td>cut</td><td>Extract fields</td><td><code>cut -d: -f1 /etc/passwd</code></td></tr>
+            <tr><td>sort</td><td>Sort lines</td><td><code>sort -n file.txt</code></td></tr>
+            <tr><td>uniq</td><td>Filter duplicates</td><td><code>sort file | uniq -c</code></td></tr>
+            <tr><td>tr</td><td>Translate chars</td><td><code>tr 'a-z' 'A-Z'</code></td></tr>
+            <tr><td>wc</td><td>Word count</td><td><code>wc -l file.txt</code></td></tr>
+            <tr><td>head/tail</td><td>First/last lines</td><td><code>tail -f log.txt</code></td></tr>
+            <tr><td>diff/patch</td><td>Compare files</td><td><code>diff -u f1 f2 > patch</code></td></tr>
+        </table>
+
+        <h2>Conclusion</h2>
+        <p>These 10 text processing commands enable you to search and filter text patterns, transform and edit text streams, extract specific data fields, sort and remove duplicates, compare files and apply patches, and analyze log files efficiently.</p>
+
+        <hr style="border-color: var(--border-color); margin: 2rem 0;">
+        <p><strong>Related Articles:</strong></p>
+        <ul>
+            <li><a href="linux-file-content-commands.html" style="color: var(--accent-color);">Linux File Content Commands</a></li>
+            <li><a href="linux-process-commands.html" style="color: var(--accent-color);">Linux Process Management Commands</a></li>
+            <li><a href="linux-productivity-tools-2026.html" style="color: var(--accent-color);">Modern Linux Productivity Tools for 2026</a></li>
+        </ul>
+    </article>
+</div>
+<footer>
+    <p>&copy; 2026 isLinux.com</p>
+    <p><a href="../index.html">Back to Home</a></p>
+</footer>
+</body>
+</html>
