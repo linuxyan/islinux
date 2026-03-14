@@ -430,19 +430,48 @@
 
 ## 10. Quick Reference
 
-### 10.1 File Structure
+### 10.1 Site Map and Domain Mapping
+
+| Directory | Domain | Type | Description |
+|-----------|--------|------|-------------|
+| `islinux_root` | `https://islinux.com` | Main Site | Linux commands, tech blog, portal |
+| `islinux_ai` | `https://ai.islinux.com` | Subsite | AI prompts, prompt engineering guides |
+| `islinux_tool` | `https://tool.islinux.com` | Subsite | Developer tools (JSON, encryption, etc.) |
+| `islinux_calc` | `https://calc.islinux.com` | Subsite | Financial calculators |
+
+### 10.2 Cross-Site Linking Rules
+
+**Important**: Each site is deployed independently on a different domain/subdomain.
+
+| Scenario | Link Type | Example |
+|----------|-----------|---------|
+| Main Site → Main Site | Relative path | `href="privacy.html"` or `href="../index.html"` |
+| Main Site → Subsite | Absolute URL | `href="https://ai.islinux.com/index.html"` |
+| Subsite → Same Subsite | Relative path | `href="about.html"` or `href="index.html"` |
+| Subsite → Main Site | Absolute URL | `href="https://islinux.com/privacy.html"` |
+| Subsite → Different Subsite | Absolute URL | `href="https://tool.islinux.com/index.html"` |
+
+**Common Mistakes to Avoid**:
+```
+❌ href="../islinux_root/privacy.html"  (Relative path across sites - won't work)
+❌ href="../../islinux_tool/index.html" (Relative path across sites - won't work)
+✅ href="https://islinux.com/privacy.html" (Absolute URL - correct)
+✅ href="https://tool.islinux.com/index.html" (Absolute URL - correct)
+```
+
+### 10.3 File Structure
 
 ```
 islinux/
-├── islinux_root/          # Main Site
+├── islinux_root/          # Main Site (https://islinux.com)
 │   ├── index.html         # Homepage (English only)
 │   ├── about.html         # About Us
 │   ├── privacy.html       # Privacy Policy
 │   ├── contact.html       # Contact Us
 │   └── articles/          # Articles
-├── islinux_ai/            # AI Subsite
-├── islinux_tool/          # Tools Subsite
-├── islinux_calc/          # Calculator Subsite
+├── islinux_ai/            # AI Subsite (https://ai.islinux.com)
+├── islinux_tool/          # Tools Subsite (https://tool.islinux.com)
+├── islinux_calc/          # Calculator Subsite (https://calc.islinux.com)
 ├── DEVELOPMENT_GUIDE.md   # This Document
 └── islinux_project_guide.md
 ```
