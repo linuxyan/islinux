@@ -1,0 +1,42 @@
+# robots.txt for isLinux.com Matrix
+# Last Updated: 2026-03-14
+
+Sitemap: https://islinux.com/sitemap_index.xml
+
+User-agent: *
+Allow: /
+Crawl-delay: 5
+
+Allow: /articles/
+Allow: /assets/
+Allow: /about.html
+Allow: /privacy.html
+
+
+Disallow: /admin/
+Disallow: /private/
+Disallow: /config/
+Disallow: /.* 
+Disallow: /*.json$
+Disallow: /*.bak$
+Disallow: /*.log$
+Disallow: /Dockerfile*
+Disallow: /docker-compose*
+
+
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Slurp
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 0
+
+
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: MJ12bot
+User-agent: DotBot
+User-agent: Rogerbot
+User-agent: MegaIndex.ru
+User-agent: GPTBot        
+Disallow: /
