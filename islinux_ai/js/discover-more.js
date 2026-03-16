@@ -12,7 +12,8 @@
     const articles = [
         { href: 'articles/prompt-engineering-shell.html', icon: '📚', title: 'Prompt Engineering for Shell', description: 'Master the art of writing effective shell prompts.' },
         { href: 'articles/ai-code-review-guide.html', icon: '🔍', title: 'AI Code Review Guide', description: 'Best practices for AI-assisted code review.' },
-        { href: 'articles/git-commit-messages.html', icon: '💡', title: 'Git Commit Messages', description: 'Write better commit messages with AI.' }
+        { href: 'articles/git-commit-messages.html', icon: '💡', title: 'Git Commit Messages', description: 'Write better commit messages with AI.' },
+        { href: 'articles/copilot-to-agentic-ai.html', icon: '🤖', title: 'From Copilot to Agentic AI', description: 'Build autonomous workflows with local AI agents in 2026.' }
     ];
 
     const toolGuides = {
