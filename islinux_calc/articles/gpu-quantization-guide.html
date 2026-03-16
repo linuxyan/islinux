@@ -70,7 +70,7 @@
             margin-bottom: 1rem;
         }
         .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
-        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
         article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
         .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
         article h2 { color: var(--accent-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-top: 2.5rem; }
@@ -161,23 +161,23 @@
     <a href="../index.html" class="back-link">← Back to Tools</a>
 
     <article>
-        <h1>🖥️ 2026 年 GPU 算力避坑指南：为什么 4-bit 量化是小微企业的"救命稻草"？</h1>
+        <h1>🖥️ 2026 GPU Computing Guide: Why 4-bit Quantization is a Lifesaver for Small Businesses</h1>
         <div class="meta">15 min read</div>
 
         <div class="blockquote">
-            预算有限也能跑大模型？本文详解如何通过量化技术在消费级显卡上部署 70B 参数模型，帮小微企业节省 90% 硬件成本。
+            Run large AI models on a budget? This article explains how to deploy 70B parameter models on consumer GPUs using quantization, saving small businesses 90% on hardware costs.
         </div>
 
-        <h2>💸 痛点：大模型显存需求 vs 预算限制</h2>
-        <p>2026 年，AI 模型参数持续增长，但 GPU 价格却居高不下。让我们看看运行主流模型需要的显存：</p>
+        <h2>💸 The Pain Point: VRAM Requirements vs Budget Constraints</h2>
+        <p>In 2026, AI model parameters continue to grow, but GPU prices remain high. Let's look at the VRAM needed to run mainstream models:</p>
 
         <table>
             <tr>
-                <th>模型</th>
-                <th>FP16 显存</th>
-                <th>8-bit 显存</th>
-                <th>4-bit 显存</th>
-                <th>推荐显卡</th>
+                <th>Model</th>
+                <th>FP16 VRAM</th>
+                <th>8-bit VRAM</th>
+                <th>4-bit VRAM</th>
+                <th>Recommended GPU</th>
             </tr>
             <tr>
                 <td>Llama 3 8B</td>
@@ -209,128 +209,128 @@
             </tr>
         </table>
 
-        <p><strong>关键发现</strong>：4-bit 量化可将显存需求降低 75%，让 70B 模型从需要 A100 80GB（$15,000+）变为双卡 RTX 3090（$1,500 二手）即可运行。</p>
+        <p><strong>Key Finding</strong>: 4-bit quantization reduces VRAM requirements by 75%, making 70B models runnable on dual RTX 3090 ($1,500 used) instead of A100 80GB ($15,000+).</p>
 
-        <h2>🔬 量化技术详解</h2>
-        <h3>什么是量化？</h3>
-        <p>量化（Quantization）是将模型权重从高精度（如 FP16，16 位浮点数）转换为低精度（如 INT4，4 位整数）的技术。核心公式：</p>
+        <h2>🔬 Quantization Technology Explained</h2>
+        <h3>What is Quantization?</h3>
+        <p>Quantization is the technique of converting model weights from high precision (e.g., FP16, 16-bit floating point) to low precision (e.g., INT4, 4-bit integer). The core formula:</p>
 
-        <pre><code>量化后权重 = round(原始权重 × 缩放因子) / 缩放因子</code></pre>
+        <pre><code>Quantized Weight = round(Original Weight × Scale Factor) / Scale Factor</code></pre>
 
         <h3>4-bit vs 8-bit vs FP16</h3>
         <table>
             <tr>
-                <th>量化级别</th>
-                <th>显存占用</th>
-                <th>精度损失</th>
-                <th>推理速度</th>
-                <th>适用场景</th>
+                <th>Quantization Level</th>
+                <th>VRAM Usage</th>
+                <th>Accuracy Loss</th>
+                <th>Inference Speed</th>
+                <th>Use Cases</th>
             </tr>
             <tr>
                 <td><strong>FP16</strong></td>
                 <td>100%</td>
-                <td>无</td>
-                <td>基准</td>
-                <td>生产环境、高精度需求</td>
+                <td>None</td>
+                <td>Baseline</td>
+                <td>Production, high precision needs</td>
             </tr>
             <tr>
                 <td><strong>8-bit</strong></td>
                 <td>50%</td>
                 <td>&lt;1%</td>
                 <td>+20%</td>
-                <td>平衡性能和成本</td>
+                <td>Balanced performance and cost</td>
             </tr>
             <tr>
                 <td><strong>4-bit</strong></td>
                 <td>25%</td>
                 <td>1-3%</td>
                 <td>+50%</td>
-                <td>预算有限、快速原型</td>
+                <td>Budget constraints, rapid prototyping</td>
             </tr>
         </table>
 
         <div class="blockquote">
-            <strong>实测数据</strong>：在代码生成任务中，4-bit 量化的 Llama 3 8B 相比 FP16 仅下降 2.1% 的准确率，但显存占用从 16GB 降至 6GB。
+            <strong>Real-world Data</strong>: In code generation tasks, 4-bit quantized Llama 3 8B shows only 2.1% accuracy drop compared to FP16, while VRAM usage drops from 16GB to 6GB.
         </div>
 
-        <h2>💡 为什么 4-bit 是小微企业的"救命稻草"？</h2>
-        <h3>成本对比：API vs 自建</h3>
-        <p>假设每日处理 10,000 个请求，每个请求平均 1,000 tokens：</p>
+        <h2>💡 Why 4-bit is a Lifesaver for Small Businesses?</h2>
+        <h3>Cost Comparison: API vs Self-Hosted</h3>
+        <p>Assuming 10,000 requests per day, with an average of 1,000 tokens per request:</p>
 
         <ul>
-            <li><strong>API 方案</strong>：$0.50/1M tokens × 300M tokens/月 = <strong>$150/月</strong></li>
-            <li><strong>自建方案（4-bit）</strong>：RTX 3060 12GB ($300) ÷ 24 个月 + 电费$30 = <strong>$42/月</strong></li>
-            <li><strong>年节省</strong>：($150 - $42) × 12 = <strong>$1,296</strong></li>
+            <li><strong>API Solution</strong>: $0.50/1M tokens × 300M tokens/month = <strong>$150/month</strong></li>
+            <li><strong>Self-Hosted (4-bit)</strong>: RTX 3060 12GB ($300) ÷ 24 months + $30 electricity = <strong>$42/month</strong></li>
+            <li><strong>Annual Savings</strong>: ($150 - $42) × 12 = <strong>$1,296</strong></li>
         </ul>
 
-        <h3>回本周期计算</h3>
-        <pre><code>回本天数 = 硬件成本 ÷ (API 月成本 - 自持月成本) × 30
-         = $300 ÷ ($150 - $42) × 30
-         ≈ 83 天</code></pre>
+        <h3>Break-even Calculation</h3>
+        <pre><code>Break-even Days = Hardware Cost ÷ (API Monthly Cost - Self-Host Monthly Cost) × 30
+                = $300 ÷ ($150 - $42) × 30
+                ≈ 83 days</code></pre>
 
-        <p><strong>结论</strong>：使用 4-bit 量化自建，约 3 个月即可回本，之后纯节省。</p>
+        <p><strong>Conclusion</strong>: With 4-bit quantization self-hosting, you break even in about 3 months, then enjoy pure savings.</p>
 
-        <h2>⚠️ 避坑指南：量化常见误区</h2>
-        <h3>误区 1：量化会严重降低模型质量</h3>
-        <p><strong>事实</strong>：现代量化技术（如 GGUF、AWQ）使用分组量化和逐通道缩放，4-bit 量化的质量损失通常小于 3%。对于客服、文档摘要等场景，用户几乎无法察觉差异。</p>
+        <h2>⚠️ Pitfall Guide: Common Quantization Misconceptions</h2>
+        <h3>Misconception 1: Quantization Severely Degrades Model Quality</h3>
+        <p><strong>Fact</strong>: Modern quantization techniques (like GGUF, AWQ) use group-wise quantization and per-channel scaling. Quality loss for 4-bit is typically under 3%. For customer service, document summarization, and similar tasks, users can barely notice the difference.</p>
 
-        <h3>误区 2：量化后推理速度会变慢</h3>
-        <p><strong>事实</strong>：恰恰相反！4-bit 模型数据量更小，显存带宽占用更低，在相同硬件上推理速度可提升 30-50%。瓶颈在于解量化计算，但现代 GPU 的 Tensor Core 已针对低精度优化。</p>
+        <h3>Misconception 2: Quantization Slows Down Inference</h3>
+        <p><strong>Fact</strong>: Quite the opposite! 4-bit models have smaller data footprints and lower memory bandwidth requirements, achieving 30-50% faster inference on the same hardware. The bottleneck is dequantization computation, but modern GPU Tensor Cores are optimized for low precision.</p>
 
-        <h3>误区 3：所有模型都适合 4-bit</h3>
-        <p><strong>注意</strong>：以下场景建议使用 8-bit 或 FP16：</p>
+        <h3>Misconception 3: All Models are Suitable for 4-bit</h3>
+        <p><strong>Caution</strong>: Use 8-bit or FP16 for these scenarios:</p>
         <ul>
-            <li>数学计算和逻辑推理任务</li>
-            <li>医疗、法律等高风险领域</li>
-            <li>需要精确数值输出的场景</li>
-            <li>模型本身较小（&lt;3B 参数）</li>
+            <li>Mathematical computation and logical reasoning tasks</li>
+            <li>High-risk domains like healthcare and legal</li>
+            <li>Scenarios requiring precise numerical output</li>
+            <li>Very small models (&lt;3B parameters)</li>
         </ul>
 
-        <h2>🛠️ 实战：如何在廉价硬件上部署 4-bit 模型</h2>
-        <h3>方案 1：Ollama（推荐新手）</h3>
-        <pre><code># 安装 Ollama
+        <h2>🛠️ Hands-on: Deploying 4-bit Models on Budget Hardware</h2>
+        <h3>Option 1: Ollama (Recommended for Beginners)</h3>
+        <pre><code># Install Ollama
 curl -fsSL https://ollama.com/install.sh | sh
 
-# 拉取 4-bit 量化的 Llama 3 8B
+# Pull 4-bit quantized Llama 3 8B
 ollama pull llama3:8b-instruct-q4_K_M
 
-# 运行
+# Run
 ollama run llama3:8b-instruct-q4_K_M</code></pre>
 
-        <h3>方案 2：LM Studio（图形界面）</h3>
+        <h3>Option 2: LM Studio (GUI)</h3>
         <ol>
-            <li>下载 LM Studio：https://lmstudio.ai</li>
-            <li>搜索 "Llama 3 8B GGUF"</li>
-            <li>选择 Q4_K_M 量化版本下载</li>
-            <li>点击 "Load" 加载模型</li>
-            <li>在 Chat 界面开始对话</li>
+            <li>Download LM Studio: https://lmstudio.ai</li>
+            <li>Search for "Llama 3 8B GGUF"</li>
+            <li>Select and download the Q4_K_M quantized version</li>
+            <li>Click "Load" to load the model</li>
+            <li>Start chatting in the Chat interface</li>
         </ol>
 
-        <h3>方案 3：text-generation-webui（高级用户）</h3>
-        <pre><code># 克隆仓库
+        <h3>Option 3: text-generation-webui (Advanced Users)</h3>
+        <pre><code># Clone repository
 git clone https://github.com/oobabooga/text-generation-webui
 cd text-generation-webui
 
-# 安装依赖
+# Install dependencies
 pip install -r requirements.txt
 
-# 下载 4-bit 模型（使用 HuggingFace）
+# Download 4-bit model (via HuggingFace)
 python download-model.py TheBloke/Llama-3-8B-Instruct-GGUF \
     --quantize q4_k_m
 
-# 启动 Web 界面
+# Start web interface
 python server.py --listen</code></pre>
 
-        <h2>📊 显存优化技巧</h2>
-        <h3>1. KV Cache 优化</h3>
-        <p>启用分组查询注意力（GQA）可减少 50% 的 KV Cache 占用：</p>
-        <pre><code># Ollama 配置
-OLLAMA_NUM_CTX=4096  # 上下文长度
-OLLAMA_MAX_VRAM=8GB  # 显存限制</code></pre>
+        <h2>📊 VRAM Optimization Tips</h2>
+        <h3>1. KV Cache Optimization</h3>
+        <p>Enabling Grouped Query Attention (GQA) can reduce KV Cache usage by 50%:</p>
+        <pre><code># Ollama Configuration
+OLLAMA_NUM_CTX=4096  # Context length
+OLLAMA_MAX_VRAM=8GB  # VRAM limit</code></pre>
 
-        <h3>2. 模型并行加载</h3>
-        <p>当单卡显存不足时，可将模型拆分到多卡：</p>
-        <pre><code># 使用 accelerate 库
+        <h3>2. Model Parallel Loading</h3>
+        <p>When single GPU VRAM is insufficient, split the model across multiple GPUs:</p>
+        <pre><code># Using accelerate library
 from accelerate import init_empty_weights, load_checkpoint_and_dispatch
 
 with init_empty_weights():
@@ -339,21 +339,21 @@ with init_empty_weights():
 model = load_checkpoint_and_dispatch(
     model,
     checkpoint="model_weights.bin",
-    device_map="auto",  # 自动分配到多卡
-    max_memory={0: "12GB", 1: "12GB"}  # 每卡显存限制
+    device_map="auto",  # Auto-distribute across GPUs
+    max_memory={0: "12GB", 1: "12GB"}  # Per-GPU VRAM limit
 )</code></pre>
 
-        <h3>3. 卸载到 CPU 内存</h3>
-        <p>使用 llama.cpp 可将部分层卸载到 CPU，用速度换显存：</p>
-        <pre><code># 卸载 20 层到 CPU
+        <h3>3. Offload to CPU Memory</h3>
+        <p>Use llama.cpp to offload some layers to CPU, trading speed for VRAM:</p>
+        <pre><code># Offload 20 layers to CPU
 ./main -m model.gguf -ngl 20 --n-gpu-layers 20</code></pre>
 
-        <h2>🔍 推理延迟实测数据</h2>
-        <p>以下是 RTX 4070 12GB 上的实测结果（tokens/秒）：</p>
+        <h2>🔍 Inference Latency Benchmarks</h2>
+        <p>Real-world benchmarks on RTX 4070 12GB (tokens/second):</p>
 
         <table>
             <tr>
-                <th>模型</th>
+                <th>Model</th>
                 <th>FP16</th>
                 <th>8-bit</th>
                 <th>4-bit</th>
@@ -378,63 +378,63 @@ model = load_checkpoint_and_dispatch(
             </tr>
         </table>
 
-        <p><strong>结论</strong>：4-bit 量化不仅降低显存，还能提升推理速度 50-60%。</p>
+        <p><strong>Conclusion</strong>: 4-bit quantization not only reduces VRAM but also boosts inference speed by 50-60%.</p>
 
-        <h2>💰 硬件采购建议（2026 版）</h2>
-        <h3>预算 $300-500：入门级</h3>
+        <h2>💰 Hardware Buying Guide (2026 Edition)</h2>
+        <h3>Budget $300-500: Entry Level</h3>
         <ul>
-            <li><strong>RTX 3060 12GB</strong>（二手$200）：可跑 8B 模型 4-bit，性价比之王</li>
-            <li><strong>RTX 4060 8GB</strong>（全新$300）：功耗低，适合 7x24 运行</li>
+            <li><strong>RTX 3060 12GB</strong> (used $200): Runs 8B models at 4-bit, best value king</li>
+            <li><strong>RTX 4060 8GB</strong> (new $300): Low power consumption, ideal for 24/7 operation</li>
         </ul>
 
-        <h3>预算 $500-800：进阶级</h3>
+        <h3>Budget $500-800: Mid Range</h3>
         <ul>
-            <li><strong>RTX 3080 10GB</strong>（二手$400）：可跑 12B 模型 4-bit</li>
-            <li><strong>RTX 4070 12GB</strong>（全新$600）：性能功耗平衡最佳</li>
+            <li><strong>RTX 3080 10GB</strong> (used $400): Runs 12B models at 4-bit</li>
+            <li><strong>RTX 4070 12GB</strong> (new $600): Best balance of performance and efficiency</li>
         </ul>
 
-        <h3>预算 $800-1500：专业级</h3>
+        <h3>Budget $800-1500: Professional</h3>
         <ul>
-            <li><strong>RTX 3090 24GB</strong>（二手$700）：可跑 70B 模型 4-bit（需双卡）</li>
-            <li><strong>RTX 4080 16GB</strong>（全新$1000）：单卡跑 30B 模型</li>
+            <li><strong>RTX 3090 24GB</strong> (used $700): Runs 70B models at 4-bit (requires dual cards)</li>
+            <li><strong>RTX 4080 16GB</strong> (new $1000): Runs 30B models on single card</li>
         </ul>
 
         <div class="blockquote">
-            <strong>避坑提示</strong>：避免购买矿卡（如大量 3080/3090），优先选择带保修的二手或个人自用。
+            <strong>Warning</strong>: Avoid mining GPUs (many 3080/3090 on the market). Prefer used cards with warranty or from individual sellers.
         </div>
 
-        <h2>🔮 2026 年趋势展望</h2>
+        <h2>🔮 2026 Trends Outlook</h2>
         <ul>
-            <li><strong>量化技术成熟</strong>：Q4_K_M 成为新标准，质量损失&lt;2%</li>
-            <li><strong>消费级显卡显存增长</strong>：RTX 5070 预计 16GB 起步</li>
-            <li><strong>模型效率提升</strong>：MoE 架构让 100B 模型只需 30B 激活参数</li>
-            <li><strong>边缘 AI 普及</strong>：手机/笔记本本地跑 7B 模型成为标配</li>
+            <li><strong>Quantization Maturity</strong>: Q4_K_M becomes the new standard, quality loss &lt;2%</li>
+            <li><strong>Consumer GPU VRAM Growth</strong>: RTX 5070 expected to start at 16GB</li>
+            <li><strong>Model Efficiency Improvements</strong>: MoE architecture enables 100B models with only 30B active parameters</li>
+            <li><strong>Edge AI普及</strong>: Running 7B models locally on phones/laptops becomes standard</li>
         </ul>
 
-        <h2>📝 总结</h2>
-        <p>对于小微企业和独立开发者，4-bit 量化是平衡成本与性能的最佳选择：</p>
+        <h2>📝 Summary</h2>
+        <p>For small businesses and independent developers, 4-bit quantization is the best choice for balancing cost and performance:</p>
         <ul>
-            <li>✅ 显存需求降低 75%</li>
-            <li>✅ 推理速度提升 50%</li>
-            <li>✅ 质量损失仅 1-3%</li>
-            <li>✅ 3 个月回本，长期节省 90% 成本</li>
+            <li>✅ 75% reduction in VRAM requirements</li>
+            <li>✅ 50% improvement in inference speed</li>
+            <li>✅ Only 1-3% quality loss</li>
+            <li>✅ 3-month break-even, 90% long-term cost savings</li>
         </ul>
 
-        <p>别再为昂贵的 GPU 或 API 费用发愁了。用 4-bit 量化，让大模型在你的预算内跑起来！</p>
+        <p>Stop worrying about expensive GPUs or API fees. With 4-bit quantization, run large models within your budget!</p>
 
         <!-- CTA Box -->
         <div class="cta-box">
-            <h3 class="cta-title">🧮 立即规划你的硬件采购</h3>
-            <p class="cta-text">使用我们的 AI 显存与成本计算器，输入你的模型和负载需求，一键对比 API 与自建成本，找到最优方案。</p>
-            <a href="../token-vs-gpu.html" class="cta-button">🤖 使用 Token vs GPU 计算器</a>
+            <h3 class="cta-title">🧮 Plan Your Hardware Purchase Now</h3>
+            <p class="cta-text">Use our AI VRAM & Cost Calculator to input your model and workload requirements, compare API vs self-hosted costs in one click, and find the optimal solution.</p>
+            <a href="../token-vs-gpu.html" class="cta-button">🤖 Try Token vs GPU Calculator</a>
         </div>
 
         <hr style="border-color: var(--border-color); margin: 2rem 0;">
 
-        <p><strong>相关阅读：</strong></p>
+        <p><strong>Related Reading:</strong></p>
         <ul>
-            <li><a href="freelancer-rate-calculator.html" style="color: var(--accent-color);">自由职业者定价策略指南</a></li>
-            <li><a href="https://islinux.com/articles/local-llm-deployment.html" style="color: var(--accent-color);">本地 LLM 部署完整指南</a></li>
+            <li><a href="freelancer-rate-calculator.html" style="color: var(--accent-color);">Freelancer Project Pricing Strategy</a></li>
+            <li><a href="https://islinux.com/articles/local-llm-deployment.html" style="color: var(--accent-color);">Complete Guide to Local LLM Deployment</a></li>
         </ul>
     </article>
 </div>
