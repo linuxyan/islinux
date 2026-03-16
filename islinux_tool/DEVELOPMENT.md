@@ -50,7 +50,13 @@ islinux_tool/
 <link rel="stylesheet" href="css/common.css">
 ```
 
-在 `</body>` 前添加：
+在 `</head>` 前添加 JS 引用（首页需要）：
+
+```html
+<script src="js/discover-more.js"></script>
+```
+
+在 `</body>` 前添加三个 Section：
 
 ```html
 <!-- Discover More Section -->
@@ -88,8 +94,9 @@ islinux_tool/
 ### 1. Discover More（工具推荐）
 - 自动排除当前页面
 - 从剩余工具中随机选择 4 个
-- 桌面端 4 列布局，移动端自适应
+- 桌面端 4 列布局，移动端自适应（3 列/2 列）
 - 卡片为正方形，内容居中
+- 包含：图标、标题、描述
 
 ### 2. Tool Guide（工具说明）
 - 在 `js/discover-more.js` 的 `toolGuides` 对象中配置
@@ -97,8 +104,9 @@ islinux_tool/
 - 代码块支持一键复制功能
 
 ### 3. Related Articles（相关文章）
-- 从 `articles/` 目录中随机选择 2 篇
-- 2 列布局，移动端单列
+- 工具页面：从 `articles/` 目录中随机选择 2 篇
+- 首页：随机选择 3 篇
+- 列表布局：每行显示一篇文章（图标 + 标题 + 描述）
 
 ## 添加工具说明
 
