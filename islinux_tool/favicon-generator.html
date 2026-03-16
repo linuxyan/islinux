@@ -191,6 +191,26 @@
         }
         .btn-secondary:hover { border-color: var(--text-color); }
 
+        .color-palette {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .color-swatch {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-color) !important;
+        }
+
         .preview-section {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
@@ -226,6 +246,11 @@
         .preview-label {
             font-size: 0.8rem;
             color: var(--text-muted);
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-color) !important;
         }
 
         .download-section {
@@ -372,12 +397,38 @@
 
                 <div class="option-item">
                     <label>Background Color</label>
-                    <input type="color" id="bg-color" value="#238636" onchange="generateFavicon()">
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="color" id="bg-color" value="#238636" onchange="updateColorValue('bg-color', 'bg-color-value'); generateFavicon()">
+                        <input type="text" id="bg-color-value" value="#238636" style="width: 100px;" onchange="updateColorFromText('bg-color', this.value); generateFavicon()">
+                    </div>
+                    <div class="color-palette" style="display: flex; gap: 0.3rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #238636; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#238636')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #1a7f37; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#1a7f37')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #0d1117; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#0d1117')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #161b22; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#161b22')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #1f6feb; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#1f6feb')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #d29922; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#d29922')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #f85149; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#f85149')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #8957e5; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#8957e5')"></div>
+                    </div>
                 </div>
 
                 <div class="option-item">
                     <label>Text Color</label>
-                    <input type="color" id="text-color" value="#ffffff" onchange="generateFavicon()">
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="color" id="text-color" value="#ffffff" onchange="updateColorValue('text-color', 'text-color-value'); generateFavicon()">
+                        <input type="text" id="text-color-value" value="#ffffff" style="width: 100px;" onchange="updateColorFromText('text-color', this.value); generateFavicon()">
+                    </div>
+                    <div class="color-palette" style="display: flex; gap: 0.3rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #ffffff; border-radius: 4px; cursor: pointer; border: 2px solid #30363d;" onclick="selectColor('text-color', 'text-color-value', '#ffffff')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #f0f6fc; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#f0f6fc')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #c9d1d9; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#c9d1d9')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #8b949e; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#8b949e')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #0d1117; border-radius: 4px; cursor: pointer; border: 2px solid #30363d;" onclick="selectColor('text-color', 'text-color-value', '#0d1117')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #7ee787; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#7ee787')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #3fb950; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#3fb950')"></div>
+                        <div class="color-swatch" style="width: 24px; height: 24px; background: #f85149; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#f85149')"></div>
+                    </div>
                 </div>
 
                 <div class="option-item">
@@ -496,6 +547,25 @@
         link.download = `favicon-${size}x${size}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
+    }
+
+    // Update color text input when color picker changes
+    function updateColorValue(colorId, textId) {
+        document.getElementById(textId).value = document.getElementById(colorId).value;
+    }
+
+    // Update color picker when text input changes
+    function updateColorFromText(colorId, value) {
+        if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+            document.getElementById(colorId).value = value;
+        }
+    }
+
+    // Select color from palette
+    function selectColor(colorId, textId, color) {
+        document.getElementById(colorId).value = color;
+        document.getElementById(textId).value = color;
+        generateFavicon();
     }
 
     function downloadICO() {
