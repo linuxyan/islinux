@@ -8,6 +8,7 @@
     <meta name="keywords" content="favicon generator, icon generator, ico generator, png icon">
     <link rel="canonical" href="https://tool.islinux.com/favicon-generator.html">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <style>
         :root {
@@ -394,9 +395,9 @@
             <h3 class="preview-title">Download</h3>
             <div class="download-grid">
                 <div class="download-item">
-                    <h4>ICO</h4>
-                    <p>32×32</p>
-                    <button class="btn btn-primary" onclick="downloadICO()">📥 Download .ico</button>
+                    <h4>ICO (ZIP)</h4>
+                    <p>16×16, 32×32, 48×48</p>
+                    <button class="btn btn-primary" onclick="downloadICO()">📥 Download All</button>
                 </div>
                 <div class="download-item">
                     <h4>PNG 16×16</h4>
@@ -498,17 +499,26 @@
     }
 
     function downloadICO() {
-        // Download 32x32 as ICO format
-        const canvas = document.getElementById('preview-32');
-        const link = document.createElement('a');
-        link.download = 'favicon.ico';
+        // Download all 3 sizes as PNG files in a ZIP archive
+        const sizes = [16, 32, 48];
+        const zip = new JSZip();
+        const folder = zip.folder('favicon');
 
-        // Convert canvas to blob and save as .ico
-        canvas.toBlob(blob => {
+        // Add each size as PNG to the zip
+        sizes.forEach(size => {
+            const canvas = document.getElementById(`preview-${size}`);
+            const dataUrl = canvas.toDataURL('image/png').split(',')[1];
+            folder.file(`favicon-${size}x${size}.png`, dataUrl, { base64: true });
+        });
+
+        // Generate and download ZIP
+        zip.generateAsync({ type: 'blob' }).then(blob => {
+            const link = document.createElement('a');
+            link.download = 'favicon-icons.zip';
             link.href = URL.createObjectURL(blob);
             link.click();
             URL.revokeObjectURL(link.href);
-        }, 'image/x-icon');
+        });
     }
 
     function showToast() {
