@@ -314,63 +314,7 @@
     </div>
 
     <div class="tool-panel">
-        <div class="panel-header">
-            <h2 class="panel-title">Generate From Text</h2>
-            <div class="panel-actions">
-                <button class="btn btn-primary" onclick="generateFavicon()">🔄 Generate</button>
-            </div>
-        </div>
-
-        <div class="options-grid">
-            <div class="option-item">
-                <label>Text (1-2 characters)</label>
-                <input type="text" id="icon-text" value="is" maxlength="2" oninput="generateFavicon()">
-            </div>
-
-            <div class="option-item">
-                <label>Font Size</label>
-                <select id="font-size" onchange="generateFavicon()">
-                    <option value="small">Small</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="large">Large</option>
-                </select>
-            </div>
-
-            <div class="option-item">
-                <label>Font Family</label>
-                <select id="font-family" onchange="generateFavicon()">
-                    <option value="Arial">Arial</option>
-                    <option value="Helvetica">Helvetica</option>
-                    <option value="Times New Roman">Times New Roman</option>
-                    <option value="Courier New">Courier New</option>
-                    <option value="Georgia">Georgia</option>
-                    <option value="Verdana">Verdana</option>
-                    <option value="Impact">Impact</option>
-                    <option value="Comic Sans MS">Comic Sans MS</option>
-                </select>
-            </div>
-
-            <div class="option-item">
-                <label>Background Color</label>
-                <input type="color" id="bg-color" value="#238636" onchange="generateFavicon()">
-            </div>
-
-            <div class="option-item">
-                <label>Text Color</label>
-                <input type="color" id="text-color" value="#ffffff" onchange="generateFavicon()">
-            </div>
-
-            <div class="option-item">
-                <label>Shape</label>
-                <select id="shape" onchange="generateFavicon()">
-                    <option value="square">Square</option>
-                    <option value="rounded" selected>Rounded</option>
-                    <option value="circle">Circle</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="preview-section">
+        <div class="preview-section" style="margin-top: 0; padding-top: 0; border-top: none;">
             <h3 class="preview-title">Preview</h3>
             <div class="preview-grid" id="preview-grid">
                 <div class="preview-item">
@@ -396,6 +340,64 @@
                 <div class="preview-item">
                     <canvas id="preview-256" width="256" height="256"></canvas>
                     <span class="preview-label">256×256</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+            <div class="panel-header">
+                <h2 class="panel-title">Generate From Text</h2>
+                <div class="panel-actions">
+                    <button class="btn btn-primary" onclick="generateFavicon()">🔄 Generate</button>
+                </div>
+            </div>
+
+            <div class="options-grid">
+                <div class="option-item">
+                    <label>Text (1-2 characters)</label>
+                    <input type="text" id="icon-text" value="is" maxlength="2" oninput="generateFavicon()">
+                </div>
+
+                <div class="option-item">
+                    <label>Font Size</label>
+                    <select id="font-size" onchange="generateFavicon()">
+                        <option value="small">Small</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+
+                <div class="option-item">
+                    <label>Font Family</label>
+                    <select id="font-family" onchange="generateFavicon()">
+                        <option value="Arial">Arial</option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Impact">Impact</option>
+                        <option value="Comic Sans MS">Comic Sans MS</option>
+                    </select>
+                </div>
+
+                <div class="option-item">
+                    <label>Background Color</label>
+                    <input type="color" id="bg-color" value="#238636" onchange="generateFavicon()">
+                </div>
+
+                <div class="option-item">
+                    <label>Text Color</label>
+                    <input type="color" id="text-color" value="#ffffff" onchange="generateFavicon()">
+                </div>
+
+                <div class="option-item">
+                    <label>Shape</label>
+                    <select id="shape" onchange="generateFavicon()">
+                        <option value="square">Square</option>
+                        <option value="rounded" selected>Rounded</option>
+                        <option value="circle">Circle</option>
+                    </select>
                 </div>
             </div>
         </div>
