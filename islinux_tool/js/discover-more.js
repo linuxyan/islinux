@@ -164,10 +164,10 @@ Encoded: Hello%20World!%20How%20are%20you?</code></pre>
         const guide = toolGuides[pageName];
 
         if (guide) {
-            container.innerHTML = \`
-                <h2 class="tool-guide-title">📖 \${guide.title}</h2>
-                \${guide.content}
-            \`;
+            container.innerHTML = `
+                <h2 class="tool-guide-title">📖 ${guide.title}</h2>
+                ${guide.content}
+            `;
             // Attach copy event listeners
             document.querySelectorAll('.copy-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
