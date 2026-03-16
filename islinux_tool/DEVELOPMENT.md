@@ -145,6 +145,16 @@ islinux_tool/
 }
 ```
 
+## 文章页面规范
+
+所有文章页面使用统一的容器宽度：
+
+```css
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+```
+
+**重要：** 创建新文章时，确保 `.container` 的 `max-width` 设置为 `1100px`，与工具页面保持一致。
+
 ## CSS 变量
 
 所有页面使用统一的 CSS 变量：
