@@ -199,19 +199,35 @@ Encoded: Hello%20World!%20How%20are%20you?</code></pre>
     }
 
     function renderRandomArticles() {
-        const container = document.getElementById('random-articles-grid');
-        if (!container) return;
+        // Render for tool pages (2 articles)
+        const toolContainer = document.getElementById('random-articles-grid');
+        if (toolContainer) {
+            const shuffled = articles.sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 2);
 
-        const shuffled = articles.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 2);
+            toolContainer.innerHTML = selected.map(article => `
+                <a href="${article.href}" class="article-card">
+                    <div class="article-icon">${article.icon}</div>
+                    <h3 class="article-title-card">${article.title}</h3>
+                    <p class="article-description">${article.description}</p>
+                </a>
+            `).join('');
+        }
 
-        container.innerHTML = selected.map(article => `
-            <a href="${article.href}" class="article-card">
-                <div class="article-icon">${article.icon}</div>
-                <h3 class="article-title-card">${article.title}</h3>
-                <p class="article-description">${article.description}</p>
-            </a>
-        `).join('');
+        // Render for index page (3 articles)
+        const indexContainer = document.getElementById('article-grid');
+        if (indexContainer) {
+            const shuffled = articles.sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 3);
+
+            indexContainer.innerHTML = selected.map(article => `
+                <a href="${article.href}" class="article-card">
+                    <div class="article-icon">${article.icon}</div>
+                    <h3 class="article-title-card">${article.title}</h3>
+                    <p class="article-description">${article.description}</p>
+                </a>
+            `).join('');
+        }
     }
 
     // Auto-render when DOM is ready

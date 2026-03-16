@@ -198,8 +198,28 @@
             .logo { font-size: 1.8rem; }
             .tools-grid { grid-template-columns: 1fr; }
         }
+
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .article-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/discover-more.js"></script>
 </head>
 <body>
 
@@ -270,10 +290,7 @@
     <!-- Article Section -->
     <section class="article-section">
         <h2 class="section-title">📚 Related Articles</h2>
-        <a href="articles/json-privacy-guide.html" class="article-card">
-            <h3>🔒 How to Locally Process JSON Formatting to Protect Trade Secrets</h3>
-            <p>In an era of frequent data breaches, protect sensitive data by choosing the right tools. Learn about online tool risks and local processing best practices.</p>
-        </a>
+        <div class="article-grid" id="article-grid"></div>
     </section>
 </div>
 
