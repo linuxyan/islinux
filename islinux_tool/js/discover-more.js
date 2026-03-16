@@ -144,7 +144,7 @@ Encoded: Hello%20World!%20How%20are%20you?</code></pre>
         const currentPage = window.location.pathname;
         const otherTools = tools.filter(tool => !currentPage.includes(tool.href));
         const shuffled = otherTools.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 3);
+        const selected = shuffled.slice(0, 5);
 
         grid.innerHTML = selected.map(tool => `
             <a href="${tool.href}" class="discover-card">
