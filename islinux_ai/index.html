@@ -195,8 +195,57 @@
             .logo { font-size: 1.8rem; }
             .tools-grid { grid-template-columns: 1fr; }
         }
+
+        .article-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .article-card:hover {
+            border-color: var(--ai-blue);
+            background: rgba(88, 166, 255, 0.05);
+        }
+
+        .article-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .article-content {
+            flex: 1;
+        }
+
+        .article-title-card {
+            margin: 0 0 0.5rem;
+            color: var(--ai-blue);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .article-description {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
     </style>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/discover-more.js"></script>
 </head>
 <body>
 
@@ -259,10 +308,7 @@
     <!-- Article Section -->
     <section class="article-section">
         <h2 class="section-title">📚 Related Articles</h2>
-        <a href="articles/prompt-engineering-shell.html" class="article-card">
-            <h3>AI Prompt Engineering: How to Write Perfect Shell Script Generation Prompts</h3>
-            <p>Master prompt engineering to help AI write high-quality, safe Bash scripts. Includes complete templates, practical examples, and advanced techniques.</p>
-        </a>
+        <div class="article-grid" id="article-grid"></div>
     </section>
 </div>
 

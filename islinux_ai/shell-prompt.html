@@ -192,6 +192,7 @@
             .logo { font-size: 1.8rem; }
         }
     </style>
+    <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
 
@@ -238,6 +239,23 @@ Script content:
     </div>
 </div>
 
+<!-- Discover More Section -->
+<section class="discover-section">
+    <h2 class="discover-title">🔍 Discover More</h2>
+    <div class="discover-grid" id="discover-grid"></div>
+</section>
+
+<!-- Tool Guide Section -->
+<section class="tool-guide-section">
+    <div class="tool-guide-content" id="tool-guide-content"></div>
+</section>
+
+<!-- Random Articles Section -->
+<section class="random-articles-section">
+    <h2 class="random-articles-title">📚 Related Articles</h2>
+    <div class="random-articles-grid" id="random-articles-grid"></div>
+</section>
+
 <footer>
     <p>&copy; 2026 AI.isLinux.com</p>
     <p>
@@ -249,6 +267,8 @@ Script content:
 </footer>
 
 <div class="toast" id="toast">✅ Copied to clipboard!</div>
+
+<script src="js/discover-more.js"></script>
 
 <script>
     function copyText(id) {
