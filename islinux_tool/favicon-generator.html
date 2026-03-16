@@ -329,18 +329,6 @@
                     <canvas id="preview-48" width="48" height="48"></canvas>
                     <span class="preview-label">48×48</span>
                 </div>
-                <div class="preview-item">
-                    <canvas id="preview-64" width="64" height="64"></canvas>
-                    <span class="preview-label">64×64</span>
-                </div>
-                <div class="preview-item">
-                    <canvas id="preview-128" width="128" height="128"></canvas>
-                    <span class="preview-label">128×128</span>
-                </div>
-                <div class="preview-item">
-                    <canvas id="preview-256" width="256" height="256"></canvas>
-                    <span class="preview-label">256×256</span>
-                </div>
             </div>
         </div>
 
@@ -406,8 +394,8 @@
             <h3 class="preview-title">Download</h3>
             <div class="download-grid">
                 <div class="download-item">
-                    <h4>ICO (Multi-size)</h4>
-                    <p>16×16, 32×32, 48×48</p>
+                    <h4>ICO</h4>
+                    <p>32×32</p>
                     <button class="btn btn-primary" onclick="downloadICO()">📥 Download .ico</button>
                 </div>
                 <div class="download-item">
@@ -424,21 +412,6 @@
                     <h4>PNG 48×48</h4>
                     <p>Medium size</p>
                     <button class="btn btn-secondary" onclick="downloadPNG(48)">📥 Download</button>
-                </div>
-                <div class="download-item">
-                    <h4>PNG 64×64</h4>
-                    <p>Large icon</p>
-                    <button class="btn btn-secondary" onclick="downloadPNG(64)">📥 Download</button>
-                </div>
-                <div class="download-item">
-                    <h4>PNG 128×128</h4>
-                    <p>Extra large</p>
-                    <button class="btn btn-secondary" onclick="downloadPNG(128)">📥 Download</button>
-                </div>
-                <div class="download-item">
-                    <h4>PNG 256×256</h4>
-                    <p>Maximum size</p>
-                    <button class="btn btn-secondary" onclick="downloadPNG(256)">📥 Download</button>
                 </div>
             </div>
         </div>
@@ -508,7 +481,7 @@
     }
 
     function generateFavicon() {
-        const sizes = [16, 32, 48, 64, 128, 256];
+        const sizes = [16, 32, 48];
         sizes.forEach(size => {
             const canvas = document.getElementById(`preview-${size}`);
             drawIcon(canvas, size);
@@ -525,53 +498,17 @@
     }
 
     function downloadICO() {
-        // Create ICO file with multiple sizes
-        // ICO format: header + image directory + image data
-        const sizes = [16, 32, 48];
-        const canvasData = [];
-
-        // Get PNG data for each size
-        sizes.forEach(size => {
-            const canvas = document.getElementById(`preview-${size}`);
-            canvasData.push(canvas.toDataURL('image/png').split(',')[1]);
-        });
-
-        // For simplicity, we'll create a basic ICO with just 32x32
-        // A full implementation would require proper ICO encoding
+        // Download 32x32 as ICO format
         const canvas = document.getElementById('preview-32');
         const link = document.createElement('a');
         link.download = 'favicon.ico';
 
-        // Convert PNG to ICO using a simple approach
-        // Note: This is a simplified version - real ICO files have a specific format
-        const pngData = canvas.toDataURL('image/png').split(',')[1];
-        const icoHeader = createICOHeader(sizes.length);
-
-        // For a proper ICO, we need to encode PNG data in ICO format
-        // This is a simplified version that works in most browsers
-        const blob = canvasToBlob(canvas, 'image/x-icon');
-        blob.then(b => {
-            link.href = URL.createObjectURL(b);
+        // Convert canvas to blob and save as .ico
+        canvas.toBlob(blob => {
+            link.href = URL.createObjectURL(blob);
             link.click();
-        });
-    }
-
-    function createICOHeader(numImages) {
-        const header = new ArrayBuffer(6);
-        const view = new DataView(header);
-        // Reserved (0)
-        view.setUint16(0, 0, true);
-        // Image type (1 = ICO)
-        view.setUint16(2, 1, true);
-        // Number of images
-        view.setUint16(4, numImages, true);
-        return header;
-    }
-
-    function canvasToBlob(canvas, type) {
-        return new Promise(resolve => {
-            canvas.toBlob(blob => resolve(blob), type);
-        });
+            URL.revokeObjectURL(link.href);
+        }, 'image/x-icon');
     }
 
     function showToast() {
