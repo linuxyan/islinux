@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Calculator | Calc.isLinux - Developer Financial Calculator</title>
+    <meta name="description" content="Calculate investment returns with compound interest. Plan your financial future with monthly contribution projections and ROI analysis.">
+    <meta name="keywords" content="investment calculator, compound interest, ROI calculator, investment returns">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://calc.islinux.com/investment-calculator.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Investment Calculator | Calc.isLinux">
+    <meta property="og:description" content="Calculate investment returns with compound interest.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calc.islinux.com/investment-calculator.html">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #f78166;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+            --success-color: #3fb950;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(247, 129, 102, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        .logo a { color: var(--accent-color); text-decoration: none; }
+        .logo a:hover { text-decoration: underline; }
+
+        .tagline { color: var(--text-muted); margin: 1rem 0 0; }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+        .calc-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel-title {
+            margin: 0 0 1.5rem;
+            color: #fff;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, rgba(247, 129, 102, 0.1) 0%, rgba(247, 129, 102, 0.05) 100%);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .result-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .result-details {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .detail-value {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer a:hover { color: var(--accent-color); }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+            .calc-panel { padding: 1.5rem 1rem; }
+            .result-value { font-size: 1.5rem; }
+        }
+    </style>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/discover-more.js"></script>
+</head>
+<body>
+
+<header>
+    <h1 class="logo"><a href="index.html">💰 Calc.isLinux.com</a></h1>
+    <p class="tagline">Developer Financial Calculator</p>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="https://islinux.com">Main Site</a>
+    </nav>
+</header>
+
+<div class="container">
+    <a href="index.html" class="back-link">← Back to Tools</a>
+
+    <div class="calc-panel">
+        <h2 class="panel-title">📈 Investment Return Calculator</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Initial Principal</label>
+                <input type="number" id="invest-principal" placeholder="e.g., 100000" oninput="calcInvest()">
+            </div>
+            <div class="form-group">
+                <label>Annual Return Rate (%)</label>
+                <input type="number" id="invest-rate" placeholder="e.g., 8" step="0.1" oninput="calcInvest()">
+            </div>
+            <div class="form-group">
+                <label>Investment Period (Years)</label>
+                <input type="number" id="invest-years" placeholder="e.g., 10" oninput="calcInvest()">
+            </div>
+            <div class="form-group">
+                <label>Monthly Contribution</label>
+                <input type="number" id="invest-monthly" placeholder="e.g., 500" value="0" oninput="calcInvest()">
+            </div>
+        </div>
+        <div class="result-box" id="invest-result">
+            <div class="result-label">Final Value</div>
+            <div class="result-value" id="invest-final">$0</div>
+            <div class="result-details">
+                <div class="detail-item">
+                    <div class="detail-label">Total Principal</div>
+                    <div class="detail-value" id="invest-total-principal">$0</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Total Profit</div>
+                    <div class="detail-value" id="invest-profit">$0</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Return Rate</div>
+                    <div class="detail-value" id="invest-roi">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discover More Section -->
+    <section class="discover-section">
+        <h2 class="discover-title">🔍 Discover More</h2>
+        <div class="discover-grid" id="discover-grid"></div>
+    </section>
+
+    <!-- Tool Guide Section -->
+    <section class="tool-guide-section">
+        <div class="tool-guide-content" id="tool-guide-content"></div>
+    </section>
+
+    <!-- Random Articles Section -->
+    <section class="random-articles-section">
+        <h2 class="random-articles-title">📚 Related Articles</h2>
+        <div class="random-articles-grid" id="random-articles-grid"></div>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2026 Calc.isLinux.com</p>
+    <p>
+        <a href="index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="https://islinux.com/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
+</footer>
+
+<div class="toast" id="toast">✅ Copied to clipboard!</div>
+
+<script>
+    function formatMoney(num) {
+        return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    function calcInvest() {
+        const principal = parseFloat(document.getElementById('invest-principal').value) || 0;
+        const rate = (parseFloat(document.getElementById('invest-rate').value) || 0) / 100;
+        const years = parseFloat(document.getElementById('invest-years').value) || 0;
+        const monthly = parseFloat(document.getElementById('invest-monthly').value) || 0;
+
+        if (principal <= 0 && monthly <= 0) {
+            document.getElementById('invest-result').style.display = 'none';
+            return;
+        }
+
+        const monthlyRate = rate / 12;
+        const totalMonths = years * 12;
+
+        const principalFinal = principal * Math.pow(1 + rate, years);
+
+        let monthlyFinal = 0;
+        if (monthly > 0 && monthlyRate > 0) {
+            monthlyFinal = monthly * (Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate;
+        } else if (monthly > 0) {
+            monthlyFinal = monthly * totalMonths;
+        }
+
+        const final = principalFinal + monthlyFinal;
+        const totalPrincipal = principal + monthly * totalMonths;
+        const profit = final - totalPrincipal;
+        const roi = totalPrincipal > 0 ? (profit / totalPrincipal) * 100 : 0;
+
+        document.getElementById('invest-result').style.display = 'block';
+        document.getElementById('invest-final').innerText = formatMoney(final);
+        document.getElementById('invest-total-principal').innerText = formatMoney(totalPrincipal);
+        document.getElementById('invest-profit').innerText = formatMoney(profit);
+        document.getElementById('invest-roi').innerText = roi.toFixed(1) + '%';
+    }
+</script>
+
+</body>
+</html>

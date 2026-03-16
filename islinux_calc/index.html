@@ -23,7 +23,6 @@
             --card-bg: #161b22;
             --border-color: #30363d;
             --text-muted: #8b949e;
-            --code-bg: #000;
             --success-color: #3fb950;
         }
 
@@ -53,176 +52,85 @@
             margin: 0;
         }
 
-        .tagline {
-            color: var(--text-muted);
-            margin: 1rem 0;
+        .logo a { color: var(--accent-color); text-decoration: none; }
+        .logo a:hover { text-decoration: underline; }
+
+        .tagline { color: var(--text-muted); margin: 1rem 0 0; }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
         }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { border-color: var(--accent-color); color: var(--accent-color); }
 
         /* Container */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
+        .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1rem; }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        /* Calculator Tabs */
-        .calc-tabs {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-            justify-content: center;
-        }
-
-        .calc-tab {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            padding: 0.7rem 1.3rem;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.95rem;
-        }
-
-        .calc-tab:hover,
-        .calc-tab.active {
-            background: var(--accent-color);
-            border-color: var(--accent-color);
-            color: #fff;
-        }
-
-        /* Calculator Panels */
-        .calc-panel {
+        .tool-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 2rem;
-            display: none;
-        }
-
-        .calc-panel.active {
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
             display: block;
         }
 
-        .panel-title {
-            margin: 0 0 1.5rem;
-            color: #fff;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Form Grid */
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .form-group input,
-        .form-group select {
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-color);
-            padding: 0.8rem 1rem;
-            font-size: 1rem;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
+        .tool-card:hover {
             border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(247, 129, 102, 0.1);
         }
 
-        .form-group .hint {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 0.3rem;
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
-        /* Result Box */
-        .result-box {
-            background: linear-gradient(135deg, rgba(247, 129, 102, 0.1) 0%, rgba(247, 129, 102, 0.05) 100%);
-            border: 1px solid var(--accent-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
+        .tool-title {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+            font-size: 1.2rem;
         }
 
-        .result-label {
+        .tool-description {
+            margin: 0;
             color: var(--text-muted);
             font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            line-height: 1.5;
         }
 
-        .result-value {
-            font-size: 2rem;
-            font-weight: bold;
+        .tool-tag {
+            display: inline-block;
+            background: rgba(247, 129, 102, 0.15);
             color: var(--accent-color);
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .result-details {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-        }
-
-        .detail-item {
-            text-align: center;
-        }
-
-        .detail-label {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .detail-value {
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 0.8rem 2rem;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.2s;
-            font-weight: 600;
-        }
-
-        .btn-primary {
-            background: var(--accent-color);
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            background: #ff6b4a;
-        }
-
-        .btn-container {
-            text-align: center;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
             margin-top: 1rem;
         }
 
@@ -239,33 +147,6 @@
             margin-bottom: 1.5rem;
         }
 
-        .article-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            transition: all 0.2s;
-        }
-
-        .article-card:hover {
-            border-color: var(--accent-color);
-            background: rgba(247, 129, 102, 0.05);
-        }
-
-        .article-card h3 {
-            margin: 0 0 0.5rem;
-            color: var(--accent-color);
-        }
-
-        .article-card p {
-            margin: 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
         /* Footer */
         footer {
             text-align: center;
@@ -273,268 +154,129 @@
             border-top: 1px solid var(--border-color);
             color: var(--text-muted);
             font-size: 0.9rem;
-            margin-top: 3rem;
         }
 
         footer a {
             color: var(--text-color);
             text-decoration: none;
+            margin: 0 0.5rem;
         }
+
+        footer a:hover { color: var(--accent-color); }
 
         @media (max-width: 768px) {
             .logo { font-size: 1.8rem; }
-            .calc-panel { padding: 1.5rem 1rem; }
-            .result-value { font-size: 1.5rem; }
+            .tools-grid { grid-template-columns: 1fr; }
+        }
+
+        .article-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .article-card:hover {
+            border-color: var(--accent-color);
+            background: rgba(247, 129, 102, 0.05);
+        }
+
+        .article-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .article-content {
+            flex: 1;
+        }
+
+        .article-title-card {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .article-description {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
     </style>
-    <link rel="stylesheet" href="css/common.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <script src="js/discover-more.js"></script>
 </head>
 <body>
 
 <header>
-    <h1 class="logo">💰 Calc.isLinux.com</h1>
+    <h1 class="logo"><a href="index.html">💰 Calc.isLinux.com</a></h1>
     <p class="tagline">Developer Financial Calculator</p>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="https://islinux.com">Main Site</a>
+    </nav>
 </header>
 
 <div class="container">
-    <!-- Calculator Tabs -->
-    <div class="calc-tabs">
-        <button class="calc-tab active" onclick="showCalc('hourly')">Hourly Rate</button>
-        <button class="calc-tab" onclick="showCalc('mortgage')">Mortgage</button>
-        <button class="calc-tab" onclick="showCalc('currency')">Currency</button>
-        <button class="calc-tab" onclick="showCalc('investment')">Investment</button>
-        <button class="calc-tab" onclick="showCalc('freelance')">Freelance Rate</button>
+    <h2 class="section-title">🛠️ Calculator Tools</h2>
+    <div class="tools-grid">
+        <a href="hourly-rate.html" class="tool-card">
+            <div class="tool-icon">⏱️</div>
+            <h3 class="tool-title">Hourly Rate Converter</h3>
+            <p class="tool-description">Convert hourly income to daily, weekly, monthly, and yearly earnings.</p>
+            <span class="tool-tag">Income</span>
+        </a>
+
+        <a href="mortgage-calculator.html" class="tool-card">
+            <div class="tool-icon">🏠</div>
+            <h3 class="tool-title">Mortgage Calculator</h3>
+            <p class="tool-description">Calculate mortgage payments with equal payment vs equal principal comparison.</p>
+            <span class="tool-tag">Loan</span>
+        </a>
+
+        <a href="currency-converter.html" class="tool-card">
+            <div class="tool-icon">💱</div>
+            <h3 class="tool-title">Currency Converter</h3>
+            <p class="tool-description">Convert between major world currencies with real-time exchange rates.</p>
+            <span class="tool-tag">Currency</span>
+        </a>
+
+        <a href="investment-calculator.html" class="tool-card">
+            <div class="tool-icon">📈</div>
+            <h3 class="tool-title">Investment Calculator</h3>
+            <p class="tool-description">Calculate investment returns with compound interest and monthly contributions.</p>
+            <span class="tool-tag">Investment</span>
+        </a>
+
+        <a href="freelance-rate.html" class="tool-card">
+            <div class="tool-icon">💼</div>
+            <h3 class="tool-title">Freelance Rate Calculator</h3>
+            <p class="tool-description">Scientifically calculate your ideal hourly rate based on target income.</p>
+            <span class="tool-tag">Freelance</span>
+        </a>
     </div>
 
-    <!-- Hourly Rate Calculator -->
-    <div id="hourly" class="calc-panel active">
-        <h2 class="panel-title">⏱️ Hourly to Monthly Converter</h2>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Hourly Rate (USD/hour)</label>
-                <input type="number" id="hourly-rate" placeholder="e.g., 50" oninput="calcHourly()">
-                <span class="hint">Your hourly income</span>
-            </div>
-            <div class="form-group">
-                <label>Hours per Week</label>
-                <input type="number" id="hourly-weekly" value="40" oninput="calcHourly()">
-                <span class="hint">Standard work week is 40 hours</span>
-            </div>
-        </div>
-        <div class="result-box">
-            <div class="result-label">Estimated Monthly Income</div>
-            <div class="result-value" id="hourly-result">$0</div>
-            <div class="result-details">
-                <div class="detail-item">
-                    <div class="detail-label">Daily Income</div>
-                    <div class="detail-value" id="hourly-daily">$0</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Weekly Income</div>
-                    <div class="detail-value" id="hourly-weekly-result">$0</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Yearly Income</div>
-                    <div class="detail-value" id="hourly-yearly">$0</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mortgage Calculator -->
-    <div id="mortgage" class="calc-panel">
-        <h2 class="panel-title">🏠 Mortgage Calculator</h2>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Loan Amount</label>
-                <input type="number" id="mortgage-amount" placeholder="e.g., 200000" oninput="calcMortgage()">
-            </div>
-            <div class="form-group">
-                <label>Annual Interest Rate (%)</label>
-                <input type="number" id="mortgage-rate" placeholder="e.g., 4.2" step="0.01" oninput="calcMortgage()">
-            </div>
-            <div class="form-group">
-                <label>Loan Term (Years)</label>
-                <select id="mortgage-years" onchange="calcMortgage()">
-                    <option value="10">10 Years</option>
-                    <option value="15">15 Years</option>
-                    <option value="20" selected>20 Years</option>
-                    <option value="25">25 Years</option>
-                    <option value="30">30 Years</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Payment Type</label>
-                <select id="mortgage-type" onchange="calcMortgage()">
-                    <option value="equal-payment">Equal Payment (Principal + Interest)</option>
-                    <option value="equal-principal">Equal Principal</option>
-                </select>
-            </div>
-        </div>
-        <div class="btn-container">
-            <button class="btn btn-primary" onclick="calcMortgage()">Calculate</button>
-        </div>
-        <div class="result-box" id="mortgage-result" style="display: none;">
-            <div class="result-label">Monthly Payment</div>
-            <div class="result-value" id="mortgage-monthly">$0</div>
-            <div class="result-details">
-                <div class="detail-item">
-                    <div class="detail-label">Total Payment</div>
-                    <div class="detail-value" id="mortgage-total">$0</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Total Interest</div>
-                    <div class="detail-value" id="mortgage-interest">$0</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Currency Calculator -->
-    <div id="currency" class="calc-panel">
-        <h2 class="panel-title">💱 Currency Converter</h2>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Amount</label>
-                <input type="number" id="currency-amount" placeholder="e.g., 1000" value="1000" oninput="calcCurrency()">
-            </div>
-            <div class="form-group">
-                <label>From</label>
-                <select id="currency-from" onchange="calcCurrency()">
-                    <option value="USD">USD (US Dollar)</option>
-                    <option value="CNY">CNY (Chinese Yuan)</option>
-                    <option value="EUR">EUR (Euro)</option>
-                    <option value="GBP">GBP (British Pound)</option>
-                    <option value="JPY">JPY (Japanese Yen)</option>
-                    <option value="HKD">HKD (Hong Kong Dollar)</option>
-                    <option value="SGD">SGD (Singapore Dollar)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>To</label>
-                <select id="currency-to" onchange="calcCurrency()">
-                    <option value="USD">USD (US Dollar)</option>
-                    <option value="CNY">CNY (Chinese Yuan)</option>
-                    <option value="EUR">EUR (Euro)</option>
-                    <option value="GBP">GBP (British Pound)</option>
-                    <option value="JPY">JPY (Japanese Yen)</option>
-                    <option value="HKD">HKD (Hong Kong Dollar)</option>
-                    <option value="SGD">SGD (Singapore Dollar)</option>
-                </select>
-            </div>
-        </div>
-        <div class="result-box">
-            <div class="result-label">Converted Amount</div>
-            <div class="result-value" id="currency-result">0.00</div>
-            <div class="result-details" id="currency-rate"></div>
-        </div>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">
-            * Exchange rates are for reference only. Actual transaction rates may vary.
-        </p>
-    </div>
-
-    <!-- Investment Calculator -->
-    <div id="investment" class="calc-panel">
-        <h2 class="panel-title">📈 Investment Return Calculator</h2>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Initial Principal</label>
-                <input type="number" id="invest-principal" placeholder="e.g., 100000" oninput="calcInvest()">
-            </div>
-            <div class="form-group">
-                <label>Annual Return Rate (%)</label>
-                <input type="number" id="invest-rate" placeholder="e.g., 8" step="0.1" oninput="calcInvest()">
-            </div>
-            <div class="form-group">
-                <label>Investment Period (Years)</label>
-                <input type="number" id="invest-years" placeholder="e.g., 10" oninput="calcInvest()">
-            </div>
-            <div class="form-group">
-                <label>Monthly Contribution</label>
-                <input type="number" id="invest-monthly" placeholder="e.g., 500" value="0" oninput="calcInvest()">
-            </div>
-        </div>
-        <div class="result-box" id="invest-result" style="display: none;">
-            <div class="result-label">Final Value</div>
-            <div class="result-value" id="invest-final">$0</div>
-            <div class="result-details">
-                <div class="detail-item">
-                    <div class="detail-label">Total Principal</div>
-                    <div class="detail-value" id="invest-total-principal">$0</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Total Profit</div>
-                    <div class="detail-value" id="invest-profit">$0</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Return Rate</div>
-                    <div class="detail-value" id="invest-roi">0%</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Freelance Rate Calculator -->
-    <div id="freelance" class="calc-panel">
-        <h2 class="panel-title">💼 Freelance Rate Calculator</h2>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Target Annual Income</label>
-                <input type="number" id="freelance-target" placeholder="e.g., 50000" oninput="calcFreelance()">
-                <span class="hint">Your desired annual income</span>
-            </div>
-            <div class="form-group">
-                <label>Working Weeks per Year</label>
-                <input type="number" id="freelance-weeks" placeholder="e.g., 48" value="48" oninput="calcFreelance()">
-                <span class="hint">Actual working weeks after vacation</span>
-            </div>
-            <div class="form-group">
-                <label>Hours per Week</label>
-                <input type="number" id="freelance-hours" placeholder="e.g., 40" value="40" oninput="calcFreelance()">
-            </div>
-            <div class="form-group">
-                <label>Billing Utilization (%)</label>
-                <input type="number" id="freelance-utilization" placeholder="e.g., 60" value="60" oninput="calcFreelance()">
-                <span class="hint">Percentage of time spent on billable work (typically 50-70%)</span>
-            </div>
-        </div>
-        <div class="result-box" id="freelance-result" style="display: none;">
-            <div class="result-label">Suggested Hourly Rate</div>
-            <div class="result-value" id="freelance-hourly">$0/hour</div>
-            <div class="result-details">
-                <div class="detail-item">
-                    <div class="detail-label">Suggested Daily Rate</div>
-                    <div class="detail-value" id="freelance-daily">$0/day</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Project Multiplier</div>
-                    <div class="detail-value" id="freelance-multiplier">1.5x</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Discover More Section -->
-    <section class="discover-section">
-        <h2 class="discover-title">🔍 Discover More</h2>
-        <div class="discover-grid" id="discover-grid"></div>
-    </section>
-
-    <!-- Tool Guide Section -->
-    <section class="tool-guide-section">
-        <div class="tool-guide-content" id="tool-guide-content"></div>
-    </section>
-
-    <!-- Random Articles Section -->
-    <section class="random-articles-section">
-        <h2 class="random-articles-title">📚 Related Articles</h2>
-        <div class="random-articles-grid" id="random-articles-grid"></div>
+    <!-- Article Section -->
+    <section class="article-section">
+        <h2 class="section-title">📚 Related Articles</h2>
+        <div class="article-grid" id="article-grid"></div>
     </section>
 </div>
-
-<div class="toast" id="toast">✅ Copied to clipboard!</div>
 
 <footer>
     <p>&copy; 2026 Calc.isLinux.com</p>
@@ -545,174 +287,6 @@
         <a href="https://islinux.com">Main Site</a>
     </p>
 </footer>
-
-<script>
-    // Show calculator
-    function showCalc(id) {
-        document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        event.currentTarget.classList.add('active');
-    }
-
-    // Format currency
-    function formatMoney(num) {
-        return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-    }
-
-    // Hourly calculator
-    function calcHourly() {
-        const rate = parseFloat(document.getElementById('hourly-rate').value) || 0;
-        const weekly = parseFloat(document.getElementById('hourly-weekly').value) || 40;
-
-        const daily = rate * 8;
-        const weeklyResult = rate * weekly;
-        const monthly = weeklyResult * 4.33;
-        const yearly = monthly * 12;
-
-        document.getElementById('hourly-result').innerText = formatMoney(monthly);
-        document.getElementById('hourly-daily').innerText = formatMoney(daily);
-        document.getElementById('hourly-weekly-result').innerText = formatMoney(weeklyResult);
-        document.getElementById('hourly-yearly').innerText = formatMoney(yearly);
-    }
-
-    // Mortgage calculator
-    function calcMortgage() {
-        const amount = parseFloat(document.getElementById('mortgage-amount').value) || 0;
-        const rate = (parseFloat(document.getElementById('mortgage-rate').value) || 0) / 100;
-        const years = parseFloat(document.getElementById('mortgage-years').value) || 20;
-        const type = document.getElementById('mortgage-type').value;
-
-        if (amount <= 0 || rate <= 0) {
-            document.getElementById('mortgage-result').style.display = 'none';
-            return;
-        }
-
-        const months = years * 12;
-        const monthlyRate = rate / 12;
-        const principal = amount;
-
-        let monthlyPayment, totalPayment, totalInterest;
-
-        if (type === 'equal-payment') {
-            // Equal payment (principal + interest)
-            monthlyPayment = principal * monthlyRate * Math.pow(1 + monthlyRate, months) / (Math.pow(1 + monthlyRate, months) - 1);
-            totalPayment = monthlyPayment * months;
-            totalInterest = totalPayment - principal;
-        } else {
-            // Equal principal
-            const principalMonthly = principal / months;
-            const firstPayment = principalMonthly + principal * monthlyRate;
-            const lastPayment = principalMonthly + principalMonthly * monthlyRate;
-            monthlyPayment = (firstPayment + lastPayment) / 2; // Average monthly payment
-            totalPayment = (principalMonthly + principal * monthlyRate + principalMonthly + principalMonthly * monthlyRate) * months / 2;
-            totalInterest = totalPayment - principal;
-        }
-
-        document.getElementById('mortgage-result').style.display = 'block';
-        document.getElementById('mortgage-monthly').innerText = formatMoney(monthlyPayment);
-        document.getElementById('mortgage-total').innerText = formatMoney(totalPayment);
-        document.getElementById('mortgage-interest').innerText = formatMoney(totalInterest);
-    }
-
-    // Currency calculator (using fixed rates for demo)
-    const rates = {
-        USD: 1,
-        CNY: 7.25,
-        EUR: 0.92,
-        GBP: 0.79,
-        JPY: 150,
-        HKD: 7.82,
-        SGD: 1.35
-    };
-
-    function calcCurrency() {
-        const amount = parseFloat(document.getElementById('currency-amount').value) || 0;
-        const from = document.getElementById('currency-from').value;
-        const to = document.getElementById('currency-to').value;
-
-        const result = amount * (rates[to] / rates[from]);
-        const rate = rates[to] / rates[from];
-
-        document.getElementById('currency-result').innerText = result.toFixed(2) + ' ' + to;
-        document.getElementById('currency-rate').innerHTML = `
-            <div class="detail-item">
-                <div class="detail-label">Exchange Rate</div>
-                <div class="detail-value">1 ${from} = ${rate.toFixed(4)} ${to}</div>
-            </div>
-        `;
-    }
-
-    // Investment calculator
-    function calcInvest() {
-        const principal = parseFloat(document.getElementById('invest-principal').value) || 0;
-        const rate = (parseFloat(document.getElementById('invest-rate').value) || 0) / 100;
-        const years = parseFloat(document.getElementById('invest-years').value) || 0;
-        const monthly = parseFloat(document.getElementById('invest-monthly').value) || 0;
-
-        if (principal <= 0 && monthly <= 0) {
-            document.getElementById('invest-result').style.display = 'none';
-            return;
-        }
-
-        const monthlyRate = rate / 12;
-        const totalMonths = years * 12;
-
-        // Initial principal compound interest
-        const principalFinal = principal * Math.pow(1 + rate, years);
-
-        // Monthly contributions
-        let monthlyFinal = 0;
-        if (monthly > 0 && monthlyRate > 0) {
-            monthlyFinal = monthly * (Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate;
-        } else if (monthly > 0) {
-            monthlyFinal = monthly * totalMonths;
-        }
-
-        const final = principalFinal + monthlyFinal;
-        const totalPrincipal = principal + monthly * totalMonths;
-        const profit = final - totalPrincipal;
-        const roi = totalPrincipal > 0 ? (profit / totalPrincipal) * 100 : 0;
-
-        document.getElementById('invest-result').style.display = 'block';
-        document.getElementById('invest-final').innerText = formatMoney(final);
-        document.getElementById('invest-total-principal').innerText = formatMoney(totalPrincipal);
-        document.getElementById('invest-profit').innerText = formatMoney(profit);
-        document.getElementById('invest-roi').innerText = roi.toFixed(1) + '%';
-    }
-
-    // Freelance rate calculator
-    function calcFreelance() {
-        const target = parseFloat(document.getElementById('freelance-target').value) || 0;
-        const weeks = parseFloat(document.getElementById('freelance-weeks').value) || 48;
-        const hours = parseFloat(document.getElementById('freelance-hours').value) || 40;
-        const utilization = (parseFloat(document.getElementById('freelance-utilization').value) || 60) / 100;
-
-        if (target <= 0) {
-            document.getElementById('freelance-result').style.display = 'none';
-            return;
-        }
-
-        const billableHours = weeks * hours * utilization;
-        const hourly = target / billableHours;
-        const daily = hourly * 8;
-
-        document.getElementById('freelance-result').style.display = 'block';
-        document.getElementById('freelance-hourly').innerText = formatMoney(hourly) + '/hour';
-        document.getElementById('freelance-daily').innerText = formatMoney(daily) + '/day';
-
-        // Project multiplier suggestion
-        let multiplier = 1.2;
-        if (utilization < 0.5) multiplier = 2.0;
-        else if (utilization < 0.6) multiplier = 1.5;
-        else if (utilization < 0.7) multiplier = 1.3;
-
-        document.getElementById('freelance-multiplier').innerText = multiplier.toFixed(1) + 'x';
-    }
-
-    // Initialize
-    calcCurrency();
-</script>
 
 </body>
 </html>

@@ -24,7 +24,7 @@ Related Articles (2 篇随机文章)
 
 ```
 islinux_calc/
-├── index.html              # 首页（计算器工具）
+├── index.html              # 首页（工具导航）
 ├── about.html              # 关于页面
 ├── css/
 │   └── common.css          # 通用样式（所有页面共享）
@@ -32,6 +32,12 @@ islinux_calc/
 │   └── discover-more.js    # Discover More + Tool Guide + Random Articles
 ├── articles/               # 文章目录
 │   └── freelancer-rate-calculator.html
+├── 工具页面
+│   ├── hourly-rate.html           # 时薪转换器
+│   ├── mortgage-calculator.html   # 房贷计算器
+│   ├── currency-converter.html    # 货币转换器
+│   ├── investment-calculator.html # 投资收益计算器
+│   └── freelance-rate.html        # 自由职业者费率计算器
 └── DEVELOPMENT.md          # 开发手册
 ```
 
