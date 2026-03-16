@@ -34,7 +34,13 @@ islinux_ai/
 │   ├── prompt-engineering-shell.html
 │   ├── ai-code-review-guide.html
 │   └── git-commit-messages.html
-├── *.html                  # 工具页面
+├── *.html                  # 工具页面（6 个）
+│   ├── shell-prompt.html
+│   ├── python-generator.html
+│   ├── readme-generator.html
+│   ├── git-commit.html
+│   ├── sql-optimizer.html
+│   └── debug-assistant.html
 └── DEVELOPMENT.md          # 开发手册
 ```
 
