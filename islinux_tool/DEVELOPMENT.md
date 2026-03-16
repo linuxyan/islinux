@@ -167,6 +167,30 @@ islinux_tool/
 - 平板端：768px - 1024px
 - 手机端：< 768px
 
+## 首页布局
+
+首页采用工具卡片网格布局：
+
+```css
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* 桌面端 4 列 */
+    gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .tools-grid {
+        grid-template-columns: repeat(3, 1fr);  /* 平板端 3 列 */
+    }
+}
+
+@media (max-width: 768px) {
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);  /* 手机端 2 列 */
+    }
+}
+```
+
 ## 代码规范
 
 - HTML 使用语义化标签
