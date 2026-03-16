@@ -23,6 +23,7 @@
             --card-bg: #161b22;
             --border-color: #30363d;
             --text-muted: #8b949e;
+            --code-bg: #000;
             --success-color: #3fb950;
         }
 
@@ -286,7 +287,9 @@
             .result-value { font-size: 1.5rem; }
         }
     </style>
+    <link rel="stylesheet" href="css/common.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/discover-more.js"></script>
 </head>
 <body>
 
@@ -513,18 +516,34 @@
         </div>
     </div>
 
-    <!-- Article Section -->
-    <section class="article-section">
-        <h2 class="section-title">📚 Related Articles</h2>
-        <a href="/articles/freelancer-rate-calculator.html" class="article-card">
-            <h3>💼 Freelancer Project Pricing Strategy and Hourly Rate Calculator</h3>
-            <p>Scientifically calculate your real hourly rate and avoid underpricing. Includes hidden cost checklist, pricing methods, negotiation tips, and contract essentials.</p>
-        </a>
+    <!-- Discover More Section -->
+    <section class="discover-section">
+        <h2 class="discover-title">🔍 Discover More</h2>
+        <div class="discover-grid" id="discover-grid"></div>
+    </section>
+
+    <!-- Tool Guide Section -->
+    <section class="tool-guide-section">
+        <div class="tool-guide-content" id="tool-guide-content"></div>
+    </section>
+
+    <!-- Random Articles Section -->
+    <section class="random-articles-section">
+        <h2 class="random-articles-title">📚 Related Articles</h2>
+        <div class="random-articles-grid" id="random-articles-grid"></div>
     </section>
 </div>
 
+<div class="toast" id="toast">✅ Copied to clipboard!</div>
+
 <footer>
-    <p>&copy; 2026 Calc.isLinux.com | <a href="index.html">Home</a> | <a href="about.html">About</a> | <a href="https://islinux.com/privacy.html">Privacy</a> | <a href="https://islinux.com">Main Site</a></p>
+    <p>&copy; 2026 Calc.isLinux.com</p>
+    <p>
+        <a href="index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="https://islinux.com/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
 </footer>
 
 <script>

@@ -10,7 +10,6 @@
     <style>
         :root { --bg-color: #0d1117; --text-color: #c9d1d9; --accent-color: #f78166; --border-color: #30363d; --text-muted: #8b949e; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; line-height: 1.8; }
-        header { padding: 2rem 1rem; text-align: center; border-bottom: 1px solid var(--border-color); }
         .logo { font-family: 'Courier New', Courier, monospace; font-size: 2rem; font-weight: bold; color: var(--accent-color); }
         .container { max-width: 800px; margin: 0 auto; padding: 3rem 1rem; }
         h1 { color: #fff; }
@@ -20,10 +19,21 @@
         footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); }
         footer a { color: var(--text-color); text-decoration: none; }
     </style>
+    <link rel="stylesheet" href="css/common.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/discover-more.js"></script>
 </head>
 <body>
-<header><div class="logo">💰 Calc.isLinux.com</div></header>
+
+<header>
+    <div class="logo">💰 Calc.isLinux.com</div>
+    <nav style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+        <a href="index.html" style="color: var(--text-color); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px;">Home</a>
+        <a href="about.html" style="color: var(--text-color); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px;">About</a>
+        <a href="https://islinux.com" style="color: var(--text-color); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px;">Main Site</a>
+    </nav>
+</header>
+
 <div class="container">
     <h1>About Calc.isLinux</h1>
     <p>Calc.isLinux.com is a financial and efficiency calculator subsite under isLinux, designed specifically for developers and freelancers.</p>
@@ -38,6 +48,35 @@
     <h2>Contact Us</h2>
     <p>For any questions or suggestions, please contact: contact@islinux.com</p>
 </div>
-<footer><p>&copy; 2026 Calc.isLinux.com | <a href="index.html">Home</a> | <a href="https://islinux.com/privacy.html">Privacy Policy</a> | <a href="https://islinux.com">Main Site</a></p></footer>
+
+<!-- Discover More Section -->
+<section class="discover-section">
+    <h2 class="discover-title">🔍 Discover More</h2>
+    <div class="discover-grid" id="discover-grid"></div>
+</section>
+
+<!-- Tool Guide Section -->
+<section class="tool-guide-section">
+    <div class="tool-guide-content" id="tool-guide-content"></div>
+</section>
+
+<!-- Random Articles Section -->
+<section class="random-articles-section">
+    <h2 class="random-articles-title">📚 Related Articles</h2>
+    <div class="random-articles-grid" id="random-articles-grid"></div>
+</section>
+
+<footer>
+    <p>&copy; 2026 Calc.isLinux.com</p>
+    <p>
+        <a href="index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="https://islinux.com/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
+</footer>
+
+<div class="toast" id="toast">✅ Copied to clipboard!</div>
+
 </body>
 </html>
