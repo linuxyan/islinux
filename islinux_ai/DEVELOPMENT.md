@@ -7,7 +7,7 @@
 ```
 [Header - 站点导航]
     ↓
-[工具内容区域] (max-width: 900px)
+[工具内容区域] (max-width: 1100px)
     ↓
 Discover More (4 个随机工具推荐)
     ↓

@@ -1,0 +1,70 @@
+Token 计费 vs 显卡租用
+
+计算器的核心逻辑是：对比“按量付费（API）”与“包时付费（租用/自建 GPU 服务器）”的成本临界点。
+
+你可以直接将以下逻辑集成到你的 HTML 页面中。
+
+1. 核心计算逻辑 (JavaScript Prototype)
+这段代码处理了显存估算和成本对比的核心算法：
+
+JavaScript
+const AI_COST_CALCULATOR = {
+    // 基础配置：2026年主流模型数据
+    models: {
+        "llama3-8b": { parameters: 8, vram_base: 16 },
+        "llama3-70b": { parameters: 70, vram_base: 140 },
+        "custom": { parameters: 0, vram_base: 0 }
+    },
+
+    /**
+     * 计算预估显存占用 (GB)
+     * @param {number} params - 参数量 (B)
+     * @param {number} quant - 量化位数 (4, 8, 16)
+     */
+    estimateVRAM: function(params, quant) {
+        const weightSize = (params * quant) / 8; // 基础权重大小
+        const kvCache = weightSize * 0.25;      // 预留上下文缓存 (约25%)
+        return Math.ceil(weightSize + kvCache + 2); // +2GB 系统预留
+    },
+
+    /**
+     * 对比成本
+     * @param {Object} data - 用户输入数据
+     */
+    calculateROI: function(data) {
+        // 1. 公有云 API 总成本 (按月)
+        const dailyTokens = data.avgTokensPerReq * data.dailyRequests;
+        const monthlyApiCost = (dailyTokens / 1000000) * data.apiPricePerM * 30;
+
+        // 2. 自建/租用硬件总成本 (按月)
+        // 硬件成本 = (买入价格 / 折旧月份) + 月电费 + 维护费
+        const monthlyHardwareCost = (data.hardwarePrice / data.depreciationMonths) 
+                                    + data.monthlyElectricity 
+                                    + data.maintenanceFee;
+
+        return {
+            apiMonthly: monthlyApiCost.toFixed(2),
+            hardwareMonthly: monthlyHardwareCost.toFixed(2),
+            isHardwareCheaper: monthlyHardwareCost < monthlyApiCost,
+            breakEvenDays: (data.hardwarePrice / (monthlyApiCost / 30)).toFixed(0)
+        };
+    }
+};
+2. 交互界面设计建议 (UI/UX)
+为了符合 islinux.com 的风格，UI 应当像一个仪表盘：
+
+左侧：输入面板 (Inputs)
+
+模型选择：下拉菜单（Llama 4, Mistral, 甚至 DeepSeek）。
+
+量化设置：Radio 按钮（4-bit, 8-bit, FP16）。
+
+负载滑块：每日请求数 (Requests/Day)。
+
+右侧：结果看板 (Output)
+
+显存预警：如果计算出的 VRAM > 24GB，提示“需要多卡联播或 A100 以上级别”。
+
+成本曲线：一个简单的对比柱状图。
+
+结论金句：例如：“在您的负载下，自建服务器将在 142 天后回本。”

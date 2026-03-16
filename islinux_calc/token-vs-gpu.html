@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Billing vs GPU Rental Calculator | Calc.isLinux - AI Cost Comparison</title>
+    <meta name="description" content="Compare AI API token costs vs self-hosted GPU expenses. Find your break-even point for Llama, Mistral, and other models.">
+    <meta name="keywords" content="AI cost calculator, token billing, GPU rental, LLM hosting, self-host AI">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://calc.islinux.com/token-vs-gpu.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Token Billing vs GPU Rental Calculator | Calc.isLinux">
+    <meta property="og:description" content="Compare AI API token costs vs self-hosted GPU expenses.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calc.islinux.com/token-vs-gpu.html">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #f78166;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+            --success-color: #3fb950;
+            --warning-color: #d29922;
+            --danger-color: #f85149;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(247, 129, 102, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        .logo a { color: var(--accent-color); text-decoration: none; }
+        .logo a:hover { text-decoration: underline; }
+
+        .tagline { color: var(--text-muted); margin: 1rem 0 0; }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+        .calc-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel-title {
+            margin: 0 0 1.5rem;
+            color: #fff;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .calc-grid { grid-template-columns: 1fr; }
+        }
+
+        .input-section, .result-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .form-group .hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .slider-group input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: var(--border-color);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .slider-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .radio-group label:hover {
+            border-color: var(--accent-color);
+        }
+
+        .radio-group input[type="radio"]:checked + span {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, rgba(247, 129, 102, 0.1) 0%, rgba(247, 129, 102, 0.05) 100%);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .result-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .detail-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-color);
+            border-radius: 6px;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-value {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .conclusion-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .conclusion-title {
+            color: #fff;
+            font-size: 1rem;
+            margin: 0 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .conclusion-text {
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .vram-alert {
+            background: rgba(210, 153, 34, 0.15);
+            border: 1px solid var(--warning-color);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .vram-alert.danger {
+            background: rgba(248, 81, 73, 0.15);
+            border-color: var(--danger-color);
+        }
+
+        .vram-alert-icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .vram-alert-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .comparison-chart {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            height: 200px;
+            align-items: flex-end;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--accent-color) 0%, rgba(247, 129, 102, 0.3) 100%);
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            min-height: 20px;
+            transition: height 0.3s ease;
+        }
+
+        .chart-bar.api {
+            background: linear-gradient(180deg, #58a6ff 0%, rgba(88, 166, 255, 0.3) 100%);
+        }
+
+        .chart-bar.cheaper {
+            background: linear-gradient(180deg, #3fb950 0%, rgba(63, 185, 80, 0.3) 100%);
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .chart-value {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer a:hover { color: var(--accent-color); }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+            .calc-panel { padding: 1.5rem 1rem; }
+            .result-value { font-size: 1.5rem; }
+            .comparison-chart { height: 150px; }
+        }
+    </style>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/discover-more.js"></script>
+</head>
+<body>
+
+<header>
+    <h1 class="logo"><a href="index.html">💰 Calc.isLinux.com</a></h1>
+    <p class="tagline">Developer Financial Calculator</p>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="https://islinux.com">Main Site</a>
+    </nav>
+</header>
+
+<div class="container">
+    <a href="index.html" class="back-link">← Back to Tools</a>
+
+    <div class="calc-panel">
+        <h2 class="panel-title">🤖 Token Billing vs GPU Rental Calculator</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">Compare AI API token costs against self-hosted GPU expenses to find your optimal deployment strategy.</p>
+
+        <div class="calc-grid">
+            <!-- Left: Input Section -->
+            <div class="input-section">
+                <h3 style="color: #fff; margin: 0 0 1rem;">⚙️ Model Configuration</h3>
+
+                <div class="form-group">
+                    <label>AI Model</label>
+                    <select id="model-select" onchange="updateModel()">
+                        <option value="llama3-8b">Llama 3 8B</option>
+                        <option value="llama3-70b">Llama 3 70B</option>
+                        <option value="llama4-8b">Llama 4 8B (2026)</option>
+                        <option value="mistral-12b">Mistral 2026 12B</option>
+                        <option value="codellama-15b">CodeLlama Ultra 15B</option>
+                        <option value="phi4-3b">Phi-4 Mini 3B</option>
+                        <option value="custom">Custom Model</option>
+                    </select>
+                    <span class="hint">Select your target AI model</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Model Parameters (Billion)</label>
+                    <input type="number" id="model-params" placeholder="e.g., 8" value="8" step="0.1" oninput="calculate()">
+                    <span class="hint">Model parameter count in billions</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantization</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="quant" value="4" checked onchange="calculate()">
+                            <span>4-bit</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="quant" value="8" onchange="calculate()">
+                            <span>8-bit</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="quant" value="16" onchange="calculate()">
+                            <span>FP16</span>
+                        </label>
+                    </div>
+                    <span class="hint">Lower quantization = less VRAM, potential quality loss</span>
+                </div>
+
+                <h3 style="color: #fff; margin: 1.5rem 0 1rem;">📊 Workload</h3>
+
+                <div class="slider-group">
+                    <label>Daily Requests</label>
+                    <input type="range" id="daily-requests" min="100" max="100000" value="10000" step="100" oninput="calculate()">
+                    <span class="slider-value" id="daily-requests-value">10,000 requests/day</span>
+                </div>
+
+                <div class="slider-group">
+                    <label>Avg Tokens per Request</label>
+                    <input type="range" id="avg-tokens" min="100" max="10000" value="1000" step="100" oninput="calculate()">
+                    <span class="slider-value" id="avg-tokens-value">1,000 tokens</span>
+                </div>
+
+                <h3 style="color: #fff; margin: 1.5rem 0 1rem;">💰 API Pricing</h3>
+
+                <div class="form-group">
+                    <label>API Price per 1M Tokens ($)</label>
+                    <input type="number" id="api-price" placeholder="e.g., 0.50" value="0.50" step="0.01" oninput="calculate()">
+                    <span class="hint">Typical range: $0.10 - $5.00 per 1M tokens</span>
+                </div>
+
+                <h3 style="color: #fff; margin: 1.5rem 0 1rem;">🖥️ Hardware Costs</h3>
+
+                <div class="form-group">
+                    <label>GPU Hardware Price ($)</label>
+                    <input type="number" id="hardware-price" placeholder="e.g., 2000" value="2000" step="100" oninput="calculate()">
+                    <span class="hint">Single GPU or multi-GPU setup cost</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Depreciation Period (Months)</label>
+                    <input type="number" id="depreciation-months" placeholder="e.g., 24" value="24" step="1" oninput="calculate()">
+                    <span class="hint">Expected hardware lifespan</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Monthly Electricity ($)</label>
+                    <input type="number" id="monthly-electricity" placeholder="e.g., 50" value="50" step="10" oninput="calculate()">
+                    <span class="hint">Power consumption cost per month</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Monthly Maintenance ($)</label>
+                    <input type="number" id="maintenance-fee" placeholder="e.g., 20" value="20" step="10" oninput="calculate()">
+                    <span class="hint">Cloud hosting, repairs, etc.</span>
+                </div>
+            </div>
+
+            <!-- Right: Result Section -->
+            <div class="result-section">
+                <h3 style="color: #fff; margin: 0 0 1rem;">💻 VRAM Requirement</h3>
+
+                <div class="result-box">
+                    <div class="result-label">Estimated VRAM Usage</div>
+                    <div class="result-value" id="vram-result">0 GB</div>
+                    <div class="vram-alert" id="vram-alert">
+                        <span class="vram-alert-icon">⚠️</span>
+                        <span class="vram-alert-text" id="vram-alert-text"></span>
+                    </div>
+                </div>
+
+                <h3 style="color: #fff; margin: 1.5rem 0 1rem;">📈 Monthly Cost Comparison</h3>
+
+                <div class="comparison-chart">
+                    <div class="chart-bar api" id="chart-api">
+                        <span class="chart-value" id="chart-api-value">$0</span>
+                        <span class="chart-label">API Cost</span>
+                    </div>
+                    <div class="chart-bar" id="chart-hardware">
+                        <span class="chart-value" id="chart-hardware-value">$0</span>
+                        <span class="chart-label">Self-Host Cost</span>
+                    </div>
+                </div>
+
+                <div class="result-details">
+                    <div class="detail-item">
+                        <div class="detail-label">API Monthly Cost</div>
+                        <div class="detail-value" id="api-monthly">$0</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Self-Host Monthly Cost</div>
+                        <div class="detail-value" id="hardware-monthly">$0</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Break-even Point</div>
+                        <div class="detail-value" id="break-even">0 days</div>
+                    </div>
+                </div>
+
+                <div class="conclusion-box">
+                    <h4 class="conclusion-title" id="conclusion-title">💡 Analysis</h4>
+                    <p class="conclusion-text" id="conclusion-text">Enter your parameters to see the cost comparison.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discover More Section -->
+    <section class="discover-section">
+        <h2 class="discover-title">🔍 Discover More</h2>
+        <div class="discover-grid" id="discover-grid"></div>
+    </section>
+
+    <!-- Tool Guide Section -->
+    <section class="tool-guide-section">
+        <div class="tool-guide-content" id="tool-guide-content"></div>
+    </section>
+
+    <!-- Random Articles Section -->
+    <section class="random-articles-section">
+        <h2 class="random-articles-title">📚 Related Articles</h2>
+        <div class="random-articles-grid" id="random-articles-grid"></div>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2026 Calc.isLinux.com</p>
+    <p>
+        <a href="index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="https://islinux.com/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
+</footer>
+
+<div class="toast" id="toast">✅ Copied to clipboard!</div>
+
+<script>
+// Model configurations (2026 data)
+const MODELS = {
+    "llama3-8b": { params: 8, vramBase: 16 },
+    "llama3-70b": { params: 70, vramBase: 140 },
+    "llama4-8b": { params: 8, vramBase: 18 },
+    "mistral-12b": { params: 12, vramBase: 24 },
+    "codellama-15b": { params: 15, vramBase: 30 },
+    "phi4-3b": { params: 3, vramBase: 6 },
+    "custom": { params: 0, vramBase: 0 }
+};
+
+/**
+ * Estimate VRAM usage in GB
+ * @param {number} params - Parameters in billions
+ * @param {number} quant - Quantization bits (4, 8, 16)
+ */
+function estimateVRAM(params, quant) {
+    const weightSize = (params * quant) / 8; // Weight size in GB
+    const kvCache = weightSize * 0.25; // KV cache ~25%
+    return Math.ceil(weightSize + kvCache + 2); // +2GB system reserve
+}
+
+/**
+ * Calculate cost comparison
+ */
+function calculate() {
+    // Get inputs
+    const params = parseFloat(document.getElementById('model-params').value) || 0;
+    const quant = parseInt(document.querySelector('input[name="quant"]:checked').value);
+    const dailyRequests = parseInt(document.getElementById('daily-requests').value);
+    const avgTokens = parseInt(document.getElementById('avg-tokens').value);
+    const apiPrice = parseFloat(document.getElementById('api-price').value) || 0;
+    const hardwarePrice = parseFloat(document.getElementById('hardware-price').value) || 0;
+    const depreciationMonths = parseInt(document.getElementById('depreciation-months').value) || 24;
+    const monthlyElectricity = parseFloat(document.getElementById('monthly-electricity').value) || 0;
+    const maintenanceFee = parseFloat(document.getElementById('maintenance-fee').value) || 0;
+
+    // Update slider displays
+    document.getElementById('daily-requests-value').textContent = dailyRequests.toLocaleString() + ' requests/day';
+    document.getElementById('avg-tokens-value').textContent = avgTokens.toLocaleString() + ' tokens';
+
+    // Calculate VRAM
+    const vram = estimateVRAM(params, quant);
+    document.getElementById('vram-result').textContent = vram + ' GB';
+
+    // VRAM alerts
+    const vramAlert = document.getElementById('vram-alert');
+    const vramAlertText = document.getElementById('vram-alert-text');
+    vramAlert.classList.remove('danger');
+
+    if (vram > 24 && vram <= 48) {
+        vramAlert.style.display = 'block';
+        vramAlertText.textContent = 'Requires 24GB+ VRAM. Consider RTX 3090/4090 or A10/A100.';
+    } else if (vram > 48) {
+        vramAlert.style.display = 'block';
+        vramAlert.classList.add('danger');
+        vramAlertText.textContent = 'Requires multi-GPU setup or A100 80GB. Consider model parallelism or cloud hosting.';
+    } else {
+        vramAlert.style.display = 'none';
+    }
+
+    // Calculate costs
+    const dailyTokens = avgTokens * dailyRequests;
+    const monthlyApiCost = (dailyTokens / 1000000) * apiPrice * 30;
+    const monthlyHardwareCost = (hardwarePrice / depreciationMonths) + monthlyElectricity + maintenanceFee;
+
+    // Update results
+    document.getElementById('api-monthly').textContent = '$' + monthlyApiCost.toFixed(2);
+    document.getElementById('hardware-monthly').textContent = '$' + monthlyHardwareCost.toFixed(2);
+
+    // Break-even calculation
+    const breakEvenDays = monthlyApiCost > 0 ? Math.round(hardwarePrice / (monthlyApiCost / 30)) : Infinity;
+    document.getElementById('break-even').textContent = isFinite(breakEvenDays) ? breakEvenDays + ' days' : 'N/A';
+
+    // Update chart
+    const maxCost = Math.max(monthlyApiCost, monthlyHardwareCost, 1);
+    const apiHeight = (monthlyApiCost / maxCost) * 100;
+    const hardwareHeight = (monthlyHardwareCost / maxCost) * 100;
+
+    const chartApi = document.getElementById('chart-api');
+    const chartHardware = document.getElementById('chart-hardware');
+
+    chartApi.style.height = Math.max(apiHeight, 5) + '%';
+    chartHardware.style.height = Math.max(hardwareHeight, 5) + '%';
+
+    document.getElementById('chart-api-value').textContent = '$' + monthlyApiCost.toFixed(0);
+    document.getElementById('chart-hardware-value').textContent = '$' + monthlyHardwareCost.toFixed(0);
+
+    // Update chart colors based on which is cheaper
+    if (monthlyHardwareCost < monthlyApiCost) {
+        chartHardware.classList.add('cheaper');
+        chartApi.classList.remove('cheaper');
+    } else {
+        chartApi.classList.add('cheaper');
+        chartHardware.classList.remove('cheaper');
+    }
+
+    // Generate conclusion
+    const conclusionTitle = document.getElementById('conclusion-title');
+    const conclusionText = document.getElementById('conclusion-text');
+
+    if (monthlyHardwareCost < monthlyApiCost) {
+        const savings = monthlyApiCost - monthlyHardwareCost;
+        conclusionTitle.textContent = '✅ Self-Hosting Recommended';
+        conclusionText.innerHTML = `
+            With your current workload, <strong>self-hosting saves $${savings.toFixed(2)}/month</strong> compared to API usage.
+            Your investment will break even in <strong>${isFinite(breakEvenDays) ? breakEvenDays : 'N/A'} days</strong>.
+            After break-even, you'll save approximately <strong>$${(savings * 12).toFixed(0)}/year</strong>.
+        `;
+    } else if (monthlyApiCost < monthlyHardwareCost) {
+        const savings = monthlyHardwareCost - monthlyApiCost;
+        conclusionTitle.textContent = '☁️ API Usage Recommended';
+        conclusionText.innerHTML = `
+            For your current workload, <strong>API usage is $${savings.toFixed(2)}/month cheaper</strong> than self-hosting.
+            Consider API until your daily requests exceed <strong>${Math.round((monthlyHardwareCost * 1000000) / (apiPrice * 30 * avgTokens)).toLocaleString()} requests/day</strong>.
+        `;
+    } else {
+        conclusionTitle.textContent = '⚖️ Costs Are Equal';
+        conclusionText.textContent = 'Both options cost approximately the same. Consider other factors like privacy, latency, and customization needs.';
+    }
+}
+
+function updateModel() {
+    const modelKey = document.getElementById('model-select').value;
+    const model = MODELS[modelKey];
+
+    if (modelKey !== 'custom') {
+        document.getElementById('model-params').value = model.params;
+    }
+
+    calculate();
+}
+
+// Initial calculation
+calculate();
+</script>
+
+</body>
+</html>

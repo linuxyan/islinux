@@ -5,11 +5,13 @@
         { href: 'mortgage-calculator.html', icon: '🏠', title: 'Mortgage Calculator', description: 'Calculate mortgage payments and interest.' },
         { href: 'currency-converter.html', icon: '💱', title: 'Currency Converter', description: 'Convert between major world currencies.' },
         { href: 'investment-calculator.html', icon: '📈', title: 'Investment Calculator', description: 'Calculate investment returns and compound interest.' },
-        { href: 'freelance-rate.html', icon: '💼', title: 'Freelance Rate', description: 'Calculate your ideal freelance hourly rate.' }
+        { href: 'freelance-rate.html', icon: '💼', title: 'Freelance Rate', description: 'Calculate your ideal freelance hourly rate.' },
+        { href: 'token-vs-gpu.html', icon: '🤖', title: 'Token vs GPU', description: 'Compare AI API token costs vs self-hosted GPU expenses.' }
     ];
 
     const articles = [
-        { href: 'articles/freelancer-rate-calculator.html', icon: '📚', title: 'Freelancer Pricing Strategy', description: 'Scientifically calculate your real hourly rate and avoid underpricing.' }
+        { href: 'articles/freelancer-rate-calculator.html', icon: '📚', title: 'Freelancer Pricing Strategy', description: 'Scientifically calculate your real hourly rate and avoid underpricing.' },
+        { href: 'articles/gpu-quantization-guide.html', icon: '🖥️', title: '2026 GPU Computing Guide', description: 'Why 4-bit quantization is a lifesaver for small businesses running AI models.' }
     ];
 
     const toolGuides = {
@@ -103,6 +105,33 @@
                 </ul>
                 <h3>💡 Billable Utilization</h3>
                 <p>Most freelancers achieve 50-70% billable time. The rest goes to admin, marketing, and learning.</p>
+            `
+        },
+        'token-vs-gpu.html': {
+            title: 'How to Use Token vs GPU Calculator',
+            content: `
+                <h3>📋 Usage</h3>
+                <ul>
+                    <li>Select an AI model from the dropdown (Llama, Mistral, etc.)</li>
+                    <li>Set quantization level (4-bit, 8-bit, or FP16)</li>
+                    <li>Adjust daily requests and tokens per request sliders</li>
+                    <li>Enter API pricing per 1M tokens</li>
+                    <li>Enter hardware costs: GPU price, depreciation period, electricity, maintenance</li>
+                    <li>Compare monthly costs and break-even point</li>
+                </ul>
+                <h3>💡 Tips</h3>
+                <ul>
+                    <li><strong>4-bit quantization:</strong> Best for low VRAM, minimal quality loss for most tasks</li>
+                    <li><strong>8-bit quantization:</strong> Good balance between VRAM and quality</li>
+                    <li><strong>FP16:</strong> Full precision, requires high-end GPUs</li>
+                </ul>
+                <h3>🖥️ VRAM Guidelines</h3>
+                <ul>
+                    <li>8B models @ 4-bit: ~6GB VRAM</li>
+                    <li>70B models @ 4-bit: ~35GB VRAM</li>
+                    <li>Consumer GPUs: RTX 3090/4090 (24GB), RTX 4070 (12GB)</li>
+                    <li>Professional: A100 (40/80GB), H100 (80GB)</li>
+                </ul>
             `
         }
     };
