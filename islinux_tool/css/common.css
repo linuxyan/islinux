@@ -49,7 +49,12 @@
     text-decoration: none;
     color: inherit;
     transition: all 0.2s;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    aspect-ratio: 1;
 }
 
 .discover-card:hover {
