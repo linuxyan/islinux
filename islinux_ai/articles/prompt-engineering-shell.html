@@ -16,16 +16,79 @@
     <meta property="og:url" content="https://ai.islinux.com/articles/prompt-engineering-shell.html">
 
     <style>
-        :root { --bg-color: #0d1117; --text-color: #c9d1d9; --accent-color: #58a6ff; --card-bg: #161b22; --border-color: #30363d; --text-muted: #8b949e; --code-bg: #000; }
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+            --ai-blue: #58a6ff;
+        }
         * { box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; line-height: 1.8; }
-        header { padding: 2rem 1rem; text-align: center; border-bottom: 1px solid var(--border-color); }
-        .back-link { display: inline-block; color: var(--text-color); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem; }
-        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(88, 166, 255, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--ai-blue);
+            margin: 0;
+        }
+
+        .logo a { color: var(--ai-blue); text-decoration: none; }
+        .logo a:hover { text-decoration: underline; }
+
+        .tagline { color: var(--text-muted); margin: 1rem 0 0; }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { border-color: var(--ai-blue); color: var(--ai-blue); }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        .back-link:hover { border-color: var(--ai-blue); color: var(--ai-blue); }
         .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
         article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
         .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
-        article h2 { color: var(--accent-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-top: 2.5rem; }
+        article h2 { color: var(--ai-blue); border-left: 3px solid var(--ai-blue); padding-left: 1rem; margin-top: 2.5rem; }
         article h3 { color: #fff; margin-top: 1.5rem; }
         article p { margin: 1rem 0; }
         article ul { margin: 1rem 0; padding-left: 2rem; }
@@ -36,15 +99,39 @@
         table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
         th, td { border: 1px solid var(--border-color); padding: 0.8rem; text-align: left; }
         th { background: var(--card-bg); color: #fff; }
-        .blockquote { border-left: 4px solid var(--accent-color); padding-left: 1rem; margin: 1.5rem 0; color: var(--text-muted); }
-        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); margin-top: 3rem; }
-        footer a { color: var(--text-color); text-decoration: none; }
+        .blockquote { border-left: 4px solid var(--ai-blue); padding-left: 1rem; margin: 1.5rem 0; color: var(--text-muted); background: var(--card-bg); padding: 1rem; border-radius: 0 4px 4px 0; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        footer a { color: var(--text-color); text-decoration: none; margin: 0 0.5rem; }
+        footer a:hover { color: var(--ai-blue); }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+        }
     </style>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body>
-<header><a href="https://islinux.com" class="back-link">← Back to Home</a></header>
+
+<header>
+    <h1 class="logo"><a href="index.html">🤖 AI.isLinux.com</a></h1>
+    <p class="tagline">Developer AI Toolkit</p>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="https://islinux.com">Main Site</a>
+    </nav>
+</header>
+
 <div class="container">
+    <a href="index.html" class="back-link">← Back to Tools</a>
+
     <article>
         <h1>🤖 AI Prompt Engineering: How to Write Perfect Shell Script Generation Prompts</h1>
         <div class="meta">18 min read</div>
@@ -152,10 +239,20 @@ main "$@"</code></pre>
         <hr style="border-color: var(--border-color); margin: 2rem 0;">
         <p><strong>Related Reading:</strong></p>
         <ul>
-            <li><a href="https://islinux.com/articles/linux-productivity-tools-2026.html" style="color: var(--accent-color);">Linux Productivity Tools Guide</a></li>
+            <li><a href="https://islinux.com/articles/linux-productivity-tools-2026.html" style="color: var(--ai-blue);">Linux Productivity Tools Guide</a></li>
         </ul>
     </article>
 </div>
-<footer><p>&copy; 2026 isLinux.com</p><p><a href="https://islinux.com">Back to Home</a></p></footer>
+
+<footer>
+    <p>&copy; 2026 AI.isLinux.com</p>
+    <p>
+        <a href="index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="https://islinux.com/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
+</footer>
+
 </body>
 </html>

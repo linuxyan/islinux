@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Prompts | isLinux - Developer Prompt Library</title>
-    <meta name="description" content="AI prompt library for developers: code generation, debugging, documentation, Shell scripts.">
-    <meta name="keywords" content="AI prompts, ChatGPT, developer tools, code generation, shell scripts">
+    <title>AI Tools | isLinux - Developer AI Toolkit</title>
+    <meta name="description" content="AI tools for developers: prompt library, code generation, debugging, documentation, SQL optimization, and Git tools.">
+    <meta name="keywords" content="AI tools, developer tools, code generation, debugging, prompts">
     <meta name="author" content="isLinux Team">
     <link rel="canonical" href="https://ai.islinux.com">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="AI Prompts | isLinux">
-    <meta property="og:description" content="AI prompt library for developers: code generation, debugging, documentation.">
+    <meta property="og:title" content="AI Tools | isLinux">
+    <meta property="og:description" content="AI tools for developers: prompt library, code generation, debugging, documentation.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ai.islinux.com">
 
@@ -23,7 +23,7 @@
             --card-bg: #161b22;
             --border-color: #30363d;
             --text-muted: #8b949e;
-            --code-bg: #000;
+            --ai-blue: #58a6ff;
         }
 
         * { box-sizing: border-box; }
@@ -48,167 +48,90 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 2.5rem;
             font-weight: bold;
-            color: #58a6ff;
+            color: var(--ai-blue);
             margin: 0;
         }
 
-        .tagline {
-            color: var(--text-muted);
-            margin: 1rem 0;
-        }
+        .logo a { color: var(--ai-blue); text-decoration: none; }
+        .logo a:hover { text-decoration: underline; }
 
-        /* Container */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
+        .tagline { color: var(--text-muted); margin: 1rem 0 0; }
 
-        /* Category Tabs */
-        .category-tabs {
+        /* Navigation */
+        nav {
             display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
             justify-content: center;
-        }
-
-        .category-tab {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
-
-        .category-tab:hover,
-        .category-tab.active {
-            background: var(--accent-color);
-            border-color: var(--accent-color);
-            color: #fff;
-        }
-
-        /* Prompt Cards */
-        .prompt-grid {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .prompt-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: all 0.2s;
-        }
-
-        .prompt-card:hover {
-            border-color: #58a6ff;
-            transform: translateY(-2px);
-        }
-
-        .prompt-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            gap: 1rem;
             flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .prompt-title {
-            margin: 0;
-            color: #58a6ff;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .prompt-category {
-            background: rgba(88, 166, 255, 0.15);
-            color: #58a6ff;
-            padding: 0.2rem 0.8rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-        }
-
-        .prompt-body {
-            padding: 1.5rem;
-        }
-
-        .prompt-description {
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .prompt-code {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 1rem;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.85rem;
-            white-space: pre-wrap;
-            word-break: break-word;
-            color: #7ee787;
-            max-height: 200px;
-            overflow-y: auto;
-            margin: 0;
-            display: block;
-        }
-
-        .prompt-actions {
-            display: flex;
-            gap: 1rem;
             margin-top: 1rem;
         }
 
-        .btn {
-            padding: 0.6rem 1.2rem;
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
             border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
             transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 0.9rem;
         }
 
-        .btn-primary {
-            background: var(--accent-color);
-            color: #fff;
+        nav a:hover { border-color: var(--ai-blue); color: var(--ai-blue); }
+
+        /* Container */
+        .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1rem; }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        .btn-primary:hover {
-            background: #2ea043;
-        }
-
-        /* Search */
-        .search-box {
-            max-width: 500px;
-            margin: 0 auto 2rem;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 0.8rem 1.2rem;
+        .tool-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: var(--text-color);
-            font-size: 1rem;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+            display: block;
         }
 
-        .search-input:focus {
-            outline: none;
-            border-color: #58a6ff;
+        .tool-card:hover {
+            border-color: var(--ai-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.1);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-title {
+            margin: 0 0 0.5rem;
+            color: var(--ai-blue);
+            font-size: 1.2rem;
+        }
+
+        .tool-description {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .tool-tag {
+            display: inline-block;
+            background: rgba(88, 166, 255, 0.15);
+            color: var(--ai-blue);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-top: 1rem;
         }
 
         /* Article Section */
@@ -263,31 +186,14 @@
         footer a {
             color: var(--text-color);
             text-decoration: none;
+            margin: 0 0.5rem;
         }
 
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--accent-color);
-            color: #fff;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        footer a:hover { color: var(--ai-blue); }
 
         @media (max-width: 768px) {
             .logo { font-size: 1.8rem; }
-            .prompt-header { flex-direction: column; align-items: flex-start; }
+            .tools-grid { grid-template-columns: 1fr; }
         }
     </style>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -295,207 +201,65 @@
 <body>
 
 <header>
-    <h1 class="logo">🤖 AI.isLinux.com</h1>
-    <p class="tagline">Developer AI Prompt Library</p>
+    <h1 class="logo"><a href="index.html">🤖 AI.isLinux.com</a></h1>
+    <p class="tagline">Developer AI Toolkit</p>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="https://islinux.com">Main Site</a>
+    </nav>
 </header>
 
 <div class="container">
-    <!-- Search -->
-    <div class="search-box">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search prompts...">
-    </div>
+    <h2 class="section-title">🛠️ AI Tools</h2>
+    <div class="tools-grid">
+        <a href="shell-prompt.html" class="tool-card">
+            <div class="tool-icon">📜</div>
+            <h3 class="tool-title">Shell Script Optimizer</h3>
+            <p class="tool-description">Let AI check your Bash scripts for security issues and performance problems.</p>
+            <span class="tool-tag">Shell</span>
+        </a>
 
-    <!-- Category Tabs -->
-    <div class="category-tabs">
-        <button class="category-tab active" data-category="all">All</button>
-        <button class="category-tab" data-category="shell">Shell Scripts</button>
-        <button class="category-tab" data-category="code">Code Generation</button>
-        <button class="category-tab" data-category="debug">Debugging</button>
-        <button class="category-tab" data-category="doc">Documentation</button>
-        <button class="category-tab" data-category="sql">SQL</button>
-        <button class="category-tab" data-category="git">Git</button>
-    </div>
+        <a href="python-generator.html" class="tool-card">
+            <div class="tool-icon">💻</div>
+            <h3 class="tool-title">Python Function Generator</h3>
+            <p class="tool-description">Describe your requirements and let AI generate PEP8-compliant Python code.</p>
+            <span class="tool-tag">Code Generation</span>
+        </a>
 
-    <!-- Prompt Grid -->
-    <div class="prompt-grid" id="promptGrid">
-        <!-- Shell Script -->
-        <div class="prompt-card" data-category="shell">
-            <div class="prompt-header">
-                <h3 class="prompt-title">📜 Shell Script Optimizer</h3>
-                <span class="prompt-category">Shell</span>
-            </div>
-            <div class="prompt-body">
-                <p class="prompt-description">Let AI check your Bash scripts for security issues and performance problems.</p>
-                <code class="prompt-code" id="prompt1">Please act as a senior Linux operations expert and review the following Bash script for security, maintainability, and performance issues:
+        <a href="debug-assistant.html" class="tool-card">
+            <div class="tool-icon">🐛</div>
+            <h3 class="tool-title">Code Debugging Assistant</h3>
+            <p class="tool-description">Paste error messages and code to let AI help you quickly identify issues.</p>
+            <span class="tool-tag">Debugging</span>
+        </a>
 
-1. Point out potential security risks (e.g., unquoted variables, command injection risks)
-2. Suggest performance optimizations
-3. Provide specific improvement code
-4. Follow ShellCheck best practices
+        <a href="readme-generator.html" class="tool-card">
+            <div class="tool-icon">📖</div>
+            <h3 class="tool-title">README Generator</h3>
+            <p class="tool-description">Automatically generate professional README documentation based on your project code.</p>
+            <span class="tool-tag">Documentation</span>
+        </a>
 
-Script content:
-[Paste your script here]</code>
-                <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt1')">📋 Copy Prompt</button>
-                </div>
-            </div>
-        </div>
+        <a href="sql-optimizer.html" class="tool-card">
+            <div class="tool-icon">🗄️</div>
+            <h3 class="tool-title">SQL Query Optimizer</h3>
+            <p class="tool-description">Optimize slow queries to improve database performance.</p>
+            <span class="tool-tag">SQL</span>
+        </a>
 
-        <!-- Code Generation -->
-        <div class="prompt-card" data-category="code">
-            <div class="prompt-header">
-                <h3 class="prompt-title">💻 Python Function Generator</h3>
-                <span class="prompt-category">Code Generation</span>
-            </div>
-            <div class="prompt-body">
-                <p class="prompt-description">Describe your requirements and let AI generate PEP8-compliant Python code.</p>
-                <code class="prompt-code" id="prompt2">Please act as a senior Python developer and write a function to implement the following:
-
-Function description: [Detailed description]
-
-Requirements:
-1. Follow PEP8 coding standards
-2. Add complete type annotations
-3. Include detailed docstring (Google style)
-4. Provide 2-3 usage examples
-5. Consider edge cases and error handling
-
-Please output the complete function code.</code>
-                <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt2')">📋 Copy Prompt</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Debugging -->
-        <div class="prompt-card" data-category="debug">
-            <div class="prompt-header">
-                <h3 class="prompt-title">🐛 Code Debugging Assistant</h3>
-                <span class="prompt-category">Debugging</span>
-            </div>
-            <div class="prompt-body">
-                <p class="prompt-description">Paste error messages and code to let AI help you quickly identify issues.</p>
-                <code class="prompt-code" id="prompt3">Please help me debug the following code issue:
-
-Error message:
-[Paste complete error stack trace]
-
-Related code:
-[Paste code]
-
-I have tried:
-1. [Attempted solution 1]
-2. [Attempted solution 2]
-
-Environment information:
-- Language version:
-- Operating system:
-- Related library versions:
-
-Please analyze possible causes and provide solutions.</code>
-                <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt3')">📋 Copy Prompt</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Documentation -->
-        <div class="prompt-card" data-category="doc">
-            <div class="prompt-header">
-                <h3 class="prompt-title">📖 README Generator</h3>
-                <span class="prompt-category">Documentation</span>
-            </div>
-            <div class="prompt-body">
-                <p class="prompt-description">Automatically generate professional README documentation based on your project code.</p>
-                <code class="prompt-code" id="prompt4">Please generate a professional README.md file for the following project:
-
-Project name: [Name]
-Project description: [Brief description]
-Main features:
-- [Feature 1]
-- [Feature 2]
-
-Tech stack: [List technologies used]
-Installation steps: [Brief instructions]
-Usage examples: [Provide examples]
-
-Requirements:
-1. Use Markdown format
-2. Include badges
-3. Include table of contents
-4. Include sections for installation, usage, API documentation
-5. Add contribution guidelines and license information</code>
-                <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt4')">📋 Copy Prompt</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- SQL -->
-        <div class="prompt-card" data-category="sql">
-            <div class="prompt-header">
-                <h3 class="prompt-title">🗄️ SQL Query Optimizer</h3>
-                <span class="prompt-category">SQL</span>
-            </div>
-            <div class="prompt-body">
-                <p class="prompt-description">Optimize slow queries to improve database performance.</p>
-                <code class="prompt-code" id="prompt5">Please act as a database expert and optimize the following SQL query:
-
-Database type: [MySQL/PostgreSQL/SQLite]
-
-Table structure:
-[Describe table structure or provide CREATE TABLE statement]
-
-Current query:
-[Paste SQL]
-
-Problem description:
-- Slow query performance
-- Data volume: approximately [X] rows
-- Expected response time: within [X] ms
-
-Please:
-1. Analyze query performance bottlenecks
-2. Provide optimized SQL
-3. Suggest required indexes
-4. Explain the optimization principles</code>
-                <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt5')">📋 Copy Prompt</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Git -->
-        <div class="prompt-card" data-category="git">
-            <div class="prompt-header">
-                <h3 class="prompt-title">🔧 Git Commit Message Generator</h3>
-                <span class="prompt-category">Git</span>
-            </div>
-            <div class="prompt-body">
-                <p class="prompt-description">Automatically generate standardized commit messages based on code changes.</p>
-                <code class="prompt-code" id="prompt6">Please generate Conventional Commits-compliant commit messages based on the following Git changes:
-
-Change content:
-[Paste git diff or describe changes]
-
-Requirements:
-1. Use Conventional Commits format (feat/fix/docs/style/refactor/perf/test/chore)
-2. Keep title concise (under 50 characters)
-3. Add detailed body description if necessary
-4. Reference related Issues if applicable
-
-Please generate 3 alternative commit messages for selection.</code>
-                <div class="prompt-actions">
-                    <button class="btn btn-primary" onclick="copyText('prompt6')">📋 Copy Prompt</button>
-                </div>
-            </div>
-        </div>
+        <a href="git-commit.html" class="tool-card">
+            <div class="tool-icon">🔧</div>
+            <h3 class="tool-title">Git Commit Message Generator</h3>
+            <p class="tool-description">Automatically generate standardized commit messages based on code changes.</p>
+            <span class="tool-tag">Git</span>
+        </a>
     </div>
 
     <!-- Article Section -->
     <section class="article-section">
         <h2 class="section-title">📚 Related Articles</h2>
-        <a href="/articles/prompt-engineering-shell.html" class="article-card">
+        <a href="articles/prompt-engineering-shell.html" class="article-card">
             <h3>AI Prompt Engineering: How to Write Perfect Shell Script Generation Prompts</h3>
             <p>Master prompt engineering to help AI write high-quality, safe Bash scripts. Includes complete templates, practical examples, and advanced techniques.</p>
         </a>
@@ -503,53 +267,14 @@ Please generate 3 alternative commit messages for selection.</code>
 </div>
 
 <footer>
-    <p>&copy; 2026 AI.isLinux.com | <a href="index.html">Home</a> | <a href="about.html">About</a> | <a href="https://islinux.com/privacy.html">Privacy</a> | <a href="https://islinux.com">Main Site</a></p>
+    <p>&copy; 2026 AI.isLinux.com</p>
+    <p>
+        <a href="index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="https://islinux.com/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
 </footer>
-
-<div class="toast" id="toast">✅ Copied to clipboard!</div>
-
-<script>
-    // Copy function
-    function copyText(id) {
-        const text = document.getElementById(id).innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            showToast();
-        });
-    }
-
-    // Toast
-    function showToast() {
-        const toast = document.getElementById('toast');
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
-    }
-
-    // Category filter
-    document.querySelectorAll('.category-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-
-            const category = tab.dataset.category;
-            document.querySelectorAll('.prompt-card').forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    });
-
-    // Search
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
-        document.querySelectorAll('.prompt-card').forEach(card => {
-            const text = card.innerText.toLowerCase();
-            card.style.display = text.includes(term) ? 'block' : 'none';
-        });
-    });
-</script>
 
 </body>
 </html>

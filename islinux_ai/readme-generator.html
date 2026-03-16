@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README Generator | AI.isLinux</title>
+    <meta name="description" content="AI prompt for generating professional README documentation for your projects.">
+    <meta name="keywords" content="README, documentation, AI prompt, markdown">
+    <link rel="canonical" href="https://ai.islinux.com/readme-generator.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --ai-blue: #58a6ff;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(88, 166, 255, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--ai-blue);
+            margin: 0;
+        }
+
+        .logo a { color: var(--ai-blue); text-decoration: none; }
+        .logo a:hover { text-decoration: underline; }
+
+        .tagline { color: var(--text-muted); margin: 1rem 0 0; }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { border-color: var(--ai-blue); color: var(--ai-blue); }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover { border-color: var(--ai-blue); color: var(--ai-blue); }
+
+        .tool-header {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-header h1 {
+            margin: 0 0 0.5rem;
+            color: var(--ai-blue);
+            font-size: 1.5rem;
+        }
+
+        .tool-header p {
+            margin: 0;
+            color: var(--text-muted);
+        }
+
+        .prompt-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-code {
+            background: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #7ee787;
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-x: auto;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .btn-primary:hover { background: #2ea043; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer a:hover { color: var(--ai-blue); }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-color);
+            color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="logo"><a href="index.html">🤖 AI.isLinux.com</a></h1>
+    <p class="tagline">Developer AI Toolkit</p>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="https://islinux.com">Main Site</a>
+    </nav>
+</header>
+
+<div class="container">
+    <a href="index.html" class="back-link">← Back to Tools</a>
+
+    <div class="tool-header">
+        <h1>📖 README Generator</h1>
+        <p>Automatically generate professional README documentation for your projects</p>
+    </div>
+
+    <div class="prompt-container">
+        <p class="prompt-label">Copy this prompt and paste into your AI chatbot:</p>
+        <code class="prompt-code" id="prompt">Please generate a professional README.md file for the following project:
+
+Project name: [Name]
+Project description: [Brief description]
+Main features:
+- [Feature 1]
+- [Feature 2]
+
+Tech stack: [List technologies used]
+Installation steps: [Brief instructions]
+Usage examples: [Provide examples]
+
+Requirements:
+1. Use Markdown format
+2. Include badges
+3. Include table of contents
+4. Include sections for installation, usage, API documentation
+5. Add contribution guidelines and license information</code>
+        <button class="btn btn-primary" onclick="copyText('prompt')">📋 Copy Prompt</button>
+    </div>
+
+    <div class="prompt-container">
+        <h3 style="color: var(--ai-blue); margin-top: 0;">💡 Tips for Best Results</h3>
+        <ul style="color: var(--text-muted);">
+            <li>Provide a clear and concise project description</li>
+            <li>List all major features and use cases</li>
+            <li>Include screenshots or diagrams if applicable</li>
+            <li>Mention your target audience and prerequisites</li>
+        </ul>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 AI.isLinux.com</p>
+    <p>
+        <a href="index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="https://islinux.com/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
+</footer>
+
+<div class="toast" id="toast">✅ Copied to clipboard!</div>
+
+<script>
+    function copyText(id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            showToast();
+        });
+    }
+
+    function showToast() {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+</script>
+
+</body>
+</html>
