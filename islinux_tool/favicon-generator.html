@@ -412,6 +412,61 @@
 
         .toast.show { transform: translateY(0); opacity: 1; }
 
+        /* Discover More Section */
+        .discover-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .discover-title {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .discover-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .discover-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+            display: block;
+        }
+
+        .discover-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(35, 134, 54, 0.2);
+        }
+
+        .discover-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .discover-title-card {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        .discover-description {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
         @media (max-width: 1024px) {
             .generate-layout {
                 grid-template-columns: 1fr;
@@ -578,6 +633,12 @@
     </p>
 </footer>
 
+<!-- Discover More Section -->
+<section class="discover-section">
+    <h2 class="discover-title">🔍 Discover More</h2>
+    <div class="discover-grid" id="discover-grid"></div>
+</section>
+
 <div class="toast" id="toast">✅ Generated!</div>
 
 <script>
@@ -742,10 +803,40 @@
         setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
+    // Tool data for discover section
+    const tools = [
+        { href: 'json-format.html', icon: '📝', title: 'JSON Formatter', description: 'Format, minify, and validate JSON with customizable indentation.' },
+        { href: 'json-validate.html', icon: '✅', title: 'JSON Validator', description: 'Check JSON syntax and validate your JSON data.' },
+        { href: 'base64.html', icon: '🔐', title: 'Base64 Encoder/Decoder', description: 'Encode text to Base64 or decode Base64 back to text.' },
+        { href: 'url-encode.html', icon: '🔗', title: 'URL Encoder/Decoder', description: 'Encode or decode URL-encoded strings.' },
+        { href: 'hash.html', icon: '🔑', title: 'Hash Calculator', description: 'Calculate MD5, SHA1, SHA256 hashes for any text.' },
+        { href: 'diff.html', icon: '📊', title: 'Text Diff', description: 'Compare two texts and find the differences line by line.' },
+        { href: 'favicon-generator.html', icon: '🎨', title: 'Favicon Generator', description: 'Generate favicon.ico and PNG icons from text with customizable styles.' }
+    ];
+
+    // Render discover more section with 3 random tools (excluding current page)
+    function renderDiscoverMore(currentPage) {
+        const otherTools = tools.filter(tool => !currentPage.includes(tool.href));
+        const shuffled = otherTools.sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 3);
+
+        const grid = document.getElementById('discover-grid');
+        if (grid) {
+            grid.innerHTML = selected.map(tool => `
+                <a href="${tool.href}" class="discover-card">
+                    <div class="discover-icon">${tool.icon}</div>
+                    <h3 class="discover-title-card">${tool.title}</h3>
+                    <p class="discover-description">${tool.description}</p>
+                </a>
+            `).join('');
+        }
+    }
+
     // Generate on load
     window.onload = function() {
         generateColorPalette();
         generateFavicon();
+        renderDiscoverMore(window.location.pathname);
     };
 </script>
 
