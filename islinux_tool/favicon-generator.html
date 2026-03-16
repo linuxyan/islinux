@@ -133,8 +133,9 @@
         }
 
         .option-item label {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
         .option-item input[type="text"],
@@ -145,6 +146,7 @@
             color: var(--text-color);
             padding: 0.6rem 0.8rem;
             font-size: 0.9rem;
+            width: 100%;
         }
 
         .option-item input[type="text"]:focus,
@@ -167,6 +169,104 @@
             gap: 1rem;
             flex-wrap: wrap;
             align-items: center;
+        }
+
+        .generate-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .generate-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .color-picker-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .color-picker-section label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .color-input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .color-input-wrapper input[type="color"] {
+            width: 60px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .color-input-wrapper input[type="text"] {
+            flex: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            padding: 0.6rem 0.8rem;
+            font-size: 0.9rem;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .color-palette-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+            background: #0d1117;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .color-swatch-grid {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 3px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.15s;
+        }
+
+        .color-swatch-grid:hover {
+            transform: scale(1.15);
+            border-color: #fff;
+            z-index: 1;
+        }
+
+        .shade-column {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-left: 4px;
+        }
+
+        .shade-swatch {
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.15s;
+        }
+
+        .shade-swatch:hover {
+            transform: scale(1.15);
+            border-color: #fff;
         }
 
         .btn {
@@ -312,10 +412,22 @@
 
         .toast.show { transform: translateY(0); opacity: 1; }
 
+        @media (max-width: 1024px) {
+            .generate-layout {
+                grid-template-columns: 1fr;
+            }
+            .color-palette-grid {
+                grid-template-columns: repeat(15, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .logo { font-size: 1.8rem; }
             .panel-header { flex-direction: column; align-items: flex-start; }
             .options-grid { grid-template-columns: 1fr; }
+            .color-palette-grid {
+                grid-template-columns: repeat(12, 1fr);
+            }
         }
     </style>
 </head>
@@ -366,78 +478,64 @@
                 </div>
             </div>
 
-            <div class="options-grid">
-                <div class="option-item">
-                    <label>Text (1-2 characters)</label>
-                    <input type="text" id="icon-text" value="is" maxlength="2" oninput="generateFavicon()">
-                </div>
-
-                <div class="option-item">
-                    <label>Font Size</label>
-                    <select id="font-size" onchange="generateFavicon()">
-                        <option value="small">Small</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="large">Large</option>
-                    </select>
-                </div>
-
-                <div class="option-item">
-                    <label>Font Family</label>
-                    <select id="font-family" onchange="generateFavicon()">
-                        <option value="Arial">Arial</option>
-                        <option value="Helvetica">Helvetica</option>
-                        <option value="Times New Roman">Times New Roman</option>
-                        <option value="Courier New">Courier New</option>
-                        <option value="Georgia">Georgia</option>
-                        <option value="Verdana">Verdana</option>
-                        <option value="Impact">Impact</option>
-                        <option value="Comic Sans MS">Comic Sans MS</option>
-                    </select>
-                </div>
-
-                <div class="option-item">
-                    <label>Background Color</label>
-                    <div style="display: flex; gap: 0.5rem; align-items: center;">
-                        <input type="color" id="bg-color" value="#238636" onchange="updateColorValue('bg-color', 'bg-color-value'); generateFavicon()">
-                        <input type="text" id="bg-color-value" value="#238636" style="width: 100px;" onchange="updateColorFromText('bg-color', this.value); generateFavicon()">
+            <div class="generate-layout">
+                <!-- Left: Options -->
+                <div class="generate-options">
+                    <div class="option-item">
+                        <label>Text</label>
+                        <input type="text" id="icon-text" value="F" maxlength="2" oninput="generateFavicon()">
                     </div>
-                    <div class="color-palette" style="display: flex; gap: 0.3rem; margin-top: 0.5rem; flex-wrap: wrap;">
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #238636; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#238636')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #1a7f37; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#1a7f37')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #0d1117; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#0d1117')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #161b22; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#161b22')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #1f6feb; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#1f6feb')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #d29922; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#d29922')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #f85149; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#f85149')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #8957e5; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('bg-color', 'bg-color-value', '#8957e5')"></div>
+
+                    <div class="option-item">
+                        <label>Background</label>
+                        <select id="shape" onchange="generateFavicon()">
+                            <option value="square">Square</option>
+                            <option value="rounded" selected>Rounded</option>
+                            <option value="circle">Circle</option>
+                        </select>
+                    </div>
+
+                    <div class="option-item">
+                        <label>Font Family</label>
+                        <select id="font-family" onchange="generateFavicon()">
+                            <option value="Arial">Arial</option>
+                            <option value="Helvetica">Helvetica</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Impact">Impact</option>
+                            <option value="Comic Sans MS">Comic Sans MS</option>
+                            <option value="Leckerli One">Leckerli One</option>
+                            <option value="Pacifico">Pacifico</option>
+                            <option value="Dancing Script">Dancing Script</option>
+                        </select>
+                    </div>
+
+                    <div class="option-item">
+                        <label>Font Size</label>
+                        <input type="text" id="font-size-value" value="60" onchange="updateFontSize(); generateFavicon()">
                     </div>
                 </div>
 
-                <div class="option-item">
-                    <label>Text Color</label>
-                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <!-- Middle: Font Color -->
+                <div class="color-picker-section">
+                    <label>Font Color</label>
+                    <div class="color-input-wrapper">
                         <input type="color" id="text-color" value="#ffffff" onchange="updateColorValue('text-color', 'text-color-value'); generateFavicon()">
-                        <input type="text" id="text-color-value" value="#ffffff" style="width: 100px;" onchange="updateColorFromText('text-color', this.value); generateFavicon()">
+                        <input type="text" id="text-color-value" value="#ffffff" onchange="updateColorFromText('text-color', this.value); generateFavicon()">
                     </div>
-                    <div class="color-palette" style="display: flex; gap: 0.3rem; margin-top: 0.5rem; flex-wrap: wrap;">
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #ffffff; border-radius: 4px; cursor: pointer; border: 2px solid #30363d;" onclick="selectColor('text-color', 'text-color-value', '#ffffff')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #f0f6fc; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#f0f6fc')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #c9d1d9; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#c9d1d9')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #8b949e; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#8b949e')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #0d1117; border-radius: 4px; cursor: pointer; border: 2px solid #30363d;" onclick="selectColor('text-color', 'text-color-value', '#0d1117')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #7ee787; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#7ee787')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #3fb950; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#3fb950')"></div>
-                        <div class="color-swatch" style="width: 24px; height: 24px; background: #f85149; border-radius: 4px; cursor: pointer; border: 2px solid transparent;" onclick="selectColor('text-color', 'text-color-value', '#f85149')"></div>
-                    </div>
+                    <div class="color-palette-grid" id="font-color-palette"></div>
                 </div>
 
-                <div class="option-item">
-                    <label>Shape</label>
-                    <select id="shape" onchange="generateFavicon()">
-                        <option value="square">Square</option>
-                        <option value="rounded" selected>Rounded</option>
-                        <option value="circle">Circle</option>
-                    </select>
+                <!-- Right: Background Color -->
+                <div class="color-picker-section">
+                    <label>Background Color</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="bg-color" value="#209CEE" onchange="updateColorValue('bg-color', 'bg-color-value'); generateFavicon()">
+                        <input type="text" id="bg-color-value" value="#209CEE" onchange="updateColorFromText('bg-color', this.value); generateFavicon()">
+                    </div>
+                    <div class="color-palette-grid" id="bg-color-palette"></div>
                 </div>
             </div>
         </div>
@@ -485,21 +583,68 @@
 <script>
     let generatedCanvases = {};
 
+    // Generate color palette grid (60 colors: 10x5 + 6 shades)
+    function generateColorPalette() {
+        const hues = [
+            '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
+            '#FFC3A0', '#FFCC33', '#CCFF33', '#33FF57', '#33FFBD',
+            '#FF6B6B', '#FFD93D', '#6BCB77', '#4D96FF', '#FF85A2',
+            '#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#00FFFF',
+            '#8B0000', '#8B4513', '#556B2F', '#006400', '#00008B',
+            '#4B0082', '#8B008B', '#000080', '#008080', '#008000',
+            '#808000', '#800080', '#800000', '#808080', '#C0C0C0',
+            '#FF1493', '#00CED1', '#9400D3', '#FF4500', '#32CD32',
+            '#1E90FF', '#FF69B4', '#ADFF2F', '#DB7093', '#7FFFD4',
+            '#DC143C', '#00FA9A', '#9932CC', '#8A2BE2', '#00BFFF',
+            '#D2691E', '#FF7F50', '#6495ED', '#DA70D6', '#EEE8AA'
+        ];
+
+        const shades = ['#FFFFFF', '#E0E0E0', '#A0A0A0', '#606060', '#303030', '#000000'];
+
+        let paletteHtml = '';
+        for (let i = 0; i < hues.length; i++) {
+            paletteHtml += `<div class="color-swatch-grid" style="background: ${hues[i]};" onclick="selectColor('text-color', 'text-color-value', '${hues[i]}')"></div>`;
+        }
+        for (let i = 0; i < shades.length; i++) {
+            paletteHtml += `<div class="color-swatch-grid" style="background: ${shades[i]}; border: 1px solid #30363d;" onclick="selectColor('text-color', 'text-color-value', '${shades[i]}')"></div>`;
+        }
+        document.getElementById('font-color-palette').innerHTML = paletteHtml;
+
+        // Background color palette (same colors)
+        let bgPaletteHtml = '';
+        for (let i = 0; i < hues.length; i++) {
+            bgPaletteHtml += `<div class="color-swatch-grid" style="background: ${hues[i]};" onclick="selectColor('bg-color', 'bg-color-value', '${hues[i]}')"></div>`;
+        }
+        for (let i = 0; i < shades.length; i++) {
+            bgPaletteHtml += `<div class="color-swatch-grid" style="background: ${shades[i]}; border: 1px solid #30363d;" onclick="selectColor('bg-color', 'bg-color-value', '${shades[i]}')"></div>`;
+        }
+        document.getElementById('bg-color-palette').innerHTML = bgPaletteHtml;
+    }
+
+    function updateFontSize() {
+        // Convert font size value to small/medium/large
+        const sizeValue = parseInt(document.getElementById('font-size-value').value) || 60;
+        const select = document.getElementById('font-size');
+        if (sizeValue <= 40) {
+            select.value = 'small';
+        } else if (sizeValue <= 80) {
+            select.value = 'medium';
+        } else {
+            select.value = 'large';
+        }
+    }
+
     function drawIcon(canvas, size) {
         const ctx = canvas.getContext('2d');
-        const text = document.getElementById('icon-text').value || 'is';
+        const text = document.getElementById('icon-text').value || 'F';
         const bgColor = document.getElementById('bg-color').value;
         const textColor = document.getElementById('text-color').value;
         const fontFamily = document.getElementById('font-family').value;
         const shape = document.getElementById('shape').value;
 
-        // Font size based on icon size
-        let fontSize;
-        switch(document.getElementById('font-size').value) {
-            case 'small': fontSize = size * 0.5; break;
-            case 'medium': fontSize = size * 0.6; break;
-            case 'large': fontSize = size * 0.7; break;
-        }
+        // Font size based on user input (scale proportionally)
+        const baseFontSize = parseInt(document.getElementById('font-size-value').value) || 60;
+        const fontSize = (baseFontSize / 100) * size;
 
         ctx.clearRect(0, 0, size, size);
 
@@ -598,7 +743,10 @@
     }
 
     // Generate on load
-    window.onload = generateFavicon;
+    window.onload = function() {
+        generateColorPalette();
+        generateFavicon();
+    };
 </script>
 
 </body>
