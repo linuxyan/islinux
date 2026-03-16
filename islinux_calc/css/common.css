@@ -2,7 +2,7 @@
 
 /* Discover More Section */
 .discover-section {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 2rem auto 0;
     padding: 2rem 1rem;
     border-top: 1px solid var(--border-color);
@@ -80,7 +80,7 @@
 
 /* Tool Guide Section */
 .tool-guide-section {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 2rem auto 0;
     padding: 2rem 1rem;
     border-top: 1px solid var(--border-color);
@@ -197,7 +197,7 @@
 
 /* Random Articles Section */
 .random-articles-section {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 2rem auto 0;
     padding: 2rem 1rem;
     border-top: 1px solid var(--border-color);
