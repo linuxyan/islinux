@@ -31,13 +31,15 @@ islinux_calc/
 ├── js/
 │   └── discover-more.js    # Discover More + Tool Guide + Random Articles
 ├── articles/               # 文章目录
-│   └── freelancer-rate-calculator.html
+│   ├── freelancer-rate-calculator.html
+│   └── gpu-quantization-guide.html
 ├── 工具页面
 │   ├── hourly-rate.html           # 时薪转换器
 │   ├── mortgage-calculator.html   # 房贷计算器
 │   ├── currency-converter.html    # 货币转换器
 │   ├── investment-calculator.html # 投资收益计算器
-│   └── freelance-rate.html        # 自由职业者费率计算器
+│   ├── freelance-rate.html        # 自由职业者费率计算器
+│   └── token-vs-gpu.html          # Token 计费 vs 显卡租用计算器
 └── DEVELOPMENT.md          # 开发手册
 ```
 
