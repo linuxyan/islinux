@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encoding Guide | Tool.isLinux</title>
+    <meta name="description" content="Learn how Base64 encoding works and when to use it.">
+    <link rel="canonical" href="https://tool.islinux.com/articles/base64-encoding-guide.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(35, 134, 54, 0.1) 0%, transparent 100%);
+        }
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+        }
+        .logo a { color: var(--accent-color); text-decoration: none; }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        article h1 { color: #fff; }
+        article h2 { color: var(--accent-color); }
+        article p, article li { color: var(--text-muted); }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+        footer a { color: var(--text-color); text-decoration: none; }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="logo"><a href="../index.html">🛠️ Tool.isLinux.com</a></h1>
+</header>
+<div class="container">
+    <article>
+        <h1>📚 Base64 Encoding: A Complete Guide</h1>
+        <p>Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format.</p>
+        <h2>When to Use Base64</h2>
+        <ul>
+            <li>Embedding images in HTML/CSS</li>
+            <li>Encoding binary data for JSON/XML</li>
+            <li>Email attachments (MIME)</li>
+            <li>Data URI schemes</li>
+        </ul>
+        <h2>How It Works</h2>
+        <p>Base64 converts every 3 bytes of binary data into 4 ASCII characters, resulting in ~33% size increase.</p>
+    </article>
+</div>
+<footer>
+    <p>&copy; 2026 Tool.isLinux.com</p>
+</footer>
+</body>
+</html>

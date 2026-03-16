@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Encoding Guide | Tool.isLinux</title>
+    <meta name="description" content="Learn about URL encoding and percent-encoding.">
+    <link rel="canonical" href="https://tool.islinux.com/articles/url-encoding-guide.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(35, 134, 54, 0.1) 0%, transparent 100%);
+        }
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+        }
+        .logo a { color: var(--accent-color); text-decoration: none; }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        article h1 { color: #fff; }
+        article h2 { color: var(--accent-color); }
+        article p, article li { color: var(--text-muted); }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+        footer a { color: var(--text-color); text-decoration: none; }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="logo"><a href="../index.html">🛠️ Tool.isLinux.com</a></h1>
+</header>
+<div class="container">
+    <article>
+        <h1>🔗 URL Encoding Guide</h1>
+        <p>URL encoding (percent-encoding) is used to encode special characters in URLs.</p>
+        <h2>Why URL Encode?</h2>
+        <ul>
+            <li>Spaces become %20</li>
+            <li>Special characters like & = ? need encoding in values</li>
+            <li>Non-ASCII characters must be encoded</li>
+        </ul>
+        <h2>Example</h2>
+        <p><code>Hello World!</code> becomes <code>Hello%20World!</code></p>
+    </article>
+</div>
+<footer>
+    <p>&copy; 2026 Tool.isLinux.com</p>
+</footer>
+</body>
+</html>

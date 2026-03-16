@@ -10,6 +10,16 @@
         { href: 'favicon-generator.html', icon: '🎨', title: 'Favicon Generator', description: 'Generate favicon.ico and PNG icons from text with customizable styles.' }
     ];
 
+    const articles = [
+        { href: 'articles/json-privacy-guide.html', icon: '🔒', title: 'JSON Privacy Guide', description: 'Protect sensitive data by using local JSON processing tools.' },
+        { href: 'articles/json-validation-tips.html', icon: '✅', title: 'JSON Validation Tips', description: 'Common JSON errors and how to avoid them.' },
+        { href: 'articles/base64-encoding-guide.html', icon: '🔐', title: 'Base64 Encoding Guide', description: 'Learn how Base64 encoding works and when to use it.' },
+        { href: 'articles/url-encoding-guide.html', icon: '🔗', title: 'URL Encoding Guide', description: 'Understanding percent-encoding for URLs.' },
+        { href: 'articles/hash-functions-guide.html', icon: '🔑', title: 'Hash Functions Guide', description: 'MD5, SHA1, SHA256 comparison and use cases.' },
+        { href: 'articles/diff-tool-guide.html', icon: '📊', title: 'Diff Tool Guide', description: 'How to compare text and code using diff.' },
+        { href: 'articles/favicon-best-practices.html', icon: '🎨', title: 'Favicon Best Practices', description: 'Create professional favicons for your website.' }
+    ];
+
     const toolGuides = {
         'json-format.html': {
             title: 'How to Use JSON Formatter',
@@ -188,14 +198,32 @@ Encoded: Hello%20World!%20How%20are%20you?</code></pre>
         }
     }
 
+    function renderRandomArticles() {
+        const container = document.getElementById('random-articles-grid');
+        if (!container) return;
+
+        const shuffled = articles.sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 2);
+
+        container.innerHTML = selected.map(article => `
+            <a href="${article.href}" class="article-card">
+                <div class="article-icon">${article.icon}</div>
+                <h3 class="article-title-card">${article.title}</h3>
+                <p class="article-description">${article.description}</p>
+            </a>
+        `).join('');
+    }
+
     // Auto-render when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             renderDiscoverMore();
             renderToolGuide();
+            renderRandomArticles();
         });
     } else {
         renderDiscoverMore();
         renderToolGuide();
+        renderRandomArticles();
     }
 })();
