@@ -114,6 +114,30 @@
 </section>
 ```
 
+### 1.5 Navigation Link Specification
+
+**Critical**: All navigation links must use absolute paths starting with `/`:
+
+| Link Type | Correct | Incorrect |
+|-----------|---------|-----------|
+| Homepage | `/index.html` | `../index.html`, `index.html` |
+| About | `/about.html` | `../about.html`, `about.html` |
+| Privacy | `/privacy.html` | `../privacy.html`, `privacy.html` |
+
+**Example (Footer Navigation)**:
+```html
+<footer>
+    <a href="/index.html">Home</a> |
+    <a href="/about.html">About</a> |
+    <a href="/privacy.html">Privacy</a>
+</footer>
+```
+
+**Rationale**:
+- Absolute paths work consistently regardless of page depth
+- Prevents broken links when articles are in nested directories
+- Simplifies maintenance and reduces path-related bugs
+
 ---
 
 ## 2. Google AdSense Approval Requirements - Critical Item
