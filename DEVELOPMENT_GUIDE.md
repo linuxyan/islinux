@@ -138,6 +138,58 @@
 - Prevents broken links when articles are in nested directories
 - Simplifies maintenance and reduces path-related bugs
 
+### 1.6 Article Page Linking Rules
+
+**Same Site Articles**: Use absolute path `/articles/xxx.html`:
+
+```html
+<!-- Correct -->
+<a href="/articles/linux-commands.html">Linux Commands Guide</a>
+
+<!-- Incorrect -->
+<a href="../articles/linux-commands.html">Linux Commands Guide</a>
+<a href="articles/linux-commands.html">Linux Commands Guide</a>
+```
+
+**Cross-Site Articles**: Use full domain URL with `/articles/xxx.html`:
+
+| From Site | To Site | Link Format |
+|-----------|---------|-------------|
+| Root (islinux.com) | AI (ai.islinux.com) | `https://ai.islinux.com/articles/xxx.html` |
+| Root (islinux.com) | Tool (tool.islinux.com) | `https://tool.islinux.com/articles/xxx.html` |
+| Root (islinux.com) | Calc (calc.islinux.com) | `https://calc.islinux.com/articles/xxx.html` |
+| AI Subsite | Root (islinux.com) | `https://islinux.com/articles/xxx.html` |
+| AI Subsite | Tool (tool.islinux.com) | `https://tool.islinux.com/articles/xxx.html` |
+| Tool Subsite | Root (islinux.com) | `https://islinux.com/articles/xxx.html` |
+| Tool Subsite | AI (ai.islinux.com) | `https://ai.islinux.com/articles/xxx.html` |
+
+**Example (Related Articles Section)**:
+```html
+<!-- Same site articles -->
+<section class="related-articles">
+    <h2>Related Articles</h2>
+    <ul>
+        <li><a href="/articles/linux-basics.html">Linux Basics</a></li>
+        <li><a href="/articles/bash-scripting.html">Bash Scripting</a></li>
+    </ul>
+</section>
+
+<!-- Cross-site articles -->
+<section class="related-articles">
+    <h2>More Resources</h2>
+    <ul>
+        <li><a href="https://ai.islinux.com/articles/prompt-engineering.html">AI Prompt Engineering</a></li>
+        <li><a href="https://tool.islinux.com/articles/json-tips.html">JSON Tips</a></li>
+        <li><a href="https://calc.islinux.com/articles/gpu-guide.html">GPU Guide</a></li>
+    </ul>
+</section>
+```
+
+**Rationale**:
+- Consistent article link structure across all subsites
+- No relative path issues when deploying to different domains
+- Clear separation between same-site and cross-site linking
+
 ---
 
 ## 2. Google AdSense Approval Requirements - Critical Item
