@@ -1,13 +1,13 @@
 // Discover More - Random tool recommendations and tool guide
 (function() {
     const tools = [
-        { href: '/articles/json-format.html', icon: '📝', title: 'JSON Formatter', description: 'Format, minify, and validate JSON with customizable indentation.' },
-        { href: '/articles/json-validate.html', icon: '✅', title: 'JSON Validator', description: 'Check JSON syntax and validate your JSON data.' },
-        { href: '/articles/base64.html', icon: '🔐', title: 'Base64 Encoder/Decoder', description: 'Encode text to Base64 or decode Base64 back to text.' },
-        { href: '/articles/url-encode.html', icon: '🔗', title: 'URL Encoder/Decoder', description: 'Encode or decode URL-encoded strings.' },
-        { href: '/articles/hash.html', icon: '🔑', title: 'Hash Calculator', description: 'Calculate MD5, SHA1, SHA256 hashes for any text.' },
-        { href: '/articles/diff.html', icon: '📊', title: 'Text Diff', description: 'Compare two texts and find the differences line by line.' },
-        { href: '/articles/favicon-generator.html', icon: '🎨', title: 'Favicon Generator', description: 'Generate favicon.ico and PNG icons from text with customizable styles.' }
+        { href: '/json-format.html', icon: '📝', title: 'JSON Formatter', description: 'Format, minify, and validate JSON with customizable indentation.' },
+        { href: '/json-validate.html', icon: '✅', title: 'JSON Validator', description: 'Check JSON syntax and validate your JSON data.' },
+        { href: '/base64.html', icon: '🔐', title: 'Base64 Encoder/Decoder', description: 'Encode text to Base64 or decode Base64 back to text.' },
+        { href: '/url-encode.html', icon: '🔗', title: 'URL Encoder/Decoder', description: 'Encode or decode URL-encoded strings.' },
+        { href: '/hash.html', icon: '🔑', title: 'Hash Calculator', description: 'Calculate MD5, SHA1, SHA256 hashes for any text.' },
+        { href: '/diff.html', icon: '📊', title: 'Text Diff', description: 'Compare two texts and find the differences line by line.' },
+        { href: '/favicon-generator.html', icon: '🎨', title: 'Favicon Generator', description: 'Generate favicon.ico and PNG icons from text with customizable styles.' }
     ];
 
     const articles = [
@@ -21,7 +21,7 @@
     ];
 
     const toolGuides = {
-        '/articles/json-format.html': {
+        '/json-format.html': {
             title: 'How to Use JSON Formatter',
             content: `
                 <h3>📋 Usage</h3>
@@ -39,7 +39,7 @@
                 </ul>
             `
         },
-        '/articles/json-validate.html': {
+        '/json-validate.html': {
             title: 'How to Validate JSON',
             content: `
                 <h3>📋 Usage</h3>
@@ -58,7 +58,7 @@
                 </ul>
             `
         },
-        '/articles/base64.html': {
+        '/base64.html': {
             title: 'How to Use Base64 Encoder/Decoder',
             content: `
                 <h3>📋 Usage</h3>
@@ -74,7 +74,7 @@ Base64:  SGVsbG8sIFdvcmxkIQ==</code></pre>
                 </div>
             `
         },
-        '/articles/url-encode.html': {
+        '/url-encode.html': {
             title: 'How to Use URL Encoder/Decoder',
             content: `
                 <h3>📋 Usage</h3>
@@ -89,7 +89,7 @@ Encoded: Hello%20World!%20How%20are%20you?</code></pre>
                 </div>
             `
         },
-        '/articles/hash.html': {
+        '/hash.html': {
             title: 'How to Use Hash Calculator',
             content: `
                 <h3>📋 Usage</h3>
@@ -107,7 +107,7 @@ Encoded: Hello%20World!%20How%20are%20you?</code></pre>
                 </ul>
             `
         },
-        '/articles/diff.html': {
+        '/diff.html': {
             title: 'How to Use Text Diff Tool',
             content: `
                 <h3>📋 Usage</h3>
@@ -126,7 +126,7 @@ Encoded: Hello%20World!%20How%20are%20you?</code></pre>
                 </ul>
             `
         },
-        '/articles/favicon-generator.html': {
+        '/favicon-generator.html': {
             title: 'How to Use Favicon Generator',
             content: `
                 <h3>📋 Usage</h3>
