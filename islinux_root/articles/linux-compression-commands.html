@@ -270,6 +270,64 @@ zcat file1.gz file2.gz
 bzcat file.txt.bz2      # For bzip2
 xzcat file.txt.xz       # For xz</code></pre>
 
+        <h3>🚀 AI Use Case: Split Compression for Large Model Weight Files</h3>
+        <p>When working with large AI model files (GGUF, AWQ, Safetensors), split compression is essential for sharing models, uploading to cloud storage with file size limits, or distributing models across multiple storage devices.</p>
+        <pre><code># Compress and split a large GGUF model (e.g., Llama-3-70B.gguf ~40GB)
+# Split into 4GB chunks for easy upload
+
+# Step 1: Compress the model file
+xz -9 -k llama-3-70b.gguf  # Creates llama-3-70b.gguf.xz
+
+# Step 2: Split compressed file into 4GB chunks
+split -b 4G llama-3-70b.gguf.xz llama-3-70b.gguf.xz.part.
+
+# Result: llama-3-70b.gguf.xz.part.aa, .ab, .ac, etc.
+
+# Step 3: List all parts
+ls -lh llama-3-70b.gguf.xz.part.*
+
+# Step 4: Reconstruct the file
+cat llama-3-70b.gguf.xz.part.* > llama-3-70b.gguf.xz
+
+# Step 5: Decompress
+xz -d llama-3-70b.gguf.xz</code></pre>
+        <p><strong>Alternative: Direct split without compression</strong> (faster but larger):</p>
+        <pre><code># Split large model file directly (e.g., for USB transfer)
+split -b 4G llama-3-70b.gguf llama-3-70b.gguf.part.
+
+# Reconstruct on destination
+cat llama-3-70b.gguf.part.* > llama-3-70b.gguf
+
+# Verify integrity with checksum
+sha256sum llama-3-70b.gguf > llama-3-70b.gguf.sha256
+sha256sum -c llama-3-70b.gguf.sha256</code></pre>
+        <p><strong>Practical scenario:</strong> Sharing a 35GB Qwen2.5-72B-Instruct.GGUF via cloud storage with 5GB file limits:</p>
+        <pre><code># Compress with maximum compression
+xz -9 -k qwen2.5-72b.gguf  # May reduce to ~25GB
+
+# Split into 4.5GB chunks (safe margin)
+split -b 4500M qwen2.5-72b.gguf.xz qwen2.5-72b.part.
+
+# Upload all parts to cloud storage
+# Share download link with users
+
+# Users download and reconstruct:
+cat qwen2.5-72b.part.* > qwen2.5-72b.gguf.xz
+xz -d qwen2.5-72b.gguf.xz
+
+# Verify model integrity
+sha256sum qwen2.5-72b.gguf</code></pre>
+        <p><strong>Tip:</strong> For AWQ/Safetensors models with multiple files, use tar first:</p>
+        <pre><code># Archive model directory
+tar -cJvf model-70b.tar.xz models/llama-3-70b/
+
+# Split for transfer
+split -b 4G model-70b.tar.xz model-70b.tar.xz.part.
+
+# Reconstruct and extract
+cat model-70b.tar.xz.part.* > model-70b.tar.xz
+tar -xJvf model-70b.tar.xz</code></pre>
+
         <h2>Compression Comparison</h2>
         <table>
             <tr><th>Format</th><th>Extension</th><th>Compression</th><th>Speed</th><th>Compatibility</th></tr>

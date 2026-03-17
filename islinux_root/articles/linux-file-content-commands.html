@@ -92,6 +92,39 @@ cat > newfile.txt
 # Append to file
 cat >> existing.txt</code></pre>
 
+        <h3>🚀 Modern Alternative: <code>bat</code> (2026 Recommendation)</h3>
+        <p><code>bat</code> is a modern <code>cat</code> clone with syntax highlighting, Git integration, and pager support. Perfect for viewing code files and configuration files with better readability.</p>
+        <pre><code># Install bat
+sudo apt install bat  # Debian/Ubuntu
+brew install bat      # macOS
+
+# View file with syntax highlighting
+bat config.yaml
+
+# Show line numbers and Git changes
+bat -n --show-all /etc/nginx/nginx.conf
+
+# View specific lines
+bat -r 10:50 app.py
+
+# Compare with cat mode
+bat -A file.txt  # Show non-printable characters</code></pre>
+        <p><strong>Why use bat in 2026?</strong> Syntax highlighting for 50+ languages, Git diff integration, and built-in pager make it ideal for reviewing AI-generated code and configuration files.</p>
+
+        <h3>💡 AI Use Case: Analyzing LLM Output Logs</h3>
+        <p>When working with local LLM deployments, you often need to analyze large output logs:</p>
+        <pre><code># View AI response with syntax highlighting
+bat llm_output.json
+
+# Search for specific patterns in logs
+grep -A 5 "completion" llm_output.log | bat -l json
+
+# Count tokens in output file
+wc -w llm_output.txt
+
+# View last 100 lines of generation
+tail -n 100 llm_output.log | bat -l markdown</code></pre>
+
         <h2>2. less - View Page by Page</h2>
         <p>View large files with scrollable pagination.</p>
         <pre><code># View file with pagination

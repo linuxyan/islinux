@@ -196,6 +196,55 @@ ls -lS
 # Show inode numbers
 ls -li</code></pre>
 
+        <h3>🚀 Modern Alternatives: <code>exa</code> and <code>lsd</code> (2026 Recommendation)</h3>
+        <p><code>exa</code> and <code>lsd</code> are modern <code>ls</code> replacements with icons, colors, Git integration, and tree view. Perfect for visual file browsing and AI project navigation.</p>
+        <pre><code># Install exa
+sudo apt install exa  # Debian/Ubuntu
+brew install exa      # macOS
+
+# Install lsd
+cargo install lsd     # Rust
+
+# Colorful listing with icons
+exa -lah
+lsd -lah
+
+# Tree view for project structure
+exa --tree -L 3
+lsd --tree -d 3
+
+# Git status integration
+exa --git
+lsd --git
+
+# AI project example: View model directory
+exa --tree -L 2 /models/llama-3/
+lsd -lh /datasets/</code></pre>
+        <p><strong>Why use exa/lsd in 2026?</strong> Better visual hierarchy with icons, Git status overlay, and tree view make them ideal for navigating complex AI project structures and model directories.</p>
+
+        <h3>💡 AI Use Case: Managing LLM Project Files</h3>
+        <p>When working with local LLM deployments, organizing model files, datasets, and outputs requires efficient directory management:</p>
+        <pre><code># Create AI project structure
+mkdir -p llm-project/{models,datasets,outputs,configs}
+
+# View model directory with tree
+exa --tree -L 2 llm-project/models/
+
+# Find all GGUF model files
+find ~/models -name "*.gguf" -type f
+
+# Find large output files (>100MB)
+find ~/llm-outputs -type f -size +100M
+
+# Clean up old checkpoint files
+find ./training -name "checkpoint_*" -mtime +7 -delete
+
+# List files sorted by modification time
+lsd -lt ~/llm-project/outputs/
+
+# View directory sizes
+du -sh */ | sort -h</code></pre>
+
         <h2>7. cd - Change Directory</h2>
         <p>Navigate between directories.</p>
         <pre><code># Change to specific directory
