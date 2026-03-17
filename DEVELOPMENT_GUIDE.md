@@ -190,6 +190,48 @@
 - No relative path issues when deploying to different domains
 - Clear separation between same-site and cross-site linking
 
+### 1.7 Tool Page Linking Rules
+
+**Tool pages are in the root directory of each subsite**, NOT in `/articles/`:
+
+| Page Type | Location | Link Format | Example |
+|-----------|----------|-------------|---------|
+| Tool Pages | Root (`/`) | `/xxx.html` | `/hourly-rate.html`, `/json-format.html` |
+| Article Pages | `/articles/` | `/articles/xxx.html` | `/articles/gpu-guide.html` |
+| Navigation | Root (`/`) | `/xxx.html` | `/index.html`, `/about.html` |
+
+**Correct Examples**:
+```html
+<!-- Tool links (same subsite) -->
+<a href="/hourly-rate.html">Hourly Rate Calculator</a>
+<a href="/json-format.html">JSON Formatter</a>
+<a href="/shell-prompt.html">Shell Prompt Generator</a>
+
+<!-- Article links (same subsite) -->
+<a href="/articles/gpu-quantization-guide.html">GPU Guide</a>
+<a href="/articles/json-privacy-guide.html">JSON Privacy Guide</a>
+
+<!-- Cross-subsites tool links -->
+<a href="https://calc.islinux.com/hourly-rate.html">Hourly Rate</a>
+<a href="https://tool.islinux.com/json-format.html">JSON Formatter</a>
+```
+
+**Incorrect Examples**:
+```html
+<!-- Wrong: Tool links should NOT use /articles/ prefix -->
+❌ <a href="/articles/hourly-rate.html">Hourly Rate</a>
+❌ <a href="/articles/json-format.html">JSON Formatter</a>
+
+<!-- Wrong: Relative paths -->
+❌ <a href="hourly-rate.html">Hourly Rate</a>
+❌ <a href="../tools/json-format.html">JSON Formatter</a>
+```
+
+**Rationale**:
+- Tool pages live in root directory for shorter, cleaner URLs
+- Article pages use `/articles/` prefix for clear content separation
+- Consistent structure across all subsites (calc, tool, ai)
+
 ---
 
 ## 2. Google AdSense Approval Requirements - Critical Item
