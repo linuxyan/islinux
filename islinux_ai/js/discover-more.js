@@ -1,24 +1,24 @@
 // Discover More - Random tool recommendations and tool guide for AI site
 (function() {
     const tools = [
-        { href: 'shell-prompt.html', icon: '📜', title: 'Shell Prompt', description: 'Optimize Bash scripts with AI review.' },
-        { href: 'python-generator.html', icon: '🐍', title: 'Python Generator', description: 'Generate Python code with AI prompts.' },
-        { href: 'readme-generator.html', icon: '📝', title: 'README Generator', description: 'Create professional README files.' },
-        { href: 'git-commit.html', icon: '💾', title: 'Git Commit', description: 'Generate meaningful commit messages.' },
-        { href: 'sql-optimizer.html', icon: '🗄️', title: 'SQL Optimizer', description: 'Optimize SQL queries with AI.' },
-        { href: 'debug-assistant.html', icon: '🔧', title: 'Debug Assistant', description: 'Debug code with AI assistance.' }
+        { href: '/articles/shell-prompt.html', icon: '📜', title: 'Shell Prompt', description: 'Optimize Bash scripts with AI review.' },
+        { href: '/articles/python-generator.html', icon: '🐍', title: 'Python Generator', description: 'Generate Python code with AI prompts.' },
+        { href: '/articles/readme-generator.html', icon: '📝', title: 'README Generator', description: 'Create professional README files.' },
+        { href: '/articles/git-commit.html', icon: '💾', title: 'Git Commit', description: 'Generate meaningful commit messages.' },
+        { href: '/articles/sql-optimizer.html', icon: '🗄️', title: 'SQL Optimizer', description: 'Optimize SQL queries with AI.' },
+        { href: '/articles/debug-assistant.html', icon: '🔧', title: 'Debug Assistant', description: 'Debug code with AI assistance.' }
     ];
 
     const articles = [
-        { href: 'articles/prompt-engineering-shell.html', icon: '📚', title: 'Prompt Engineering for Shell', description: 'Master the art of writing effective shell prompts.' },
-        { href: 'articles/ai-code-review-guide.html', icon: '🔍', title: 'AI Code Review Guide', description: 'Best practices for AI-assisted code review.' },
-        { href: 'articles/git-commit-messages.html', icon: '💡', title: 'Git Commit Messages', description: 'Write better commit messages with AI.' },
-        { href: 'articles/copilot-to-agentic-ai.html', icon: '🤖', title: 'From Copilot to Agentic AI', description: 'Build autonomous workflows with local AI agents in 2026.' },
-        { href: 'articles/local-llm-deployment.html', icon: '🚀', title: 'Local LLM Deployment Guide', description: 'Complete guide to deploying Llama 3, Mistral and other models locally in 2026.' }
+        { href: '/articles/prompt-engineering-shell.html', icon: '📚', title: 'Prompt Engineering for Shell', description: 'Master the art of writing effective shell prompts.' },
+        { href: '/articles/ai-code-review-guide.html', icon: '🔍', title: 'AI Code Review Guide', description: 'Best practices for AI-assisted code review.' },
+        { href: '/articles/git-commit-messages.html', icon: '💡', title: 'Git Commit Messages', description: 'Write better commit messages with AI.' },
+        { href: '/articles/copilot-to-agentic-ai.html', icon: '🤖', title: 'From Copilot to Agentic AI', description: 'Build autonomous workflows with local AI agents in 2026.' },
+        { href: '/articles/local-llm-deployment.html', icon: '🚀', title: 'Local LLM Deployment Guide', description: 'Complete guide to deploying Llama 3, Mistral and other models locally in 2026.' }
     ];
 
     const toolGuides = {
-        'shell-prompt.html': {
+        '/articles/shell-prompt.html': {
             title: 'How to Use Shell Script Optimizer',
             content: `
                 <h3>📋 Usage</h3>
@@ -37,7 +37,7 @@
                 </ul>
             `
         },
-        'python-generator.html': {
+        '/articles/python-generator.html': {
             title: 'How to Use Python Generator',
             content: `
                 <h3>📋 Usage</h3>
@@ -56,7 +56,7 @@
                 </ul>
             `
         },
-        'readme-generator.html': {
+        '/articles/readme-generator.html': {
             title: 'How to Use README Generator',
             content: `
                 <h3>📋 Usage</h3>
@@ -75,7 +75,7 @@
                 </ul>
             `
         },
-        'git-commit.html': {
+        '/articles/git-commit.html': {
             title: 'How to Use Git Commit Generator',
             content: `
                 <h3>📋 Usage</h3>
@@ -94,7 +94,7 @@
                 </ul>
             `
         },
-        'sql-optimizer.html': {
+        '/articles/sql-optimizer.html': {
             title: 'How to Use SQL Optimizer',
             content: `
                 <h3>📋 Usage</h3>
@@ -113,7 +113,7 @@
                 </ul>
             `
         },
-        'debug-assistant.html': {
+        '/articles/debug-assistant.html': {
             title: 'How to Use Debug Assistant',
             content: `
                 <h3>📋 Usage</h3>

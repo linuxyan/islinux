@@ -1,17 +1,17 @@
 // Discover More - Random tool recommendations and tool guide for calc site
 (function() {
     const tools = [
-        { href: 'hourly-rate.html', icon: '⏱️', title: 'Hourly Rate', description: 'Convert hourly rate to monthly/yearly income.' },
-        { href: 'mortgage-calculator.html', icon: '🏠', title: 'Mortgage Calculator', description: 'Calculate mortgage payments and interest.' },
-        { href: 'currency-converter.html', icon: '💱', title: 'Currency Converter', description: 'Convert between major world currencies.' },
-        { href: 'investment-calculator.html', icon: '📈', title: 'Investment Calculator', description: 'Calculate investment returns and compound interest.' },
-        { href: 'freelance-rate.html', icon: '💼', title: 'Freelance Rate', description: 'Calculate your ideal freelance hourly rate.' },
-        { href: 'token-vs-gpu.html', icon: '🤖', title: 'Token vs GPU', description: 'Compare AI API token costs vs self-hosted GPU expenses.' }
+        { href: '/articles/hourly-rate.html', icon: '⏱️', title: 'Hourly Rate', description: 'Convert hourly rate to monthly/yearly income.' },
+        { href: '/articles/mortgage-calculator.html', icon: '🏠', title: 'Mortgage Calculator', description: 'Calculate mortgage payments and interest.' },
+        { href: '/articles/currency-converter.html', icon: '💱', title: 'Currency Converter', description: 'Convert between major world currencies.' },
+        { href: '/articles/investment-calculator.html', icon: '📈', title: 'Investment Calculator', description: 'Calculate investment returns and compound interest.' },
+        { href: '/articles/freelance-rate.html', icon: '💼', title: 'Freelance Rate', description: 'Calculate your ideal freelance hourly rate.' },
+        { href: '/articles/token-vs-gpu.html', icon: '🤖', title: 'Token vs GPU', description: 'Compare AI API token costs vs self-hosted GPU expenses.' }
     ];
 
     const articles = [
-        { href: 'articles/freelancer-rate-calculator.html', icon: '📚', title: 'Freelancer Pricing Strategy', description: 'Scientifically calculate your real hourly rate and avoid underpricing.' },
-        { href: 'articles/gpu-quantization-guide.html', icon: '🖥️', title: '2026 GPU Computing Guide', description: 'Why 4-bit quantization is a lifesaver for small businesses running AI models.' }
+        { href: '/articles/freelancer-rate-calculator.html', icon: '📚', title: 'Freelancer Pricing Strategy', description: 'Scientifically calculate your real hourly rate and avoid underpricing.' },
+        { href: '/articles/gpu-quantization-guide.html', icon: '🖥️', title: '2026 GPU Computing Guide', description: 'Why 4-bit quantization is a lifesaver for small businesses running AI models.' }
     ];
 
     const toolGuides = {
