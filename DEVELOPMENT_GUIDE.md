@@ -500,6 +500,8 @@
 
 ### 9.1 Standard Page Template
 
+**Container Width**: All article pages must use `max-width: 1100px` for the `.container` class.
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
