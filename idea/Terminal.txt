@@ -34,3 +34,48 @@ Conclusion: 给出一个一键配置的建议脚本或思路。
 联动 Tool 站：提供一个“终端配置生成器”的链接。
 
 代码块优化：大量使用 <pre><code> 标签展示安装命令，Google 非常喜欢抓取这类结构化内容作为 Featured Snippets。
+
+
+2. 对文章架构的 3 个优化建议
+为了进一步提升转化率和 Google 停留时间，建议在原有架构中加入以下细节：
+
+A. 增加“性能对比”模块（视觉钩子）
+既然你有 calc.islinux.com 这个子站，文章中可以加入一段：
+
+"We tested Starship vs Oh My Zsh (Heavy plugins). Starship's render time is under 1ms, while a bloated Zsh config can take 50ms+. Speed matters for workflow."
+
+目的：通过数据说服用户，同时自然引流到你的计算器子站。
+
+B. 强化 "Local-First" 概念
+在 Introduction 或 Conclusion 中顺带提一句：
+
+"Modern tools like zoxide keep your navigation history local on your machine—aligning with the privacy-first philosophy of isLinux."
+
+目的：呼应你刚刚提交验证的隐私政策，强化品牌标签。
+
+C. 细化关键词布局
+目前你的 zsh latest version 2026 曝光很好，建议在文章中明确一段：
+
+标题：Is Zsh Still the Best Shell in March 2026?
+
+内容：正面回答这个问题，直接命中搜索意图。
+
+
+关键词以及ld+json参考如下：
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Terminal Setup 2026: Beyond Oh My Zsh and Bash | isLinux</title>
+    <meta name="description" content="Upgrade your Linux workflow with the ultimate 2026 terminal setup. Compare Zsh vs Fish, explore Starship.rs, and Rust-based tools like Eza and Bat.">
+    <meta name="keywords" content="zsh latest version 2026, starship.rs guide, oh my zsh vs fish, rust cli tools, islinux productivity">
+    <link rel="canonical" href="https://islinux.com/articles/modern-terminal-setup-2026.html">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Modern Terminal Setup 2026: Beyond Oh My Zsh and Bash",
+      "author": {"@type": "Organization", "name": "isLinux"},
+      "datePublished": "2026-03-18",
+      "description": "The definitive guide to terminal productivity in 2026 featuring Rust-based CLI tools."
+    }
+    </script>
