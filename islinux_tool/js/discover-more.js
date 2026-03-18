@@ -7,7 +7,8 @@
         { href: '/url-encode.html', icon: '🔗', title: 'URL Encoder/Decoder', description: 'Encode or decode URL-encoded strings.' },
         { href: '/hash.html', icon: '🔑', title: 'Hash Calculator', description: 'Calculate MD5, SHA1, SHA256 hashes for any text.' },
         { href: '/diff.html', icon: '📊', title: 'Text Diff', description: 'Compare two texts and find the differences line by line.' },
-        { href: '/favicon-generator.html', icon: '🎨', title: 'Favicon Generator', description: 'Generate favicon.ico and PNG icons from text with customizable styles.' }
+        { href: '/favicon-generator.html', icon: '🎨', title: 'Favicon Generator', description: 'Generate favicon.ico and PNG icons from text with customizable styles.' },
+        { href: '/terminal-config-generator.html', icon: '⌨️', title: 'Terminal Config Generator', description: 'Generate modern terminal config with Starship, Zoxide, Eza, and Bat.' }
     ];
 
     const articles = [
@@ -142,6 +143,28 @@ Encoded: Hello%20World!%20How%20are%20you?</code></pre>
                     <li><strong>16×16:</strong> Browser tab favicon</li>
                     <li><strong>32×32:</strong> Standard desktop favicon</li>
                     <li><strong>48×48:</strong> Larger icons for apps</li>
+                </ul>
+            `
+        },
+        '/terminal-config-generator.html': {
+            title: 'How to Use Terminal Config Generator',
+            content: `
+                <h3>📋 Usage</h3>
+                <ul>
+                    <li>Select your shell (Zsh, Bash, or Fish)</li>
+                    <li>Choose components to include (Starship, Zoxide, Eza, Bat, etc.)</li>
+                    <li>Click "Copy" to copy the generated config</li>
+                    <li>Paste into your ~/.zshrc or ~/.bashrc</li>
+                    <li>Run "source ~/.zshrc" to apply changes</li>
+                </ul>
+                <h3>💡 Components</h3>
+                <ul>
+                    <li><strong>Starship:</strong> Fast, customizable cross-shell prompt</li>
+                    <li><strong>Zoxide:</strong> Smart cd command with fuzzy search</li>
+                    <li><strong>Eza:</strong> Modern ls with icons and colors</li>
+                    <li><strong>Bat:</strong> Cat with syntax highlighting</li>
+                    <li><strong>FZF:</strong> Fuzzy finder for files and history</li>
+                    <li><strong>Tmux:</strong> Terminal multiplexer basics</li>
                 </ul>
             `
         }
