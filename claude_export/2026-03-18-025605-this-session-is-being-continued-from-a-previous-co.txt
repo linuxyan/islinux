@@ -1,0 +1,1911 @@
+ ▐▛███▜▌   Claude Code v2.1.78
+▝▜█████▛▘  Qwen3-235B-A22B · API Usage Billing
+  ▘▘ ▝▝    ~/devops/islinux
+
+  ↑ Opus now defaults to 1M context · 5x more room, same pricing
+
+✻ Conversation compacted (ctrl+o for history)
+
+
+● 我来检查一下当前所有 HTML 文件中的导航链接状态，确保所有链接都符合规范。
+
+● Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● 发现 4 个文件中存在 ../ 路径问题。让我修复这些：
+
+  1. json-privacy-guide.html - href="../json-format.html" 应改为
+  /articles/json-format.html
+  2. freelancer-rate-calculator.html - href="../css/common.css" 和
+  href="../js/discover-more.js" 需要修复
+  3. gpu-quantization-guide.html - 同样的 CSS/JS 路径问题，以及
+  href="../token-vs-gpu.html"
+  4. copilot-to-agentic-ai.html - href="../shell-prompt.html" 等需要修复
+
+● Update(islinux_ai/articles/copilot-to-agentic-ai.html)
+  ⎿  Added 3 lines, removed 3 lines
+      278          <p>At AI.isLinux.com, we've built tools that bridge   
+           the gap between conversational AI and autonomous agents:</p>  
+      279                                                                
+      280          <h3>Shell Script Optimizer</h3>                       
+      281 -        <p>Our <a href="../                                   
+          -shell-prompt.html" style="color: var(--ai-blue);">Shell Script
+          - Optimizer</a> helps you create prompts that generate         
+          -production-ready bash scripts. These scripts can then be      
+          -executed by your local agent as part of larger workflows.</p> 
+      281 +        <p>Our <a href="/articles/                            
+          +shell-prompt.html" style="color: var(--ai-blue);">Shell Script
+          + Optimizer</a> helps you create prompts that generate         
+          +production-ready bash scripts. These scripts can then be      
+          +executed by your local agent as part of larger workflows.</p> 
+      282                                                                
+      283          <h3>Python Generator</h3>                             
+      284 -        <p>Use the <a href="../                               
+          -python-generator.html" style="color: var(--ai-blue);">Python  
+          -Generator</a> to create agent orchestration code that ties    
+          -together multiple tools and APIs.</p>                         
+      284 +        <p>Use the <a href="/articles/                        
+          +python-generator.html" style="color: var(--ai-blue);">Python  
+          +Generator</a> to create agent orchestration code that ties    
+          +together multiple tools and APIs.</p>                         
+      285                                                                
+      286          <h3>Debug Assistant</h3>                              
+      287 -        <p>When your autonomous workflows encounter errors,   
+          -the <a href="../                                              
+          -debug-assistant.html" style="color: var(--ai-blue);">Debug    
+          -Assistant</a> helps diagnose and fix issues quickly.</p>      
+      287 +        <p>When your autonomous workflows encounter errors,   
+          +the <a href="/articles/                                       
+          +debug-assistant.html" style="color: var(--ai-blue);">Debug    
+          +Assistant</a> helps diagnose and fix issues quickly.</p>      
+      288                                                                
+      289          <h2>📋 Best Practices for 2026</h2>                   
+      290          <ul>                                                  
+
+● 现在提交这些更改：
+
+● Bash(git add -A && git status)
+  ⎿  On branch main
+     Your branch is up to date with 'origin/main'.
+     … +16 lines (ctrl+o to expand)
+
+● Bash(git commit -m "$(cat <<'EOF'
+      fix: Replace remaining ../ relative paths with absolute paths…)
+  ⎿  [main eb856b7] fix: Replace remaining ../ relative paths with absolute
+      paths
+      18 files changed, 24 insertions(+), 24 deletions(-)
+     … +2 lines (ctrl+o to expand)
+
+● 已完成所有 HTML 文件中的路径规范化修复：
+
+  修复内容：
+  1. islinux_tool/articles/json-privacy-guide.html - ../json-format.html →
+  /articles/json-format.html
+  2. islinux_calc/articles/freelancer-rate-calculator.html - CSS/JS
+  资源路径改为绝对路径
+  3. islinux_calc/articles/gpu-quantization-guide.html - CSS/JS 路径 +
+  文章链接修复
+  4. islinux_ai/articles/copilot-to-agentic-ai.html - 3 个工具链接改为
+  /articles/xxx.html 格式
+
+  提交记录：
+  - Commit eb856b7: "fix: Replace remaining ../ relative paths with absolute
+  paths"
+
+  所有导航链接现在都符合规范：
+  - 主页：/index.html
+  - 关于页：/about.html
+  - 隐私政策：/privacy.html
+  - 文章链接：/articles/xxx.html
+  - 跨子站链接：使用完整域名 URL
+
+✻ Worked for 14m 1s
+
+❯ 检查js文件中的路径，也按照这个标准修复                                        
+
+● Read 1 file (ctrl+o to expand)
+
+● 这个 JS 文件中有两处路径需要修复：
+
+  1. tools 数组中的链接（如 hourly-rate.html）- 这些是 calc 子站内部工具页面链接
+  2. articles 数组中的链接已经是 articles/xxx.html 格式，需要改为
+  /articles/xxx.html
+
+● Update(islinux_calc/js/discover-more.js)
+  ⎿  Added 2 lines, removed 2 lines
+      10      ];                                                         
+      11                                                                 
+      12      const articles = [                                         
+      13 -        { href: '                                              
+         -articles/freelancer-rate-calculator.html', icon: '📚', title:  
+         -'Freelancer Pricing Strategy', description: 'Scientifically    
+         -calculate your real hourly rate and avoid underpricing.' },    
+      14 -        { href: '                                              
+         -articles/gpu-quantization-guide.html', icon: '🖥️', title: '2026
+         - GPU Computing Guide', description: 'Why 4-bit quantization is 
+         -a lifesaver for small businesses running AI models.' }         
+      13 +        { href: '/                                             
+         +articles/freelancer-rate-calculator.html', icon: '📚', title:  
+         +'Freelancer Pricing Strategy', description: 'Scientifically    
+         +calculate your real hourly rate and avoid underpricing.' },    
+      14 +        { href: '/                                             
+         +articles/gpu-quantization-guide.html', icon: '🖥️', title: '2026
+         + GPU Computing Guide', description: 'Why 4-bit quantization is 
+         +a lifesaver for small businesses running AI models.' }         
+      15      ];                                                         
+      16                                                                 
+      17      const toolGuides = {                                       
+
+● Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● 修复这两个 JS 文件中的路径：
+
+● Update(islinux_tool/js/discover-more.js)
+  ⎿  Added 1 line, removed 1 line
+      21      ];                                                         
+      22                                                                 
+      23      const toolGuides = {                                       
+      24 -        'json-format.html': {                                  
+      24 +        '/articles/json-format.html': {                        
+      25              title: 'How to Use JSON Formatter',                
+      26              content: `                                         
+      27                  <h3>📋 Usage</h3>                              
+
+● Update(islinux_tool/js/discover-more.js)
+  ⎿  Added 1 line, removed 1 line
+      126                  </ul>                                         
+      127              `                                                 
+      128          },                                                    
+      129 -        'favicon-generator.html': {                           
+      129 +        '/articles/favicon-generator.html': {                 
+      130              title: 'How to Use Favicon Generator',            
+      131              content: `                                        
+      132                  <h3>📋 Usage</h3>                             
+
+● Update(islinux_ai/js/discover-more.js)
+  ⎿  Added 1 line, removed 1 line
+      18      ];                                                         
+      19                                                                 
+      20      const toolGuides = {                                       
+      21 -        'shell-prompt.html': {                                 
+      21 +        '/articles/shell-prompt.html': {                       
+      22              title: 'How to Use Shell Script Optimizer',        
+      23              content: `                                         
+      24                  <h3>📋 Usage</h3>                              
+
+● Update(islinux_ai/js/discover-more.js)
+  ⎿  Added 1 line, removed 1 line
+      113                  </ul>                                         
+      114              `                                                 
+      115          },                                                    
+      116 -        'debug-assistant.html': {                             
+      116 +        '/articles/debug-assistant.html': {                   
+      117              title: 'How to Use Debug Assistant',              
+      118              content: `                                        
+      119                  <h3>📋 Usage</h3>                             
+
+● 现在提交所有 JS 文件的更改：
+
+● Bash(git add -A && git diff --cached --stat)
+  ⎿   islinux_ai/js/discover-more.js   | 34 ++++++++++++++++---------------
+     -
+      islinux_calc/js/discover-more.js | 16 +++++++--------
+     … +3 lines (ctrl+o to expand)
+
+● Bash(git commit -m "$(cat <<'EOF'
+      fix: Update JS discover-more.js files to use absolute paths…)
+  ⎿  [main 17e4ee7] fix: Update JS discover-more.js files to use absolute p
+     aths
+      3 files changed, 46 insertions(+), 46 deletions(-)
+     … +2 lines (ctrl+o to expand)
+
+● 已完成所有 JS 文件中的路径规范化修复：
+
+  修复文件：
+  1. islinux_calc/js/discover-more.js
+    - 6 个工具链接：xxx.html → /articles/xxx.html
+    - 2 个文章链接：articles/xxx.html → /articles/xxx.html
+  2. islinux_tool/js/discover-more.js
+    - 7 个工具链接：xxx.html → /articles/xxx.html
+    - 7 个文章链接：articles/xxx.html → /articles/xxx.html
+    - 6 个 toolGuides 键名更新
+  3. islinux_ai/js/discover-more.js
+    - 6 个工具链接：xxx.html → /articles/xxx.html
+    - 5 个文章链接：articles/xxx.html → /articles/xxx.html
+    - 6 个 toolGuides 键名更新
+
+  提交记录：
+  - Commit 17e4ee7: "fix: Update JS discover-more.js files to use absolute
+  paths"
+
+  所有 HTML 和 JS 文件中的路径现在都符合规范，统一使用 / 开头的绝对路径。
+
+✻ Worked for 5m 26s
+
+❯ 现在工具和文章的链接都被修改了，工具的链接是在/下的，不是在/articles下，混淆  
+了，是否需要把工具单独放一个目录？                                              
+
+● 你说得对，工具和文章的链接混淆了。让我先检查一下当前的目录结构：
+
+● Searched for 1 pattern (ctrl+o to expand)
+
+● 我明白了！当前的结构是：
+
+  calc 子站：
+  - 工具页面：/hourly-rate.html, /mortgage-calculator.html 等（在根目录）
+  - 文章页面：/articles/freelancer-rate-calculator.html 等（在 articles 目录）
+
+  tool 子站：
+  - 工具页面：/json-format.html, /base64.html 等（在根目录）
+  - 文章页面：/articles/json-privacy-guide.html 等（在 articles 目录）
+
+  ai 子站：
+  - 工具页面：/shell-prompt.html, /python-generator.html 等（在根目录）
+  - 文章页面：/articles/copilot-to-agentic-ai.html 等（在 articles 目录）
+
+  所以我刚才把工具链接改成 /articles/xxx.html 是错误的。应该：
+  - 工具链接：/xxx.html（根目录）
+  - 文章链接：/articles/xxx.html
+
+  让我修复 JS 文件中的工具链接：
+
+● Update(islinux_tool/js/discover-more.js)
+  ⎿  Added 1 line, removed 1 line
+      126                  </ul>                                         
+      127              `                                                 
+      128          },                                                    
+      129 -        '/articles/favicon-generator.html': {                 
+      129 +        '/favicon-generator.html': {                          
+      130              title: 'How to Use Favicon Generator',            
+      131              content: `                                        
+      132                  <h3>📋 Usage</h3>                             
+
+● Update(islinux_ai/js/discover-more.js)
+  ⎿  Added 1 line, removed 1 line
+      113                  </ul>                                         
+      114              `                                                 
+      115          },                                                    
+      116 -        '/articles/debug-assistant.html': {                   
+      116 +        '/debug-assistant.html': {                            
+      117              title: 'How to Use Debug Assistant',              
+      118              content: `                                        
+      119                  <h3>📋 Usage</h3>                             
+
+● Bash(git add -A && git diff --cached --stat)
+  ⎿   islinux_ai/js/discover-more.js   | 24 ++++++++++++------------
+      islinux_calc/js/discover-more.js | 12 ++++++------
+      islinux_tool/js/discover-more.js | 28 ++++++++++++++--------------
+      3 files changed, 32 insertions(+), 32 deletions(-)
+
+● Bash(git commit -m "$(cat <<'EOF'
+      fix: Correct tool links in JS files to use root paths…)
+  ⎿  [main a550462] fix: Correct tool links in JS files to use root paths
+      3 files changed, 32 insertions(+), 32 deletions(-)
+     To github.com:linuxyan/islinux.git
+        17e4ee7..a550462  main -> main
+
+● 已修复 JS 文件中的路径混淆问题。现在的链接规范如下：
+
+  链接规范：
+
+  ┌──────────┬───────────────────────┬───────────────────────────────────────┐
+  │   类型   │       路径格式        │                 示例                  │
+  ├──────────┼───────────────────────┼───────────────────────────────────────┤
+  │ 工具页面 │ /xxx.html             │ /hourly-rate.html                     │
+  ├──────────┼───────────────────────┼───────────────────────────────────────┤
+  │ 文章页面 │ /articles/xxx.html    │ /articles/gpu-quantization-guide.html │
+  ├──────────┼───────────────────────┼───────────────────────────────────────┤
+  │          │ /index.html,          │                                       │
+  │ 导航页面 │ /about.html,          │ 以 / 开头                             │
+  │          │ /privacy.html         │                                       │
+  └──────────┴───────────────────────┴───────────────────────────────────────┘
+
+  修复的文件：
+  - islinux_calc/js/discover-more.js - 6 个工具链接修正
+  - islinux_tool/js/discover-more.js - 7 个工具链接 + 7 个 toolGuides 键名修正
+  - islinux_ai/js/discover-more.js - 6 个工具链接 + 6 个 toolGuides 键名修正
+
+  提交记录：
+  - Commit a550462: "fix: Correct tool links in JS files to use root paths"
+
+  不需要单独创建工具目录，当前结构（工具在根目录，文章在 articles
+  目录）是合理的。
+
+✻ Sautéed for 3m 18s
+
+❯ 检查 HTML 中的工具链接是否也需要修复                                          
+
+● Searched for 1 pattern (ctrl+o to expand)
+
+● 发现 HTML 文章中有工具链接被错误地改成了 /articles/xxx.html，需要修复：
+
+● Update(islinux_tool/articles/json-privacy-guide.html)
+  ⎿  Added 1 line, removed 1 line
+      216          <hr style="border-color: var(--border-color); margin: 
+            2rem 0;">                                                    
+      217          <p><strong>Related Tools:</strong></p>                
+      218          <ul>                                                  
+      219 -            <li><a href="/articles/                           
+          -json-format.html" style="color: var(--accent-color);">JSON    
+          -Formatter</a></li>                                            
+      219 +            <li><a href="/                                    
+          +json-format.html" style="color: var(--accent-color);">JSON    
+          +Formatter</a></li>                                            
+      220              <li><a                                            
+           href="https://islinux.com/articles/vps-singapore-review.html" 
+            style="color: var(--accent-color);">Singapore VPS Security   
+           Guide</a></li>                                                
+      221          </ul>                                                 
+      222      </article>                                                
+
+● Searched for 1 pattern (ctrl+o to expand)
+
+● Bash(git add -A && git diff --cached --stat)
+  ⎿   islinux_ai/articles/copilot-to-agentic-ai.html    | 6 +++---
+      islinux_calc/articles/gpu-quantization-guide.html | 2 +-
+      islinux_tool/articles/json-privacy-guide.html     | 2 +-
+      3 files changed, 5 insertions(+), 5 deletions(-)
+
+● Bash(git commit -m "$(cat <<'EOF'
+      fix: Correct tool links in HTML articles to use root paths…)
+  ⎿  [main 99322db] fix: Correct tool links in HTML articles to use root pa
+     ths
+      3 files changed, 5 insertions(+), 5 deletions(-)
+     … +2 lines (ctrl+o to expand)
+
+● 已完成所有 HTML 和 JS 文件中的路径修复。
+
+  最终链接规范：
+
+  ┌──────────┬─────────────────────┬────────────────────────────────────────┐
+  │   类型   │      路径格式       │                  示例                  │
+  ├──────────┼─────────────────────┼────────────────────────────────────────┤
+  │ 工具页面 │ /xxx.html           │ /hourly-rate.html, /json-format.html,  │
+  │          │                     │ /shell-prompt.html                     │
+  ├──────────┼─────────────────────┼────────────────────────────────────────┤
+  │ 文章页面 │ /articles/xxx.html  │ /articles/gpu-quantization-guide.html  │
+  ├──────────┼─────────────────────┼────────────────────────────────────────┤
+  │          │ /index.html,        │                                        │
+  │ 导航页面 │ /about.html,        │ 以 / 开头                              │
+  │          │ /privacy.html       │                                        │
+  └──────────┴─────────────────────┴────────────────────────────────────────┘
+
+  本次修复：
+  1. JS 文件 (discover-more.js) - 3 个子站的工具链接和 toolGuides 键名
+  2. HTML 文章 - 3 篇文章中的工具链接：
+    - copilot-to-agentic-ai.html: shell-prompt, python-generator,
+  debug-assistant
+    - gpu-quantization-guide.html: token-vs-gpu
+    - json-privacy-guide.html: json-format
+
+  提交记录：
+  - Commit 99322db: "fix: Correct tool links in HTML articles to use root paths"
+
+✻ Cooked for 2m 46s
+
+❯ 把这个最终链接规范也更新到开发手册里                                          
+
+● Read 1 file (ctrl+o to expand)
+
+● Update(DEVELOPMENT_GUIDE.md)
+  ⎿  Error editing file
+
+● Update(DEVELOPMENT_GUIDE.md)
+  ⎿  Added 42 lines
+      190  - No relative path issues when deploying to different domains 
+      191  - Clear separation between same-site and cross-site linking   
+      192                                                                
+      193 +### 1.7 Tool Page Linking Rules                               
+      194 +                                                              
+      195 +**Tool pages are in the root directory of each subsite**, NOT 
+          + in `/articles/`:                                             
+      196 +                                                              
+      197 +| Page Type | Location | Link Format | Example |              
+      198 +|-----------|----------|-------------|---------|              
+      199 +| Tool Pages | Root (`/`) | `/xxx.html` |                     
+          +`/hourly-rate.html`, `/json-format.html` |                    
+      200 +| Article Pages | `/articles/` | `/articles/xxx.html` |       
+          +`/articles/gpu-guide.html` |                                  
+      201 +| Navigation | Root (`/`) | `/xxx.html` | `/index.html`,      
+          +`/about.html` |                                               
+      202 +                                                              
+      203 +**Correct Examples**:                                         
+      204 +```html                                                       
+      205 +<!-- Tool links (same subsite) -->                            
+      206 +<a href="/hourly-rate.html">Hourly Rate Calculator</a>        
+      207 +<a href="/json-format.html">JSON Formatter</a>                
+      208 +<a href="/shell-prompt.html">Shell Prompt Generator</a>       
+      209 +                                                              
+      210 +<!-- Article links (same subsite) -->                         
+      211 +<a href="/articles/gpu-quantization-guide.html">GPU Guide</a> 
+      212 +<a href="/articles/json-privacy-guide.html">JSON Privacy      
+          +Guide</a>                                                     
+      213 +                                                              
+      214 +<!-- Cross-subsites tool links -->                            
+      215 +<a href="https://calc.islinux.com/hourly-rate.html">Hourly    
+          +Rate</a>                                                      
+      216 +<a href="https://tool.islinux.com/json-format.html">JSON      
+          +Formatter</a>                                                 
+      217 +```                                                           
+      218 +                                                              
+      219 +**Incorrect Examples**:                                       
+      220 +```html                                                       
+      221 +<!-- Wrong: Tool links should NOT use /articles/ prefix -->   
+      222 +❌ <a href="/articles/hourly-rate.html">Hourly Rate</a>       
+      223 +❌ <a href="/articles/json-format.html">JSON Formatter</a>    
+      224 +                                                              
+      225 +<!-- Wrong: Relative paths -->                                
+      226 +❌ <a href="hourly-rate.html">Hourly Rate</a>                 
+      227 +❌ <a href="../tools/json-format.html">JSON Formatter</a>     
+      228 +```                                                           
+      229 +                                                              
+      230 +**Rationale**:                                                
+      231 +- Tool pages live in root directory for shorter, cleaner URLs 
+      232 +- Article pages use `/articles/` prefix for clear content     
+          +separation                                                    
+      233 +- Consistent structure across all subsites (calc, tool, ai)   
+      234 +                                                              
+      235  ---                                                           
+      236                                                                
+      237  ## 2. Google AdSense Approval Requirements - Critical Item    
+
+● Bash(git add -A && git commit -m "$(cat <<'EOF'
+      docs: Add Tool Page Linking Rules to DEVELOPMENT_GUIDE.md…)
+  ⎿  [main 9227c3a] docs: Add Tool Page Linking Rules to DEVELOPMENT_GUIDE.
+     md
+      1 file changed, 42 insertions(+)
+     … +2 lines (ctrl+o to expand)
+
+● 已完成开发手册更新。
+
+  新增章节 1.7 工具页面链接规范：
+
+  ┌──────────┬────────────┬────────────────────┬─────────────────────────────┐
+  │ 页面类型 │    位置    │      链接格式      │            示例             │
+  ├──────────┼────────────┼────────────────────┼─────────────────────────────┤
+  │ 工具页面 │ 根目录 (/) │ /xxx.html          │ /hourly-rate.html,          │
+  │          │            │                    │ /json-format.html           │
+  ├──────────┼────────────┼────────────────────┼─────────────────────────────┤
+  │ 文章页面 │ /articles/ │ /articles/xxx.html │ /articles/gpu-guide.html    │
+  ├──────────┼────────────┼────────────────────┼─────────────────────────────┤
+  │ 导航页面 │ 根目录 (/) │ /xxx.html          │ /index.html, /about.html    │
+  └──────────┴────────────┴────────────────────┴─────────────────────────────┘
+
+  正确示例：
+  <!-- 工具链接（同子站） -->
+  <a href="/hourly-rate.html">Hourly Rate Calculator</a>
+  <a href="/json-format.html">JSON Formatter</a>
+
+  <!-- 文章链接（同子站） -->
+  <a href="/articles/gpu-quantization-guide.html">GPU Guide</a>
+
+  错误示例：
+  <!-- 错误：工具链接不应使用 /articles/ 前缀 -->
+  ❌ <a href="/articles/hourly-rate.html">Hourly Rate</a>
+
+  <!-- 错误：不应使用相对路径 -->
+  ❌ <a href="hourly-rate.html">Hourly Rate</a>
+
+  提交记录：
+  - Commit 9227c3a: "docs: Add Tool Page Linking Rules to DEVELOPMENT_GUIDE.md"
+
+✻ Cooked for 2m 31s
+
+❯ 检查各个sitemap文件链接是否正确                                               
+
+● Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● Sitemap 文件检查完成，链接格式都正确：
+
+  检查结果：
+
+  ┌──────────────┬──────────────────┬───────────┬────────────────────┬───────┐
+  │   Sitemap    │       域名       │ 工具页面  │      文章页面      │ 状态  │
+  ├──────────────┼──────────────────┼───────────┼────────────────────┼───────┤
+  │ islinux_root │ islinux.com      │ N/A       │ /articles/xxx.html │ ✅    │
+  │              │                  │           │                    │ 正确  │
+  ├──────────────┼──────────────────┼───────────┼────────────────────┼───────┤
+  │ islinux_tool │ tool.islinux.com │ /xxx.html │ /articles/xxx.html │ ✅    │
+  │              │                  │           │                    │ 正确  │
+  ├──────────────┼──────────────────┼───────────┼────────────────────┼───────┤
+  │ islinux_calc │ calc.islinux.com │ /xxx.html │ /articles/xxx.html │ ✅    │
+  │              │                  │           │                    │ 正确  │
+  ├──────────────┼──────────────────┼───────────┼────────────────────┼───────┤
+  │ islinux_ai   │ ai.islinux.com   │ /xxx.html │ /articles/xxx.html │ ✅    │
+  │              │                  │           │                    │ 正确  │
+  └──────────────┴──────────────────┴───────────┴────────────────────┴───────┘
+
+  sitemap_index.xml - 主索引文件正确引用了 4 个子站点的 sitemap。
+
+  链接规范符合：
+  - 工具页面：根目录 /xxx.html
+  - 文章页面：/articles/xxx.html
+  - 导航页面：/about.html, /index.html
+
+  所有 sitemap 中的 URL 都与实际文件结构和链接规范一致，无需修复。
+
+✻ Sautéed for 1m 33s
+
+❯ 优化tool子站的terminal-config-generator.html工具，保持和其他工具的样式一致，  
+并且把这个工具加入tool站首页的导航                                              
+
+● Read 3 files (ctrl+o to expand)
+
+● 我来优化 terminal-config-generator.html，使其与其他工具页面样式一致，并将其添
+  加到首页导航。
+
+● Write(islinux_tool/terminal-config-generator.html)
+  ⎿  Added 505 lines, removed 47 lines
+        3  <head>                                                        
+        4      <meta charset="UTF-8">                                    
+        5      <meta name="viewport" content="width=device-width,        
+           initial-scale=1.0">                                           
+        6 -    <title>Modern Terminal Config Generator (2026) | isLinux  
+          - Tools</title>                                                
+        7 -    <meta name="description" content="Generate a              
+          -high-performance Linux terminal configuration in seconds.     
+          -Supports Zsh, Starship, and modern Rust-based CLI tools.">    
+        6 +    <title>Terminal Config Generator | Tool.isLinux</title>   
+        7 +    <meta name="description" content="Generate a modern Linux 
+          + terminal configuration with Starship, Zoxide, Eza, and Bat.  
+          +Customize your .zshrc or .bashrc in seconds.">                
+        8 +    <meta name="keywords" content="terminal config, starship  
+          +prompt, zoxide, eza, bat, zshrc, bashrc, linux terminal">     
+        9 +    <link rel="canonical" href="https://tool.islinux.com/term 
+          +inal-config-generator.html">                                  
+       10 +    <link rel="icon" type="image/x-icon" href="/favicon.ico"> 
+       11 +                                                              
+       12      <style>                                                   
+       13 -        :root { --bg: #0d1117; --card: #161b22; --text:       
+          -#c9d1d9; --accent: #238636; --border: #30363d; }              
+       14 -        body { font-family: -apple-system, sans-serif;        
+          -background: var(--bg); color: var(--text); max-width: 900px;  
+          -margin: 0 auto; padding: 20px; }                              
+       15 -        .container { background: var(--card); border: 1px     
+          -solid var(--border); padding: 2rem; border-radius: 12px; }    
+       16 -        h1 { color: #fff; margin-top: 0; }                    
+       17 -        .option-group { margin-bottom: 1.5rem; display: grid; 
+          - grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+          - gap: 1rem; }                                                 
+       18 -        .option { background: #0d1117; border: 1px solid      
+          -var(--border); padding: 1rem; border-radius: 8px; cursor:     
+          -pointer; transition: 0.2s; }                                  
+       19 -        .option:hover { border-color: var(--accent); }        
+       20 -        .option.active { border-color: var(--accent);         
+          -background: rgba(35, 134, 54, 0.1); }                         
+       21 -        .option input { margin-right: 10px; }                 
+       22 -        pre { background: #000; padding: 1.5rem;              
+          -border-radius: 8px; position: relative; overflow-x: auto;     
+          -border: 1px solid var(--border); }                            
+       23 -        code { font-family: 'Fira Code', 'Courier New',       
+          -monospace; color: #7ee787; }                                  
+       24 -        .copy-btn { position: absolute; top: 10px; right:     
+          -10px; background: var(--accent); color: white; border: none;  
+          -padding: 5px 12px; border-radius: 4px; cursor: pointer; }     
+       25 -        .footer-links { margin-top: 2rem; font-size: 0.9rem;  
+          -color: #8b949e; text-align: center; }                         
+       26 -        a { color: var(--accent); text-decoration: none; }    
+       13 +        :root {                                               
+       14 +            --bg-color: #0d1117;                              
+       15 +            --text-color: #c9d1d9;                            
+       16 +            --accent-color: #238636;                          
+       17 +            --card-bg: #161b22;                               
+       18 +            --border-color: #30363d;                          
+       19 +            --text-muted: #8b949e;                            
+       20 +            --code-bg: #000;                                  
+       21 +        }                                                     
+       22 +                                                              
+       23 +        * { box-sizing: border-box; }                         
+       24 +                                                              
+       25 +        body {                                                
+       26 +            font-family: -apple-system, BlinkMacSystemFont,   
+          +'Segoe UI', Roboto, sans-serif;                               
+       27 +            background-color: var(--bg-color);                
+       28 +            color: var(--text-color);                         
+       29 +            margin: 0;                                        
+       30 +            line-height: 1.6;                                 
+       31 +        }                                                     
+       32 +                                                              
+       33 +        header {                                              
+       34 +            padding: 2.5rem 1rem;                             
+       35 +            text-align: center;                               
+       36 +            border-bottom: 1px solid var(--border-color);     
+       37 +            background: linear-gradient(180deg, rgba(35, 134, 
+          + 54, 0.1) 0%, transparent 100%);                              
+       38 +        }                                                     
+       39 +                                                              
+       40 +        .logo {                                               
+       41 +            font-family: 'Courier New', Courier, monospace;   
+       42 +            font-size: 2.5rem;                                
+       43 +            font-weight: bold;                                
+       44 +            color: var(--accent-color);                       
+       45 +            margin: 0;                                        
+       46 +        }                                                     
+       47 +                                                              
+       48 +        .logo a { color: var(--accent-color);                 
+          +text-decoration: none; }                                      
+       49 +        .logo a:hover { text-decoration: underline; }         
+       50 +                                                              
+       51 +        .tagline { color: var(--text-muted); margin: 1rem 0   
+          +0; }                                                          
+       52 +                                                              
+       53 +        nav {                                                 
+       54 +            display: flex;                                    
+       55 +            justify-content: center;                          
+       56 +            gap: 1rem;                                        
+       57 +            flex-wrap: wrap;                                  
+       58 +            margin-top: 1rem;                                 
+       59 +        }                                                     
+       60 +                                                              
+       61 +        nav a {                                               
+       62 +            color: var(--text-color);                         
+       63 +            text-decoration: none;                            
+       64 +            padding: 0.5rem 1rem;                             
+       65 +            border: 1px solid var(--border-color);            
+       66 +            border-radius: 6px;                               
+       67 +            transition: all 0.2s;                             
+       68 +            font-size: 0.9rem;                                
+       69 +        }                                                     
+       70 +                                                              
+       71 +        nav a:hover { border-color: var(--accent-color);      
+          +color: var(--accent-color); }                                 
+       72 +                                                              
+       73 +        .container { max-width: 1100px; margin: 0 auto;       
+          +padding: 2rem 1rem; }                                         
+       74 +                                                              
+       75 +        .back-link {                                          
+       76 +            display: inline-block;                            
+       77 +            color: var(--text-color);                         
+       78 +            text-decoration: none;                            
+       79 +            padding: 0.5rem 1rem;                             
+       80 +            border: 1px solid var(--border-color);            
+       81 +            border-radius: 6px;                               
+       82 +            margin-bottom: 1.5rem;                            
+       83 +            transition: all 0.2s;                             
+       84 +        }                                                     
+       85 +                                                              
+       86 +        .back-link:hover { border-color: var(--accent-color); 
+          + color: var(--accent-color); }                                
+       87 +                                                              
+       88 +        .tool-header {                                        
+       89 +            background: var(--card-bg);                       
+       90 +            border: 1px solid var(--border-color);            
+       91 +            border-radius: 8px;                               
+       92 +            padding: 1.5rem;                                  
+       93 +            margin-bottom: 1.5rem;                            
+       94 +        }                                                     
+       95 +                                                              
+       96 +        .tool-header h1 {                                     
+       97 +            margin: 0 0 0.5rem;                               
+       98 +            color: var(--accent-color);                       
+       99 +            font-size: 1.5rem;                                
+      100 +        }                                                     
+      101 +                                                              
+      102 +        .tool-header p { margin: 0; color: var(--text-muted); 
+          + }                                                            
+      103 +                                                              
+      104 +        .tool-panel {                                         
+      105 +            background: var(--card-bg);                       
+      106 +            border: 1px solid var(--border-color);            
+      107 +            border-radius: 8px;                               
+      108 +            padding: 1.5rem;                                  
+      109 +            margin-bottom: 1rem;                              
+      110 +        }                                                     
+      111 +                                                              
+      112 +        .panel-header {                                       
+      113 +            display: flex;                                    
+      114 +            justify-content: space-between;                   
+      115 +            align-items: center;                              
+      116 +            margin-bottom: 1rem;                              
+      117 +            flex-wrap: wrap;                                  
+      118 +            gap: 1rem;                                        
+      119 +        }                                                     
+      120 +                                                              
+      121 +        .panel-title { margin: 0; color: #fff; font-size:     
+          +1.2rem; }                                                     
+      122 +                                                              
+      123 +        .panel-actions { display: flex; gap: 0.5rem;          
+          +flex-wrap: wrap; }                                            
+      124 +                                                              
+      125 +        .options-grid {                                       
+      126 +            display: grid;                                    
+      127 +            grid-template-columns: repeat(auto-fit,           
+          +minmax(200px, 1fr));                                          
+      128 +            gap: 1rem;                                        
+      129 +            margin-bottom: 1.5rem;                            
+      130 +        }                                                     
+      131 +                                                              
+      132 +        .option-card {                                        
+      133 +            background: rgba(35, 134, 54, 0.05);              
+      134 +            border: 1px solid var(--border-color);            
+      135 +            border-radius: 6px;                               
+      136 +            padding: 1rem;                                    
+      137 +            cursor: pointer;                                  
+      138 +            transition: all 0.2s;                             
+      139 +            display: flex;                                    
+      140 +            align-items: center;                              
+      141 +            gap: 0.75rem;                                     
+      142 +        }                                                     
+      143 +                                                              
+      144 +        .option-card:hover {                                  
+      145 +            border-color: var(--accent-color);                
+      146 +            background: rgba(35, 134, 54, 0.1);               
+      147 +        }                                                     
+      148 +                                                              
+      149 +        .option-card.active {                                 
+      150 +            border-color: var(--accent-color);                
+      151 +            background: rgba(35, 134, 54, 0.15);              
+      152 +        }                                                     
+      153 +                                                              
+      154 +        .option-card input[type="checkbox"] {                 
+      155 +            width: 18px;                                      
+      156 +            height: 18px;                                     
+      157 +            cursor: pointer;                                  
+      158 +            accent-color: var(--accent-color);                
+      159 +        }                                                     
+      160 +                                                              
+      161 +        .option-card label {                                  
+      162 +            cursor: pointer;                                  
+      163 +            flex: 1;                                          
+      164 +            margin: 0;                                        
+      165 +            color: var(--text-color);                         
+      166 +            font-weight: 500;                                 
+      167 +        }                                                     
+      168 +                                                              
+      169 +        .option-card .option-icon {                           
+      170 +            font-size: 1.5rem;                                
+      171 +        }                                                     
+      172 +                                                              
+      173 +        .option-card .option-desc {                           
+      174 +            display: block;                                   
+      175 +            font-size: 0.8rem;                                
+      176 +            color: var(--text-muted);                         
+      177 +            margin-top: 0.25rem;                              
+      178 +        }                                                     
+      179 +                                                              
+      180 +        .shell-selector {                                     
+      181 +            display: flex;                                    
+      182 +            gap: 1rem;                                        
+      183 +            margin-bottom: 1.5rem;                            
+      184 +        }                                                     
+      185 +                                                              
+      186 +        .shell-btn {                                          
+      187 +            flex: 1;                                          
+      188 +            padding: 0.75rem 1.5rem;                          
+      189 +            border-radius: 6px;                               
+      190 +            border: 1px solid var(--border-color);            
+      191 +            background: var(--card-bg);                       
+      192 +            color: var(--text-color);                         
+      193 +            cursor: pointer;                                  
+      194 +            transition: all 0.2s;                             
+      195 +            font-size: 0.95rem;                               
+      196 +            text-align: center;                               
+      197 +        }                                                     
+      198 +                                                              
+      199 +        .shell-btn:hover {                                    
+      200 +            border-color: var(--accent-color);                
+      201 +        }                                                     
+      202 +                                                              
+      203 +        .shell-btn.active {                                   
+      204 +            background: var(--accent-color);                  
+      205 +            border-color: var(--accent-color);                
+      206 +            color: #fff;                                      
+      207 +        }                                                     
+      208 +                                                              
+      209 +        pre {                                                 
+      210 +            background: var(--code-bg);                       
+      211 +            border: 1px solid var(--border-color);            
+      212 +            border-radius: 6px;                               
+      213 +            padding: 1.5rem;                                  
+      214 +            overflow-x: auto;                                 
+      215 +            margin-top: 1rem;                                 
+      216 +        }                                                     
+      217 +                                                              
+      218 +        code {                                                
+      219 +            font-family: 'Fira Code', 'Courier New',          
+          +monospace;                                                    
+      220 +            font-size: 0.9rem;                                
+      221 +            color: #7ee787;                                   
+      222 +            white-space: pre;                                 
+      223 +        }                                                     
+      224 +                                                              
+      225 +        .btn {                                                
+      226 +            padding: 0.6rem 1.2rem;                           
+      227 +            border-radius: 6px;                               
+      228 +            border: none;                                     
+      229 +            cursor: pointer;                                  
+      230 +            font-size: 0.9rem;                                
+      231 +            transition: all 0.2s;                             
+      232 +            display: inline-flex;                             
+      233 +            align-items: center;                              
+      234 +            gap: 0.5rem;                                      
+      235 +        }                                                     
+      236 +                                                              
+      237 +        .btn-primary { background: var(--accent-color);       
+          +color: #fff; }                                                
+      238 +        .btn-primary:hover { background: #2ea043; }           
+      239 +                                                              
+      240 +        .btn-secondary {                                      
+      241 +            background: var(--card-bg);                       
+      242 +            color: var(--text-color);                         
+      243 +            border: 1px solid var(--border-color);            
+      244 +        }                                                     
+      245 +        .btn-secondary:hover { border-color:                  
+          +var(--text-color); }                                          
+      246 +                                                              
+      247 +        footer {                                              
+      248 +            text-align: center;                               
+      249 +            padding: 2rem;                                    
+      250 +            border-top: 1px solid var(--border-color);        
+      251 +            color: var(--text-muted);                         
+      252 +            font-size: 0.9rem;                                
+      253 +        }                                                     
+      254 +                                                              
+      255 +        footer a { color: var(--text-color); text-decoration: 
+          + none; margin: 0 0.5rem; }                                    
+      256 +        footer a:hover { color: var(--accent-color); }        
+      257 +                                                              
+      258 +        .toast {                                              
+      259 +            position: fixed;                                  
+      260 +            bottom: 2rem;                                     
+      261 +            right: 2rem;                                      
+      262 +            background: var(--accent-color);                  
+      263 +            color: #fff;                                      
+      264 +            padding: 1rem 1.5rem;                             
+      265 +            border-radius: 8px;                               
+      266 +            box-shadow: 0 4px 20px rgba(0,0,0,0.3);           
+      267 +            transform: translateY(100px);                     
+      268 +            opacity: 0;                                       
+      269 +            transition: all 0.3s;                             
+      270 +        }                                                     
+      271 +                                                              
+      272 +        .toast.show { transform: translateY(0); opacity: 1; } 
+      273 +                                                              
+      274 +        @media (max-width: 768px) {                           
+      275 +            .logo { font-size: 1.8rem; }                      
+      276 +            .panel-header { flex-direction: column;           
+          +align-items: flex-start; }                                    
+      277 +            .options-grid { grid-template-columns: 1fr; }     
+      278 +        }                                                     
+      279      </style>                                                  
+      280  </head>                                                       
+      281  <body>                                                        
+      282                                                                
+      283 +<header>                                                      
+      284 +    <h1 class="logo"><a href="/index.html">🛠️                 
+          +Tool.isLinux.com</a></h1>                                     
+      285 +    <p class="tagline">Developer Client-side Toolkit</p>      
+      286 +    <nav>                                                     
+      287 +        <a href="/index.html">Home</a>                        
+      288 +        <a href="/about.html">About</a>                       
+      289 +        <a href="https://islinux.com">Main Site</a>           
+      290 +    </nav>                                                    
+      291 +</header>                                                     
+      292 +                                                              
+      293  <div class="container">                                       
+      294 -    <h1>Terminal Config Generator</h1>                        
+      295 -    <p>Select the components you want to include in your 2026 
+          - terminal setup:</p>                                          
+      294 +    <a href="/index.html" class="back-link">← Back to         
+          +Tools</a>                                                     
+      295                                                                
+      296 -    <div class="option-group">                                
+      297 -        <label class="option active"><input type="checkbox"   
+          -checked disabled> Starship Prompt (Fast)</label>              
+      298 -        <label class="option active"><input type="checkbox"   
+          -id="useZoxide" checked> Zoxide (Smart CD)</label>             
+      299 -        <label class="option active"><input type="checkbox"   
+          -id="useEza" checked> Eza (Modern LS)</label>                  
+      300 -        <label class="option active"><input type="checkbox"   
+          -id="useBat" checked> Bat (Syntax Cat)</label>                 
+      296 +    <div class="tool-header">                                 
+      297 +        <h1>⌨️ Terminal Config Generator</h1>                 
+      298 +        <p>Generate a modern Linux terminal configuration     
+          +with Starship, Zoxide, Eza, and Bat. All processing happens   
+          +locally in your browser.</p>                                  
+      299      </div>                                                    
+      300                                                                
+      301 -    <div style="margin-bottom: 10px;">Generated Config (Paste 
+          - into your <code>.zshrc</code> or                             
+          -<code>.bashrc</code>):</div>                                  
+      302 -    <pre><button class="copy-btn"                             
+          -onclick="copyConfig()">Copy</button><code id="configResult"># 
+          - isLinux Modern Terminal Config                               
+      303 -eval "$(starship init zsh)"                                   
+      304 -eval "$(zoxide init zsh)"                                     
+      305 -alias ls='eza --icons --group-directories-first'              
+      306 -alias cat='bat --paging=never'</code></pre>                   
+      307 -</div>                                                        
+      301 +    <div class="tool-panel">                                  
+      302 +        <div class="panel-header">                            
+      303 +            <h2 class="panel-title">Select Your Shell</h2>    
+      304 +        </div>                                                
+      305 +        <div class="shell-selector">                          
+      306 +            <button class="shell-btn active"                  
+          +onclick="selectShell('zsh')">Zsh</button>                     
+      307 +            <button class="shell-btn"                         
+          +onclick="selectShell('bash')">Bash</button>                   
+      308 +            <button class="shell-btn"                         
+          +onclick="selectShell('fish')">Fish</button>                   
+      309 +        </div>                                                
+      310 +    </div>                                                    
+      311                                                                
+      312 -<div class="footer-links">                                    
+      313 -    <p>All processing is done <strong>locally</strong> in     
+          -your browser. <a                                              
+          -href="https://islinux.com/privacy.html">Privacy               
+          -Policy</a></p>                                                
+      314 -    <p>Need to calculate resource usage? Try <a               
+          -href="https://calc.islinux.com">isLinux Calc</a></p>          
+      312 +    <div class="tool-panel">                                  
+      313 +        <div class="panel-header">                            
+      314 +            <h2 class="panel-title">Select Components</h2>    
+      315 +        </div>                                                
+      316 +        <div class="options-grid">                            
+      317 +            <div class="option-card active">                  
+      318 +                <input type="checkbox" id="useStarship"       
+          +checked disabled>                                             
+      319 +                <label for="useStarship">                     
+      320 +                    <span class="option-icon">🚀</span>       
+      321 +                    Starship Prompt                           
+      322 +                    <span class="option-desc">Fast,           
+          +customizable cross-shell prompt</span>                        
+      323 +                </label>                                      
+      324 +            </div>                                            
+      325 +            <div class="option-card active">                  
+      326 +                <input type="checkbox" id="useZoxide"         
+          +checked>                                                      
+      327 +                <label for="useZoxide">                       
+      328 +                    <span class="option-icon">📂</span>       
+      329 +                    Zoxide                                    
+      330 +                    <span class="option-desc">Smart cd        
+          +command with fuzzy search</span>                              
+      331 +                </label>                                      
+      332 +            </div>                                            
+      333 +            <div class="option-card active">                  
+      334 +                <input type="checkbox" id="useEza" checked>   
+      335 +                <label for="useEza">                          
+      336 +                    <span class="option-icon">📋</span>       
+      337 +                    Eza                                       
+      338 +                    <span class="option-desc">Modern ls with  
+          +icons and colors</span>                                       
+      339 +                </label>                                      
+      340 +            </div>                                            
+      341 +            <div class="option-card active">                  
+      342 +                <input type="checkbox" id="useBat" checked>   
+      343 +                <label for="useBat">                          
+      344 +                    <span class="option-icon">🦇</span>       
+      345 +                    Bat                                       
+      346 +                    <span class="option-desc">Cat with syntax 
+          + highlighting</span>                                          
+      347 +                </label>                                      
+      348 +            </div>                                            
+      349 +            <div class="option-card">                         
+      350 +                <input type="checkbox" id="useFzf">           
+      351 +                <label for="useFzf">                          
+      352 +                    <span class="option-icon">🔍</span>       
+      353 +                    FZF                                       
+      354 +                    <span class="option-desc">Fuzzy finder    
+          +for files and history</span>                                  
+      355 +                </label>                                      
+      356 +            </div>                                            
+      357 +            <div class="option-card">                         
+      358 +                <input type="checkbox" id="useTmux">          
+      359 +                <label for="useTmux">                         
+      360 +                    <span class="option-icon">🖥️</span>       
+      361 +                    Tmux                                      
+      362 +                    <span class="option-desc">Terminal        
+          +multiplexer basics</span>                                     
+      363 +                </label>                                      
+      364 +            </div>                                            
+      365 +        </div>                                                
+      366 +    </div>                                                    
+      367 +                                                              
+      368 +    <div class="tool-panel">                                  
+      369 +        <div class="panel-header">                            
+      370 +            <h2 class="panel-title">Generated Config</h2>     
+      371 +            <div class="panel-actions">                       
+      372 +                <button class="btn btn-secondary"             
+          +onclick="resetConfig()">Reset</button>                        
+      373 +                <button class="btn btn-primary"               
+          +onclick="copyConfig()">📋 Copy</button>                       
+      374 +            </div>                                            
+      375 +        </div>                                                
+      376 +        <p style="color: var(--text-muted); margin-bottom:    
+          +0.5rem;">Paste this into your config file:</p>                
+      377 +        <pre><code id="configResult"></code></pre>            
+      378 +    </div>                                                    
+      379 +                                                              
+      380 +    <div class="tool-panel">                                  
+      381 +        <h3 style="margin-top: 0; color: #fff;">📖            
+          +Installation Guide</h3>                                       
+      382 +        <ol style="color: var(--text-muted); line-height:     
+          +2;">                                                          
+      383 +            <li><strong>Install Starship:</strong> <code>curl 
+          + -sS https://starship.rs/install.sh | sh</code></li>          
+      384 +            <li><strong>Install Zoxide:</strong> <code>curl   
+          +-sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main 
+          +/install.sh | bash</code></li>                                
+      385 +            <li><strong>Install Eza:</strong> <code>sudo apt  
+          +install eza</code> or <code>brew install eza</code></li>      
+      386 +            <li><strong>Install Bat:</strong> <code>sudo apt  
+          +install bat</code> or <code>brew install bat</code></li>      
+      387 +            <li><strong>Apply config:</strong> Copy the       
+          +generated config above to your <code>~/.zshrc</code> or       
+          +<code>~/.bashrc</code></li>                                   
+      388 +            <li><strong>Reload shell:</strong> Run            
+          +<code>source ~/.zshrc</code> or <code>source                  
+          +~/.bashrc</code></li>                                         
+      389 +        </ol>                                                 
+      390 +    </div>                                                    
+      391  </div>                                                        
+      392                                                                
+      393 +<!-- Discover More Section -->                                
+      394 +<section class="discover-section">                            
+      395 +    <h2 class="discover-title">🔍 Discover More</h2>          
+      396 +    <div class="discover-grid" id="discover-grid"></div>      
+      397 +</section>                                                    
+      398 +                                                              
+      399 +<!-- Tool Guide Section -->                                   
+      400 +<section class="tool-guide-section">                          
+      401 +    <div class="tool-guide-content"                           
+          +id="tool-guide-content"></div>                                
+      402 +</section>                                                    
+      403 +                                                              
+      404 +<!-- Random Articles Section -->                              
+      405 +<section class="random-articles-section">                     
+      406 +    <h2 class="random-articles-title">📚 Related              
+          +Articles</h2>                                                 
+      407 +    <div class="random-articles-grid"                         
+          +id="random-articles-grid"></div>                              
+      408 +</section>                                                    
+      409 +                                                              
+      410 +<footer>                                                      
+      411 +    <p>&copy; 2026 Tool.isLinux.com</p>                       
+      412 +    <p>                                                       
+      413 +        <a href="/index.html">Home</a> |                      
+      414 +        <a href="/about.html">About</a> |                     
+      415 +        <a href="/privacy.html">Privacy</a> |                 
+      416 +        <a href="https://islinux.com">Main Site</a>           
+      417 +    </p>                                                      
+      418 +</footer>                                                     
+      419 +                                                              
+      420 +<div class="toast" id="toast">✅ Copied to clipboard!</div>   
+      421 +                                                              
+      422 +<script src="js/discover-more.js"></script>                   
+      423  <script>                                                      
+      424 -    const checkboxes =                                        
+          -document.querySelectorAll('input[type="checkbox"]');          
+      425 -    const resultArea =                                        
+          -document.getElementById('configResult');                      
+      424 +    let currentShell = 'zsh';                                 
+      425                                                                
+      426 +    function selectShell(shell) {                             
+      427 +        currentShell = shell;                                 
+      428 +        document.querySelectorAll('.shell-btn').forEach(btn   
+          +=> {                                                          
+      429 +            btn.classList.remove('active');                   
+      430 +            if (btn.textContent.toLowerCase() === shell) {    
+      431 +                btn.classList.add('active');                  
+      432 +            }                                                 
+      433 +        });                                                   
+      434 +        updateConfig();                                       
+      435 +    }                                                         
+      436 +                                                              
+      437 +    function getShellInit() {                                 
+      438 +        switch(currentShell) {                                
+      439 +            case 'zsh': return 'eval "$(starship init zsh)"'; 
+      440 +            case 'bash': return 'eval "$(starship init        
+          +bash)"';                                                      
+      441 +            case 'fish': return 'starship init fish |         
+          +source';                                                      
+      442 +            default: return 'eval "$(starship init zsh)"';    
+      443 +        }                                                     
+      444 +    }                                                         
+      445 +                                                              
+      446 +    function getZoxideInit() {                                
+      447 +        switch(currentShell) {                                
+      448 +            case 'zsh': return 'eval "$(zoxide init zsh)"';   
+      449 +            case 'bash': return 'eval "$(zoxide init bash)"'; 
+      450 +            case 'fish': return 'zoxide init fish | source';  
+      451 +            default: return 'eval "$(zoxide init zsh)"';      
+      452 +        }                                                     
+      453 +    }                                                         
+      454 +                                                              
+      455      function updateConfig() {                                 
+      456 -        let config = "# isLinux Modern Terminal Config (      
+          -Updated: 2026)\n";                                            
+      457 -        config += 'eval "$(starship init zsh)"\n';            
+      458 -                                                              
+      456 +        let config = "# isLinux Modern Terminal Config (      
+          +2026)\n";                                                     
+      457 +        config += "# Generated for: " +                       
+          +currentShell.toUpperCase() + "\n\n";                          
+      458 +                                                              
+      459 +        // Starship (always enabled)                          
+      460 +        config += "# 🚀 Starship Prompt\n";                   
+      461 +        config += getShellInit() + "\n\n";                    
+      462 +                                                              
+      463          if(document.getElementById('useZoxide').checked) {    
+      464 -            config += 'eval "$(zoxide init zsh)"\n';          
+      464 +            config += "# 📂 Zoxide - Smart CD\n";             
+      465 +            config += getZoxideInit() + "\n\n";               
+      466          }                                                     
+      467 +                                                              
+      468          if(document.getElementById('useEza').checked) {       
+      469 +            config += "# 📋 Eza - Modern LS\n";               
+      470              config += "alias ls='eza --icons                  
+           --group-directories-first'\n";                                
+      471 +            config += "alias ll='eza -la --icons'\n";         
+      472 +            config += "alias lt='eza --tree'\n\n";            
+      473          }                                                     
+      474 +                                                              
+      475          if(document.getElementById('useBat').checked) {       
+      476 +            config += "# 🦇 Bat - Syntax Highlighting Cat\n"; 
+      477              config += "alias cat='bat --paging=never'\n";     
+      478 +            config += "alias grep='bat --grep'\n\n";          
+      479          }                                                     
+      480 -                                                              
+      481 -        resultArea.textContent = config;                      
+      480 +                                                              
+      481 +        if(document.getElementById('useFzf').checked) {       
+      482 +            config += "# 🔍 FZF - Fuzzy Finder\n";            
+      483 +            config += "[ -f ~/.fzf.zsh ] && source            
+          +~/.fzf.zsh\n";                                                
+      484 +            config += "alias find='fzf'\n\n";                 
+      485 +        }                                                     
+      486 +                                                              
+      487 +        if(document.getElementById('useTmux').checked) {      
+      488 +            config += "# 🖥️ Tmux - Terminal Multiplexer\n";   
+      489 +            config += "alias tmux='tmux -u'\n";               
+      490 +            config += "alias ta='tmux attach || tmux          
+          +new'\n\n";                                                    
+      491 +        }                                                     
+      492 +                                                              
+      493 +        config += "# 💡 Tip: Run 'source ~." + currentShell + 
+          + "rc' to apply changes";                                      
+      494 +                                                              
+      495 +        document.getElementById('configResult').textContent = 
+          + config;                                                      
+      496      }                                                         
+      497                                                                
+      498 -    checkboxes.forEach(cb => cb.addEventListener('change',    
+          -updateConfig));                                               
+      498 +    function resetConfig() {                                  
+      499 +        document.querySelectorAll('.option-card               
+          +input[type="checkbox"]').forEach(cb => {                      
+      500 +            if (!cb.disabled) cb.checked = false;             
+      501 +        });                                                   
+      502 +                                                              
+          +document.querySelectorAll('.option-card').forEach(card => {   
+      503 +            card.classList.remove('active');                  
+      504 +        });                                                   
+      505 +        // Re-enable Starship card visually but keep checkbox 
+          + disabled                                                     
+      506 +        document.querySelector('label[for="useStarship"]').pa 
+          +rentElement.classList.add('active');                          
+      507 +        updateConfig();                                       
+      508 +    }                                                         
+      509                                                                
+      510      function copyConfig() {                                   
+      511 -                                                              
+          -navigator.clipboard.writeText(resultArea.textContent);        
+      512 -        const btn = document.querySelector('.copy-btn');      
+      513 -        btn.textContent = 'Copied!';                          
+      514 -        setTimeout(() => btn.textContent = 'Copy', 2000);     
+      511 +        const output =                                        
+          +document.getElementById('configResult').textContent;          
+      512 +        navigator.clipboard.writeText(output).then(() => {    
+      513 +            showToast();                                      
+      514 +        });                                                   
+      515      }                                                         
+      516 +                                                              
+      517 +    function showToast() {                                    
+      518 +        const toast = document.getElementById('toast');       
+      519 +        toast.classList.add('show');                          
+      520 +        setTimeout(() => toast.classList.remove('show'),      
+          +2000);                                                        
+      521 +    }                                                         
+      522 +                                                              
+      523 +    // Initialize checkbox state                              
+      524 +    document.querySelectorAll('.option-card                   
+          +input[type="checkbox"]').forEach(cb => {                      
+      525 +        const card = cb.closest('.option-card');              
+      526 +        cb.addEventListener('change', function() {            
+      527 +            if (this.checked) {                               
+      528 +                card.classList.add('active');                 
+      529 +            } else {                                          
+      530 +                card.classList.remove('active');              
+      531 +            }                                                 
+      532 +            updateConfig();                                   
+      533 +        });                                                   
+      534 +    });                                                       
+      535 +                                                              
+      536 +    // Initial config generation                              
+      537 +    updateConfig();                                           
+      538  </script>                                                     
+      539                                                                
+      540  </body>                                                       
+      541 -</html>                                                       
+      541   No newline at end of file                                    
+      542 +</html>                                                       
+
+● 现在将这个工具添加到首页导航中：
+
+● Update(islinux_tool/index.html)
+  ⎿  Added 7 lines
+      353              <p class="tool-description">Generate favicon.ico  
+           and PNG icons from text with customizable styles.</p>         
+      354              <span class="tool-tag">Icon</span>                
+      355          </a>                                                  
+      356 +                                                              
+      357 +        <a href="terminal-config-generator.html"              
+          +class="tool-card">                                            
+      358 +            <div class="tool-icon">⌨️</div>                   
+      359 +            <h3 class="tool-title">Terminal Config            
+          +Generator</h3>                                                
+      360 +            <p class="tool-description">Generate modern       
+          +terminal config with Starship, Zoxide, Eza, and Bat.</p>      
+      361 +            <span class="tool-tag">Shell</span>               
+      362 +        </a>                                                  
+      363      </div>                                                    
+      364                                                                
+      365      <!-- Article Section -->                                  
+
+● 现在更新 JS 文件中的工具列表：
+
+● Read 1 file (ctrl+o to expand)
+
+● Update(islinux_tool/js/discover-more.js)
+  ⎿  Added 2 lines, removed 1 line
+       7          { href: '/url-encode.html', icon: '🔗', title: 'URL    
+          Encoder/Decoder', description: 'Encode or decode URL-encoded   
+          strings.' },                                                   
+       8          { href: '/hash.html', icon: '🔑', title: 'Hash         
+          Calculator', description: 'Calculate MD5, SHA1, SHA256 hashes  
+          for any text.' },                                              
+       9          { href: '/diff.html', icon: '📊', title: 'Text Diff',  
+          description: 'Compare two texts and find the differences line  
+          by line.' },                                                   
+      10 -        { href: '/favicon-generator.html', icon: '🎨', title:  
+         -'Favicon Generator', description: 'Generate favicon.ico and PNG
+         - icons from text with customizable styles.' }                  
+      10 +        { href: '/favicon-generator.html', icon: '🎨', title:  
+         +'Favicon Generator', description: 'Generate favicon.ico and PNG
+         + icons from text with customizable styles.' },                 
+      11 +        { href: '/terminal-config-generator.html', icon: '⌨️', 
+         + title: 'Terminal Config Generator', description: 'Generate    
+         +modern terminal config with Starship, Zoxide, Eza, and Bat.' } 
+      12      ];                                                         
+      13                                                                 
+      14      const articles = [                                         
+
+● Update(islinux_tool/js/discover-more.js)
+  ⎿  Added 22 lines
+      145                      <li><strong>48×48:</strong> Larger icons  
+           for apps</li>                                                 
+      146                  </ul>                                         
+      147              `                                                 
+      148 +        },                                                    
+      149 +        '/terminal-config-generator.html': {                  
+      150 +            title: 'How to Use Terminal Config Generator',    
+      151 +            content: `                                        
+      152 +                <h3>📋 Usage</h3>                             
+      153 +                <ul>                                          
+      154 +                    <li>Select your shell (Zsh, Bash, or      
+          +Fish)</li>                                                    
+      155 +                    <li>Choose components to include          
+          +(Starship, Zoxide, Eza, Bat, etc.)</li>                       
+      156 +                    <li>Click "Copy" to copy the generated    
+          +config</li>                                                   
+      157 +                    <li>Paste into your ~/.zshrc or           
+          +~/.bashrc</li>                                                
+      158 +                    <li>Run "source ~/.zshrc" to apply        
+          +changes</li>                                                  
+      159 +                </ul>                                         
+      160 +                <h3>💡 Components</h3>                        
+      161 +                <ul>                                          
+      162 +                    <li><strong>Starship:</strong> Fast,      
+          +customizable cross-shell prompt</li>                          
+      163 +                    <li><strong>Zoxide:</strong> Smart cd     
+          +command with fuzzy search</li>                                
+      164 +                    <li><strong>Eza:</strong> Modern ls with  
+          +icons and colors</li>                                         
+      165 +                    <li><strong>Bat:</strong> Cat with syntax 
+          + highlighting</li>                                            
+      166 +                    <li><strong>FZF:</strong> Fuzzy finder    
+          +for files and history</li>                                    
+      167 +                    <li><strong>Tmux:</strong> Terminal       
+          +multiplexer basics</li>                                       
+      168 +                </ul>                                         
+      169 +            `                                                 
+      170          }                                                     
+      171      };                                                        
+      172                                                                
+
+● Bash(git add -A && git diff --cached --stat)
+  ⎿   idea/Terminal.txt                           |  36 ++
+      islinux_tool/index.html                     |   7 +
+      islinux_tool/js/discover-more.js            |  25 +-
+     … +3 lines (ctrl+o to expand)
+
+● Bash(git commit -m "$(cat <<'EOF'
+      feat: Add Terminal Config Generator tool…)
+  ⎿  [main 85c7b75] feat: Add Terminal Config Generator tool
+      4 files changed, 608 insertions(+), 1 deletion(-)
+      create mode 100644 idea/Terminal.txt
+     … +3 lines (ctrl+o to expand)
+
+● 已完成 Terminal Config Generator 工具的优化和添加：
+
+  完成的工作：
+
+  1. 重写 terminal-config-generator.html - 采用与其他工具一致的样式：
+    - 统一的 header、导航和 footer
+    - 添加"Back to Tools"返回链接
+    - 工具面板样式一致
+    - 添加 Discover More、Tool Guide、Random Articles 区块
+  2. 新增功能：
+    - Shell 选择器：Zsh、Bash、Fish
+    - 组件选择卡片（带图标和描述）：
+        - 🚀 Starship Prompt（必选）
+      - 📂 Zoxide（智能 cd）
+      - 📋 Eza（现代 ls）
+      - 🦇 Bat（语法高亮 cat）
+      - 🔍 FZF（模糊查找）
+      - 🖥️ Tmux（终端复用器）
+    - 安装指南部分
+    - Copy 和 Reset 按钮
+  3. 更新首页导航 - 在 index.html 添加工具卡片
+  4. 更新 discover-more.js - 添加 Terminal Config Generator 到工具列表和工具指南
+
+  提交记录：
+  - Commit 85c7b75: "feat: Add Terminal Config Generator tool"
+
+✻ Brewed for 4m 56s
+
+❯  terminal-config-generator.html页面的Discover More和Related Articles样式不对  
+
+● 我来检查并修复样式问题。先看一下当前的样式和其他工具页面的对比：
+
+● Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● 我发现 terminal-config-generator.html 缺少这些区块的 CSS 样式。让我从
+  json-format.html 复制正确的样式：
+
+● Read 2 files (ctrl+o to expand)
+
+● 我发现 terminal-config-generator.html 缺少引用 css/common.css
+  文件，这个文件包含了 Discover More 和 Random Articles
+  区块的样式。让我添加这个引用：
+
+● Update(islinux_tool/terminal-config-generator.html)
+  ⎿  Error editing file
+
+● Read 1 file (ctrl+o to expand)
+
+● Update(islinux_tool/terminal-config-generator.html)
+  ⎿  Added 1 line
+      277              .options-grid { grid-template-columns: 1fr; }     
+      278          }                                                     
+      279      </style>                                                  
+      280 +    <link rel="stylesheet" href="css/common.css">             
+      281  </head>                                                       
+      282  <body>                                                        
+      283                                                                
+
+● Bash(git add -A && git commit -m "$(cat <<'EOF'
+      fix: Add common.css reference to terminal-config-generator.html…)
+  ⎿  [main 2bffdb7] fix: Add common.css reference to terminal-config-genera
+     tor.html
+      1 file changed, 1 insertion(+)
+     … +2 lines (ctrl+o to expand)
+
+● 已修复样式问题。
+
+  问题原因：
+  terminal-config-generator.html 缺少对 css/common.css
+  文件的引用，该文件包含了：
+  - .discover-section 样式
+  - .tool-guide-section 样式
+  - .random-articles-section 样式
+  - .discover-grid、.article-card 等子元素样式
+
+  修复内容：
+  - 在 <head> 中添加 <link rel="stylesheet" href="css/common.css">
+
+  提交记录：
+  - Commit 2bffdb7: "fix: Add common.css reference to
+  terminal-config-generator.html"
+
+✻ Baked for 3m 56s
+
+❯ 更新tools子站的sitemap文件，把这个工具的链接加入进去                          
+
+● Read 1 file (ctrl+o to expand)
+
+● Update(islinux_tool/sitemap.xml)
+  ⎿  Added 6 lines
+      60      <changefreq>monthly</changefreq>                           
+      61      <priority>0.7</priority>                                   
+      62    </url>                                                       
+      63 +  <url>                                                        
+      64 +    <loc>https://tool.islinux.com/terminal-config-generator.ht 
+         +ml</loc>                                                       
+      65 +    <lastmod>2026-03-18</lastmod>                              
+      66 +    <changefreq>monthly</changefreq>                           
+      67 +    <priority>0.7</priority>                                   
+      68 +  </url>                                                       
+      69  </urlset>                                                      
+
+● Bash(git add -A && git commit -m "$(cat <<'EOF'
+      fix: Add terminal-config-generator to tool site sitemap…)
+  ⎿  [main 83e3419] fix: Add terminal-config-generator to tool site sitemap
+      1 file changed, 6 insertions(+)
+     To github.com:linuxyan/islinux.git
+        2bffdb7..83e3419  main -> main
+
+● 已完成 sitemap 更新。
+
+  修改内容：
+  - 在 islinux_tool/sitemap.xml 中添加 Terminal Config Generator 工具页面
+  - URL: https://tool.islinux.com/terminal-config-generator.html
+  - 更新日期：2026-03-18
+  - 优先级：0.7
+
+  提交记录：
+  - Commit 83e3419: "fix: Add terminal-config-generator to tool site sitemap"
+
+✻ Churned for 1m 35s
+
+❯ 读取idea/Terminal.txt文件，根据文件内容要求，主站写一篇文章                   
+
+● Read 1 file (ctrl+o to expand)
+
+● Write(islinux_root/articles/modern-terminal-setup-2026.html)
+  ⎿  Wrote 568 lines to
+     islinux_root/articles/modern-terminal-setup-2026.html
+     <!DOCTYPE html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, 
+     initial-scale=1.0">
+         <title>Modern Terminal Setup 2026: Beyond Oh My Zsh and Bash |
+     isLinux</title>
+         <meta name="description" content="Upgrade your Linux workflow with 
+     the ultimate 2026 terminal setup. Compare Zsh vs Fish, explore 
+     Starship.rs, and Rust-based tools like Eza and Bat.">
+         <meta name="keywords" content="zsh latest version 2026, starship.rs
+      guide, oh my zsh vs fish, rust cli tools, islinux productivity, modern
+      terminal setup, bash vs zsh 2026">
+         <meta name="author" content="isLinux Team">
+         <link rel="canonical" 
+     href="https://islinux.com/articles/modern-terminal-setup-2026.html">
+
+     … +558 lines (ctrl+o to expand)
+
+● Bash(git add -A && git commit -m "$(cat <<'EOF'
+      feat: Add Modern Terminal Setup 2026 article to main site…)
+  ⎿  [main 18258eb] feat: Add Modern Terminal Setup 2026 article to main si
+     te
+      2 files changed, 614 insertions(+), 1 deletion(-)
+     … +4 lines (ctrl+o to expand)
+
+● 已完成文章创建并发布。
+
+  文章概要：
+
+  ┌──────────┬───────────────────────────────────────────────────────┐
+  │   项目   │                         内容                          │
+  ├──────────┼───────────────────────────────────────────────────────┤
+  │ 标题     │ Modern Terminal Setup 2026: Beyond Oh My Zsh and Bash │
+  ├──────────┼───────────────────────────────────────────────────────┤
+  │ 路径     │ /articles/modern-terminal-setup-2026.html             │
+  ├──────────┼───────────────────────────────────────────────────────┤
+  │ 字数     │ 约 2500 词                                            │
+  ├──────────┼───────────────────────────────────────────────────────┤
+  │ 阅读时间 │ 12 分钟                                               │
+  └──────────┴───────────────────────────────────────────────────────┘
+
+  文章架构：
+
+  1. Introduction - 为什么传统 Bash 在 2026 年不够用了
+  2. The Shell Debate - Zsh vs Fish 2026 对比
+    - 性能对比数据框（Starship 1ms vs Oh My Zsh 50ms+）
+    - Is Zsh Still the Best Shell in March 2026?
+  3. Rust-ified CLI - 5 个现代工具推荐
+    - ls → eza
+    - cat → bat
+    - cd → zoxide
+    - find → fd
+    - grep → ripgrep
+  4. Starship.rs - 通用 Prompt 引擎详解
+  5. Privacy-First - Local-First 理念
+  6. One-Click Setup - 一键安装脚本
+  7. Conclusion - 总结表格 + 相关链接
+
+  SEO 优化：
+  - Schema.org TechArticle 结构化数据
+  - 链接到 Tool 站的 Terminal Config Generator
+  - 大量 <pre><code> 代码块用于 Featured Snippets
+  - 关键词：zsh latest version 2026, starship.rs guide, rust cli tools
+
+  提交记录：
+  - Commit 18258eb: "feat: Add Modern Terminal Setup 2026 article to main site"
+
+✻ Brewed for 3m 25s
+
+❯ 更新主站的sitemap文件以及随机显示模块                                         
+
+● Read 2 files (ctrl+o to expand)
+
+● 我来更新 sitemap 和首页的随机文章模块，添加新文章：
+
+● Update(islinux_root/sitemap.xml)
+  ⎿  Added 6 lines
+      108      <changefreq>monthly</changefreq>                          
+      109      <priority>0.7</priority>                                  
+      110    </url>                                                      
+      111 +  <url>                                                       
+      112 +    <loc>https://islinux.com/articles/modern-terminal-setup-2 
+          +026.html</loc>                                                
+      113 +    <lastmod>2026-03-18</lastmod>                             
+      114 +    <changefreq>monthly</changefreq>                          
+      115 +    <priority>0.7</priority>                                  
+      116 +  </url>                                                      
+      117  </urlset>                                                     
+
+● Update(islinux_root/index.html)
+  ⎿  Added 7 lines
+      481              tag: 'Security',                                  
+      482              read: '12 min read'                               
+      483          },                                                    
+      484 +        {                                                     
+      485 +            href:                                             
+          +'/articles/modern-terminal-setup-2026.html',                  
+      486 +            title: '⌨️ Modern Terminal Setup 2026: Beyond Oh  
+          +My Zsh and Bash',                                             
+      487 +            desc: 'Upgrade your Linux workflow with the       
+          +ultimate 2026 terminal setup. Compare Zsh vs Fish, explore    
+          +Starship.rs, and Rust-based tools like Eza and Bat.',         
+      488 +            tag: 'Linux',                                     
+      489 +            read: '12 min read'                               
+      490 +        },                                                    
+      491          // AI subsite                                         
+      492          {                                                     
+      493              href: 'https://ai.islinux.com/articles/prompt-eng 
+           ineering-shell.html',                                         
+
+● Bash(git add -A && git commit -m "$(cat <<'EOF'
+      fix: Update main site sitemap and index with new article…)
+  ⎿  [main 97dc714] fix: Update main site sitemap and index with new articl
+     e
+      2 files changed, 13 insertions(+)
+     … +2 lines (ctrl+o to expand)
+
+● 已完成更新。
+
+  修改内容：
+
+  1. sitemap.xml - 添加新文章 URL：
+    - https://islinux.com/articles/modern-terminal-setup-2026.html
+    - 更新日期：2026-03-18
+    - 优先级：0.7
+  2. index.html - 在随机文章模块 (allArticles 数组) 中添加：
+    - 标题：⌨️ Modern Terminal Setup 2026: Beyond Oh My Zsh and Bash
+    - 描述：Upgrade your Linux workflow with the ultimate 2026 terminal setup...
+    - 标签：Linux
+    - 阅读时间：12 min read
+
+  提交记录：
+  - Commit 97dc714: "fix: Update main site sitemap and index with new article"
+
+✻ Cogitated for 2m 27s
+
+❯ 检查一下所有子站的文章，是否都在主站的随机文章模块中                          
+
+● Searched for 6 patterns (ctrl+o to expand)
+
+● 我对比了所有子站文章和主站 index.html
+  中的文章列表，发现有多篇缺失。让我添加所有缺失的文章：
+
+  当前状态：
+  - AI 子站：5 篇文章，仅 3 篇在主站
+  - Tool 子站：7 篇文章，仅 1 篇在主站
+  - Calc 子站：2 篇文章，仅 1 篇在主站
+
+● Update(islinux_root/index.html)
+  ⎿  Added 77 lines
+      496              tag: 'AI',                                        
+      497              read: '18 min read'                               
+      498          },                                                    
+      499 +        {                                                     
+      500 +            href:                                             
+          +'https://ai.islinux.com/articles/ai-code-review-guide.html',  
+      501 +            title: '🔍 AI Code Review Best Practices for      
+          +Developers',                                                  
+      502 +            desc: 'Learn how to effectively use AI for code   
+          +review, from security checks to performance optimization.     
+          +Includes workflow examples and prompt templates.',            
+      503 +            tag: 'AI',                                        
+      504 +            read: '15 min read'                               
+      505 +        },                                                    
+      506 +        {                                                     
+      507 +            href:                                             
+          +'https://ai.islinux.com/articles/git-commit-messages.html',   
+      508 +            title: '💡 Write Better Git Commit Messages with  
+          +AI',                                                          
+      509 +            desc: 'Generate meaningful, conventional commit   
+          +messages using AI. Includes templates for feat, fix, docs,    
+          +refactor and more.',                                          
+      510 +            tag: 'AI',                                        
+      511 +            read: '10 min read'                               
+      512 +        },                                                    
+      513 +        {                                                     
+      514 +            href:                                             
+          +'https://ai.islinux.com/articles/local-llm-deployment.html',  
+      515 +            title: '🚀 Local LLM Deployment Guide 2026:       
+          +Llama, Mistral and More',                                     
+      516 +            desc: 'Complete guide to deploying LLM models     
+          +locally. Compare quantization options, VRAM requirements, and 
+          + inference performance.',                                     
+      517 +            tag: 'AI',                                        
+      518 +            read: '20 min read'                               
+      519 +        },                                                    
+      520 +        {                                                     
+      521 +            href:                                             
+          +'https://ai.islinux.com/articles/copilot-to-agentic-ai.html', 
+      522 +            title: '🤖 From Copilot to Agentic AI: Building   
+          +Autonomous Workflows in 2026',                                
+      523 +            desc: '2026 is the year of AI agents. Learn how   
+          +to build autonomous workflows that run locally, respect       
+          +privacy, and integrate with your development tools.',         
+      524 +            tag: 'AI',                                        
+      525 +            read: '12 min read'                               
+      526 +        },                                                    
+      527          // Tools subsite                                      
+      528          {                                                     
+      529              href:                                             
+           'https://tool.islinux.com/articles/json-privacy-guide.html',  
+     ...
+      504              tag: 'Security',                                  
+      505              read: '10 min read'                               
+      506          },                                                    
+      507 +        {                                                     
+      508 +            href: 'https://tool.islinux.com/articles/json-val 
+          +idation-tips.html',                                           
+      509 +            title: '✅ JSON Validation Tips: Common Errors    
+          +and How to Fix Them',                                         
+      510 +            desc: 'Master JSON validation with this           
+          +comprehensive guide. Learn about common syntax errors,        
+          +trailing commas, quote issues, and debugging techniques.',    
+      511 +            tag: 'JSON',                                      
+      512 +            read: '8 min read'                                
+      513 +        },                                                    
+      514 +        {                                                     
+      515 +            href: 'https://tool.islinux.com/articles/base64-e 
+          +ncoding-guide.html',                                          
+      516 +            title: '🔐 Base64 Encoding Guide: How It Works    
+          +and When to Use It',                                          
+      517 +            desc: 'Understanding Base64 encoding for data     
+          +transmission, email attachments, and URL safety. Includes     
+          +encoding/decoding examples.',                                 
+      518 +            tag: 'Encoding',                                  
+      519 +            read: '10 min read'                               
+      520 +        },                                                    
+      521 +        {                                                     
+      522 +            href:                                             
+          +'https://tool.islinux.com/articles/url-encoding-guide.html',  
+      523 +            title: '🔗 URL Encoding Guide: Understanding      
+          +Percent-Encoding',                                            
+      524 +            desc: 'Learn how URL encoding works, when to use  
+          +encodeURIComponent vs encodeURI, and common pitfalls in web   
+          +development.',                                                
+      525 +            tag: 'Encoding',                                  
+      526 +            read: '8 min read'                                
+      527 +        },                                                    
+      528 +        {                                                     
+      529 +            href: 'https://tool.islinux.com/articles/hash-fun 
+          +ctions-guide.html',                                           
+      530 +            title: '🔑 Hash Functions Guide: MD5, SHA1,       
+          +SHA256 Comparison',                                           
+      531 +            desc: 'Compare cryptographic hash functions and   
+          +learn when to use each. Includes security considerations and  
+          +practical use cases.',                                        
+      532 +            tag: 'Crypto',                                    
+      533 +            read: '12 min read'                               
+      534 +        },                                                    
+      535 +        {                                                     
+      536 +            href:                                             
+          +'https://tool.islinux.com/articles/diff-tool-guide.html',     
+      537 +            title: '📊 Diff Tool Guide: How to Compare Text   
+          +and Code Effectively',                                        
+      538 +            desc: 'Master the art of comparing files and code 
+          + versions. Learn about line-by-line diff, merge conflicts,    
+          +and version control integration.',                            
+      539 +            tag: 'Utility',                                   
+      540 +            read: '10 min read'                               
+      541 +        },                                                    
+      542 +        {                                                     
+      543 +            href: 'https://tool.islinux.com/articles/favicon- 
+          +best-practices.html',                                         
+      544 +            title: '🎨 Favicon Best Practices: Create         
+          +Professional Website Icons',                                  
+      545 +            desc: 'Design and implement favicons that look    
+          +great across all devices. Covers sizes, formats, and browser  
+          +compatibility.',                                              
+      546 +            tag: 'Design',                                    
+      547 +            read: '8 min read'                                
+      548 +        },                                                    
+      549          // Calculator subsite                                 
+      550          {                                                     
+      551              href: 'https://calc.islinux.com/articles/freelanc 
+           er-rate-calculator.html',                                     
+     ...
+      511              desc: 'Scientifically calculate your real hourly  
+           rate and avoid underpricing. Includes hidden cost checklist,  
+           pricing methods, negotiation tips, and contract essentials.', 
+      512              tag: 'Finance',                                   
+      513              read: '14 min read'                               
+      514 +        },                                                    
+      515 +        {                                                     
+      516 +            href: 'https://calc.islinux.com/articles/gpu-quan 
+          +tization-guide.html',                                         
+      517 +            title: '🖥️ 2026 GPU Computing Guide: 4-bit        
+          +Quantization for Small Businesses',                           
+      518 +            desc: 'Why 4-bit quantization is a lifesaver for  
+          +small businesses running AI models. Compare VRAM              
+          +requirements, performance, and cost savings.',                
+      519 +            tag: 'AI',                                        
+      520 +            read: '16 min read'                               
+      521          }                                                     
+      522      ];                                                        
+      523                                                                
+
+● Bash(git add -A && git commit -m "$(cat <<'EOF'
+      feat: Add all subsite articles to main site index random module…)
+  ⎿  [main afa40d9] feat: Add all subsite articles to main site index rando
+     m module
+      1 file changed, 77 insertions(+)
+     … +2 lines (ctrl+o to expand)
+
+● 已完成所有子站文章的添加。
+
+  更新后的文章统计：
+
+  ┌─────────────────────────────────┬──────────┬──────────┐
+  │              子站               │ 文章数量 │ 主站收录 │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ AI 子站                         │ 5 篇     │ ✅ 5 篇  │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ prompt-engineering-shell.html   │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ ai-code-review-guide.html       │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ git-commit-messages.html        │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ local-llm-deployment.html       │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ copilot-to-agentic-ai.html      │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ Tool 子站                       │ 7 篇     │ ✅ 7 篇  │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ json-privacy-guide.html         │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ json-validation-tips.html       │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ base64-encoding-guide.html      │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ url-encoding-guide.html         │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ hash-functions-guide.html       │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ diff-tool-guide.html            │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ favicon-best-practices.html     │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ Calc 子站                       │ 2 篇     │ ✅ 2 篇  │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ freelancer-rate-calculator.html │ ✓        │          │
+  ├─────────────────────────────────┼──────────┼──────────┤
+  │ gpu-quantization-guide.html     │ ✓        │          │
+  └─────────────────────────────────┴──────────┴──────────┘
+
+  总计：21 篇文章 在主站首页随机文章模块中轮换显示
+
+  提交记录：
+  - Commit afa40d9: "feat: Add all subsite articles to main site index random
+  module"
+
+✻ Brewed for 3m 0s
+
+❯ modern-terminal-setup-2026.html 文章内容宽度怎么不是900像素                   
+
+● Searched for 1 pattern, read 1 file (ctrl+o to expand)
+  ⎿  Interrupted · What should Claude do instead?
+
+❯ modern-terminal-setup-2026.html 文章内容宽度怎么不是1100像素                  
+，以后新建的文章，内容都为1100像素                                              
+
+● Update(islinux_root/articles/modern-terminal-setup-2026.html)
+  ⎿  Added 1 line, removed 1 line
+      103          }                                                     
+      104          .back-link:hover { border-color: var(--accent-color); 
+            color: var(--accent-color); }                                
+      105                                                                
+      106 -        .container { max-width: 900px                         
+          -; margin: 0 auto; padding: 2rem 1rem; }                       
+      106 +        .container { max-width: 1100px                        
+          +; margin: 0 auto; padding: 2rem 1rem; }                       
+      107                                                                
+      108          article h1 { color: #fff; font-size: 2rem;            
+           margin-bottom: 0.5rem; }                                      
+      109          .meta { color: var(--text-muted); font-size: 0.9rem;  
+           margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px 
+            solid var(--border-color); }                                 
+
+● Bash(git add -A && git commit -m "fix: Update article container width to
+      1100px" && git push)
+  ⎿  [main 947c28b] fix: Update article container width to 1100px
+      1 file changed, 1 insertion(+), 1 deletion(-)
+     To github.com:linuxyan/islinux.git
+        afa40d9..947c28b  main -> main
+
+● 已修复。
+
+  修改内容：
+  - .container 宽度从 900px 改为 1100px
+
+  规范更新：
+  以后新建文章统一使用 max-width: 1100px 作为内容容器宽度。
+
+  提交记录：
+  - Commit 947c28b: "fix: Update article container width to 1100px"
+
+✻ Crunched for 1m 29s
+
+❯ 规范更新到开发手册了么                                                        
+
+● Read 1 file (ctrl+o to expand)
+
+● Update(DEVELOPMENT_GUIDE.md)
+  ⎿  Added 2 lines
+      500                                                                
+      501  ### 9.1 Standard Page Template                                
+      502                                                                
+      503 +**Container Width**: All article pages must use `max-width:   
+          +1100px` for the `.container` class.                           
+      504 +                                                              
+      505  ```html                                                       
+      506  <!DOCTYPE html>                                               
+      507  <html lang="en">                                              
+
+● Bash(git add -A && git commit -m "$(cat <<'EOF'
+      docs: Add container width specification to DEVELOPMENT_GUIDE.md…)
+  ⎿  [main dc389cb] docs: Add container width specification to DEVELOPMENT_
+     GUIDE.md
+      1 file changed, 2 insertions(+)
+     … +2 lines (ctrl+o to expand)
+
+● 已更新到开发手册。
+
+  修改内容：
+  在 DEVELOPMENT_GUIDE.md 的 9.1 Standard Page Template 章节开头添加了规范说明：
+
+  ▎ Container Width: All article pages must use max-width: 1100px for the 
+  .container class.
+
+  提交记录：
+  - Commit dc389cb: "docs: Add container width specification to
+  DEVELOPMENT_GUIDE.md"
+
+✻ Sautéed for 2m 0s
+
+❯ /export /home/caoyan/devops/islinux/claude_export/                            
+  ⎿  Failed to export conversation: ENOENT: no such file or directory, open
+     '/home/caoyan/devops/islinux/home/caoyan/devops/islinux/claude_export/.txt'
+
+❯ /export /home/caoyan/devops/islinux/claude_export/2026-0318-10-55.txt         
+  ⎿  Failed to export conversation: ENOENT: no such file or directory, open
+     '/home/caoyan/devops/islinux/home/caoyan/devops/islinux/claude_export/2026-
+     0318-10-55.txt'
