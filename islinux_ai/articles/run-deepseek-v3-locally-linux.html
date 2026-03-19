@@ -30,6 +30,29 @@
     }
     </script>
 
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What is the minimum VRAM to run DeepSeek-V3 on Linux?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For DeepSeek-V3 4-bit quantization, you need at least 24GB of VRAM (e.g., RTX 3090/4090/5060)."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Does Linux offer better performance for LLM inference than Windows?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, Linux kernel efficiency and native CUDA support typically offer 10-15% faster inference speeds for models like DeepSeek."
+        }
+      }]
+    }
+    </script>
+
     <style>
         :root {
             --bg-color: #0d1117;
