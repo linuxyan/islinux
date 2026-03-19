@@ -502,6 +502,160 @@
 
 **Container Width**: All article pages must use `max-width: 1100px` for the `.container` class.
 
+---
+
+## 11. Tool Page Development Checklist
+
+### 11.1 Required Framework Modules
+
+Every tool page **must include** the following three modules for consistent user experience and content discovery:
+
+| Module | HTML Element | Purpose |
+|--------|--------------|---------|
+| **Discover More Tools** | `<section class="discover-section">` | Show 4 random tools from same subsite |
+| **Tool Guide** | `<section class="tool-guide-section">` | Display usage instructions for current tool |
+| **Related Articles** | `<section class="random-articles-section">` | Show 2-3 random articles from same subsite |
+
+**Required HTML Structure**:
+```html
+<div class="container">
+    <!-- Tool Content -->
+    <div class="calculator-panel">...</div>
+
+    <!-- Discover More Section -->
+    <section class="discover-section">
+        <h2 class="discover-title">🔍 Discover More Tools</h2>
+        <div class="discover-grid" id="discover-grid"></div>
+    </section>
+
+    <!-- Tool Guide Section -->
+    <section class="tool-guide-section">
+        <div class="tool-guide-content" id="tool-guide-content"></div>
+    </section>
+
+    <!-- Random Articles Section -->
+    <section class="random-articles-section">
+        <h2 class="random-articles-title">📚 Related Articles</h2>
+        <div class="random-articles-grid" id="random-articles-grid"></div>
+    </section>
+</div>
+```
+
+### 11.2 Required CSS & JavaScript References
+
+**Must include in `<head>` section**:
+```html
+<head>
+    <!-- Your inline styles -->
+    <style>...</style>
+
+    <!-- Common styles for discover/articles modules -->
+    <link rel="stylesheet" href="css/common.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+```
+
+**Must include before closing `</body>` tag**:
+```html
+<!-- Discover More & Random Articles logic -->
+<script src="js/discover-more.js"></script>
+
+<!-- Your tool-specific script -->
+<script>...</script>
+</body>
+```
+
+### 11.3 Maintaining discover-more.js
+
+The `js/discover-more.js` file **must be updated** when adding new tools or articles:
+
+**Add new tools to the `tools` array**:
+```javascript
+const tools = [
+    { href: '/existing-tool.html', icon: '🔧', title: 'Existing Tool', description: 'Description.' },
+    // Add new tool:
+    { href: '/new-tool.html', icon: '⚡', title: 'New Tool', description: 'Description here.' }
+];
+```
+
+**Add new articles to the `articles` array**:
+```javascript
+const articles = [
+    { href: '/articles/existing-article.html', icon: '📚', title: 'Existing', description: 'Desc.' },
+    // Add new article:
+    { href: '/articles/new-article.html', icon: '📖', title: 'New Article', description: 'Description.' }
+];
+```
+
+**Add tool guide for each new tool page**:
+```javascript
+const toolGuides = {
+    'existing-tool.html': {
+        title: 'How to Use Existing Tool',
+        content: `<h3>📋 Usage</h3><ul><li>Step 1</li></ul>`
+    },
+    // Add new tool guide:
+    'new-tool.html': {
+        title: 'How to Use New Tool',
+        content: `
+            <h3>📋 Usage</h3>
+            <ul>
+                <li>Step 1: Description</li>
+                <li>Step 2: Description</li>
+            </ul>
+            <h3>💡 Tips</h3>
+            <p>Helpful tips here.</p>
+        `
+    }
+};
+```
+
+### 11.4 Container Width Specification
+
+**All tool pages must use**:
+```css
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+```
+
+This ensures consistent layout across all pages and matches article page widths.
+
+### 11.5 Pre-Launch Checklist for Tool Pages
+
+Before publishing a new tool page, verify:
+
+```
+□ css/common.css is linked in <head>
+□ js/discover-more.js is loaded before closing </body>
+□ discover-section with id="discover-grid" exists
+□ tool-guide-section with id="tool-guide-content" exists
+□ random-articles-section with id="random-articles-grid" exists
+□ Container max-width is 1100px (not 900px)
+□ Tool added to tools[] array in discover-more.js
+□ Article(s) added to articles[] array in discover-more.js
+□ Tool guide added to toolGuides{} object in discover-more.js
+□ All meta tags complete (title, description, OG tags)
+□ Canonical URL is set
+```
+
+### 11.6 Common Mistakes to Avoid
+
+```
+❌ Missing css/common.css reference → Discover/Articles sections broken
+❌ Missing js/discover-more.js script → No dynamic content rendered
+❌ Wrong class names (e.g., discover-more-section vs discover-section)
+❌ Missing id attributes (discover-grid, tool-guide-content, random-articles-grid)
+❌ Container width 900px instead of 1100px
+❌ New tool not added to tools[] array in discover-more.js
+❌ New tool missing guide in toolGuides{} object
+❌ Using relative paths for navigation (use /xxx.html format)
+```
+
+---
+
+## 13. Quick Reference
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -600,5 +754,6 @@ islinux/
 
 **Document Update History**:
 - 2026-03-13: Updated to English-only, removed i18n, added AdSense monetization guidelines
+- 2026-03-19: Added Section 11 "Tool Page Development Checklist" - framework modules, CSS/JS references, discover-more.js maintenance, common mistakes
 
 **Maintainer**: isLinux Team
