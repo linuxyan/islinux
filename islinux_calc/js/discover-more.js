@@ -6,7 +6,8 @@
         { href: '/currency-converter.html', icon: '💱', title: 'Currency Converter', description: 'Convert between major world currencies.' },
         { href: '/investment-calculator.html', icon: '📈', title: 'Investment Calculator', description: 'Calculate investment returns and compound interest.' },
         { href: '/freelance-rate.html', icon: '💼', title: 'Freelance Rate', description: 'Calculate your ideal freelance hourly rate.' },
-        { href: '/token-vs-gpu.html', icon: '🤖', title: 'Token vs GPU', description: 'Compare AI API token costs vs self-hosted GPU expenses.' }
+        { href: '/token-vs-gpu.html', icon: '🤖', title: 'Token vs GPU', description: 'Compare AI API token costs vs self-hosted GPU expenses.' },
+        { href: '/gpu-power-cost.html', icon: '⚡', title: 'GPU Power Cost', description: 'Calculate monthly electricity cost of running your GPU.' }
     ];
 
     const articles = [
@@ -132,6 +133,24 @@
                     <li>70B models @ 4-bit: ~35GB VRAM</li>
                     <li>Consumer GPUs: RTX 3090/4090 (24GB), RTX 4070 (12GB)</li>
                     <li>Professional: A100 (40/80GB), H100 (80GB)</li>
+                </ul>
+            `
+        },
+        'gpu-power-cost.html': {
+            title: 'How to Use GPU Power Cost Calculator',
+            content: `
+                <h3>📋 Usage</h3>
+                <ul>
+                    <li>Select your region to get local electricity rates</li>
+                    <li>Add GPUs from preset buttons or add custom GPU</li>
+                    <li>Set hours per day and GPU load factor</li>
+                    <li>Click Calculate to see cost breakdown</li>
+                </ul>
+                <h3>💡 Tips</h3>
+                <ul>
+                    <li><strong>Load Factor:</strong> AI inference typically runs at 70-90% load</li>
+                    <li><strong>Undervolting:</strong> Can reduce power consumption by 15-25%</li>
+                    <li><strong>Off-peak hours:</strong> Running during off-peak can save 30-50% with time-of-use pricing</li>
                 </ul>
             `
         }
