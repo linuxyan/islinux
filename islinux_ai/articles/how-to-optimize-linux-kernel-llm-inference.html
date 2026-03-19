@@ -30,6 +30,43 @@
     }
     </script>
 
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What is the best Linux kernel setting for LLM inference?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The golden combination is: Enable Transparent Huge Pages (THP) set to madvise, set vm.swappiness=1, use performance CPU governor, and configure I/O scheduler to none for NVMe drives. These optimizations can improve inference throughput by 15-25%."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How do I prevent LLM model weights from being swapped?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Set vm.swappiness=1 in /etc/sysctl.conf, configure ulimit -l unlimited for memory locking, and use mlockall() in your application to prevent the kernel from swapping model weights to disk."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What I/O scheduler is best for NVMe with LLM workloads?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For NVMe SSDs with LLM workloads, use 'none' scheduler for bare-metal performance or 'mq-deadline' for mixed workloads. Avoid bfq and kyber as they add unnecessary overhead for sequential model loading."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Does GPU Direct Storage improve LLM loading speed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, GPU Direct Storage (GDS) can reduce model loading time by 40-50% on A100/H100 systems and 20-30% on RTX 4090 by allowing data to transfer directly from NVMe to GPU VRAM without CPU memory involvement."
+        }
+      }]
+    }
+    </script>
+
     <style>
         :root {
             --bg-color: #0d1117;
