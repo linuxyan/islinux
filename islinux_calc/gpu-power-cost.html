@@ -77,7 +77,7 @@
 
         nav a:hover { border-color: var(--accent-color); color: var(--accent-color); }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
 
         .back-link {
             display: inline-block;
@@ -342,6 +342,7 @@
             .gpu-item select { width: 100%; }
         }
     </style>
+    <link rel="stylesheet" href="css/common.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body>
@@ -504,6 +505,23 @@
             * Based on $0.15/kWh electricity rate and 80% load factor
         </p>
     </div>
+
+    <!-- Discover More Section -->
+    <section class="discover-section">
+        <h2 class="discover-title">🔍 Discover More Tools</h2>
+        <div class="discover-grid" id="discover-grid"></div>
+    </section>
+
+    <!-- Tool Guide Section -->
+    <section class="tool-guide-section">
+        <div class="tool-guide-content" id="tool-guide-content"></div>
+    </section>
+
+    <!-- Random Articles Section -->
+    <section class="random-articles-section">
+        <h2 class="random-articles-title">📚 Related Articles</h2>
+        <div class="random-articles-grid" id="random-articles-grid"></div>
+    </section>
 </div>
 
 <footer>
@@ -516,6 +534,7 @@
     </p>
 </footer>
 
+<script src="js/discover-more.js"></script>
 <script>
     let gpuCount = 0;
     const gpuPresets = [];
