@@ -15,7 +15,8 @@
         { href: '/articles/git-commit-messages.html', icon: '💡', title: 'Git Commit Messages', description: 'Write better commit messages with AI.' },
         { href: '/articles/copilot-to-agentic-ai.html', icon: '🤖', title: 'From Copilot to Agentic AI', description: 'Build autonomous workflows with local AI agents in 2026.' },
         { href: '/articles/local-llm-deployment.html', icon: '🚀', title: 'Local LLM Deployment Guide', description: 'Complete guide to deploying Llama 3, Mistral and other models locally in 2026.' },
-        { href: '/articles/run-deepseek-v3-locally-linux.html', icon: '🔧', title: 'Run DeepSeek-V3 Locally on Linux', description: 'Step-by-step guide to deploying DeepSeek-V3 with Ollama and Llama.cpp on Linux.' }
+        { href: '/articles/run-deepseek-v3-locally-linux.html', icon: '🔧', title: 'Run DeepSeek-V3 Locally on Linux', description: 'Step-by-step guide to deploying DeepSeek-V3 with Ollama and Llama.cpp on Linux.' },
+        { href: '/articles/how-to-optimize-linux-kernel-llm-inference.html', icon: '⚙️', title: 'Optimize Linux Kernel for LLM Inference', description: 'DevOps guide to kernel tuning for LLM workloads: memory management, I/O optimization, CPU scheduling, and GPU Direct Storage.' }
     ];
 
     const toolGuides = {
