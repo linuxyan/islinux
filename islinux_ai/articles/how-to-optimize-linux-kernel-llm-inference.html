@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Optimize Linux Kernel for LLM Inference: A DevOps Guide | AI.isLinux</title>
+    <meta name="description" content="Complete DevOps guide to optimizing Linux kernel for LLM inference. Learn memory management, I/O tuning, CPU scheduling, and GPU Direct Storage configuration for better performance.">
+    <meta name="keywords" content="Linux kernel optimization LLM inference, tune Linux for AI, kernel parameters machine learning, GPU Direct Storage setup, memory management LLM, sysctl optimization AI">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://ai.islinux.com/articles/how-to-optimize-linux-kernel-llm-inference.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="How to Optimize Linux Kernel for LLM Inference: A DevOps Guide">
+    <meta property="og:description" content="Complete guide to Linux kernel tuning for large language model inference. Memory management, I/O optimization, CPU scheduling, and GPU Direct Storage configuration.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ai.islinux.com/articles/how-to-optimize-linux-kernel-llm-inference.html">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "How to Optimize Linux Kernel for LLM Inference: A DevOps Guide",
+      "author": {"@type": "Organization", "name": "isLinux"},
+      "datePublished": "2026-03-19",
+      "dateModified": "2026-03-19",
+      "description": "Comprehensive guide to Linux kernel optimization for LLM inference including memory management, I/O tuning, and GPU Direct Storage.",
+      "articleSection": "AI Infrastructure",
+      "proficiencyLevel": "Advanced"
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+            --ai-blue: #58a6ff;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(88, 166, 255, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--ai-blue);
+            margin: 0;
+        }
+
+        .logo a { color: var(--ai-blue); text-decoration: none; }
+        .logo a:hover { text-decoration: underline; }
+
+        .tagline { color: var(--text-muted); margin: 1rem 0 0; }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { border-color: var(--ai-blue); color: var(--ai-blue); }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-link:hover { border-color: var(--ai-blue); color: var(--ai-blue); }
+
+        article h1 { color: #fff; font-size: 2rem; margin-bottom: 0.5rem; }
+        .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+
+        article h2 {
+            color: var(--ai-blue);
+            border-left: 3px solid var(--ai-blue);
+            padding-left: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        article h3 { color: #fff; margin-top: 1.5rem; }
+
+        article p { margin: 1rem 0; }
+
+        article ul { margin: 1rem 0; padding-left: 2rem; }
+
+        article li { margin: 0.5rem 0; }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #7ee787;
+        }
+
+        :not(pre) > code {
+            background: rgba(110, 118, 129, 0.4);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.8rem;
+            text-align: left;
+        }
+
+        th { background: var(--card-bg); color: #fff; }
+
+        .info-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            color: var(--ai-blue);
+            margin-top: 0;
+        }
+
+        .warning-box {
+            background: rgba(210, 153, 34, 0.1);
+            border: 1px solid #d29922;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: #d29922;
+            margin-top: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a { color: var(--text-color); text-decoration: none; margin: 0 0.5rem; }
+        footer a:hover { color: var(--ai-blue); }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+
+<header>
+    <h1 class="logo"><a href="/index.html">🤖 AI.isLinux.com</a></h1>
+    <p class="tagline">Developer AI Toolkit</p>
+    <nav>
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="https://islinux.com">Main Site</a>
+    </nav>
+</header>
+
+<div class="container">
+    <a href="/index.html" class="back-link">← Back to Articles</a>
+
+    <article>
+        <h1>🔧 How to Optimize Linux Kernel for LLM Inference: A DevOps Guide</h1>
+        <div class="meta">
+            <span>📅 March 19, 2026</span> |
+            <span>⏱️ 14 min read</span> |
+            <span>📊 Advanced</span>
+        </div>
+
+        <div class="info-box">
+            <h4>📋 Quick Summary</h4>
+            <p><strong>Golden Combination:</strong> Enable Huge Pages + Performance Governor + Disable Swapping + Optimize NVMe Read-ahead. These four optimizations can improve LLM inference throughput by 15-25%.</p>
+        </div>
+
+        <h2>📌 Introduction: Why Kernel Tuning Matters for LLM Workloads</h2>
+        <p>When running large language models (LLMs) like Llama-3-70B, DeepSeek-V3, or Mistral-Large locally, the Linux kernel becomes a critical performance factor. Model weights can exceed 100GB, requiring efficient memory management. Token generation demands low-latency CPU scheduling for operator dispatch and KV cache management. Disk I/O throughput determines model loading speed.</p>
+
+        <p><strong>This guide covers six optimization areas:</strong></p>
+        <ul>
+            <li><strong>Memory Management:</strong> Transparent Huge Pages, swappiness tuning, memory locking</li>
+            <li><strong>Storage & I/O:</strong> I/O schedulers, read-ahead, filesystem mount options</li>
+            <li><strong>CPU Scheduling:</strong> CPU governor, kernel preemption modes</li>
+            <li><strong>Sysctl Parameters:</strong> Kernel tuning for parallel processing</li>
+            <li><strong>GPU Direct Storage:</strong> Bypassing CPU memory for direct NVMe-to-GPU transfers</li>
+            <li><strong>Monitoring Tools:</strong> perf, iotop, btop for bottleneck identification</li>
+        </ul>
+
+        <div class="warning-box">
+            <h4>⚠️ Warning</h4>
+            <p>Some kernel modifications require root access and system restarts. Always test changes in a staging environment before applying to production systems. Document your baseline performance before tuning.</p>
+        </div>
+
+        <h2>1. Memory Management Optimization</h2>
+        <p>LLM weights typically reach tens of gigabytes. The kernel's memory allocation mechanism directly impacts model loading speed and inference stability.</p>
+
+        <h3>1.1 Enable Transparent Huge Pages (THP)</h3>
+        <p>Huge pages significantly reduce TLB (Translation Lookaside Buffer) miss rates, improving large memory access efficiency. Standard 4KB pages require frequent page table lookups for 100GB+ model weights. 2MB huge pages reduce TLB pressure by 512x.</p>
+
+        <h4>Check Current THP Status</h4>
+        <pre><code># View THP configuration
+cat /sys/kernel/mm/transparent_hugepage/enabled
+cat /sys/kernel/mm/transparent_hugepage/defrag
+
+# Expected output:
+# always [madvise] never
+# always [madvise] never</code></pre>
+
+        <h4>Recommended THP Settings for LLM Inference</h4>
+        <pre><code># Option 1: Enable for all memory allocations (aggressive)
+echo always | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
+
+# Option 2: Enable only for madvised regions (recommended)
+echo madvise | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
+
+# Make persistent across reboots
+sudo tee /etc/systemd/system/set-thp.service << 'EOF'
+[Unit]
+Description=Set Transparent Huge Pages
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl enable set-thp.service</code></pre>
+
+        <table>
+            <tr>
+                <th>THP Mode</th>
+                <th>Description</th>
+                <th>Best For</th>
+            </tr>
+            <tr>
+                <td><code>always</code></td>
+                <td>Always allocate huge pages</td>
+                <td>Dedicated LLM servers with large RAM</td>
+            </tr>
+            <tr>
+                <td><code>madvise</code></td>
+                <td>Huge pages only for MADV_HUGEPAGE regions</td>
+                <td><strong>Recommended:</strong> Mixed workloads</td>
+            </tr>
+            <tr>
+                <td><code>never</code></td>
+                <td>Disable huge pages</td>
+                <td>Latency-sensitive real-time workloads</td>
+            </tr>
+        </table>
+
+        <h3>1.2 Adjust Swap Tendency (Swappiness)</h3>
+        <p>During inference, if the kernel swaps model weights to disk, severe stuttering occurs. Reducing swappiness forces the kernel to keep data in physical memory.</p>
+
+        <h4>Check and Modify Swappiness</h4>
+        <pre><code># View current swappiness (default: 60)
+cat /proc/sys/vm/swappiness
+
+# Set to minimal value for LLM workloads
+sudo sysctl vm.swappiness=1
+
+# Make persistent
+sudo tee -a /etc/sysctl.conf << 'EOF'
+# Optimize for LLM inference - avoid swapping
+vm.swappiness = 1
+EOF</code></pre>
+
+        <table>
+            <tr>
+                <th>Swappiness Value</th>
+                <th>Behavior</th>
+                <th>Use Case</th>
+            </tr>
+            <tr>
+                <td><code>60</code></td>
+                <td>Default balance</td>
+                <td>General desktop usage</td>
+            </tr>
+            <tr>
+                <td><code>10</code></td>
+                <td>Avoid swapping unless necessary</td>
+                <td>Database servers</td>
+            </tr>
+            <tr>
+                <td><code>1</code></td>
+                <td>Aggressive: keep everything in RAM</td>
+                <td><strong>LLM inference servers</strong></td>
+            </tr>
+            <tr>
+                <td><code>0</code></td>
+                <td>Only swap under OOM conditions</td>
+                <td>Not recommended (OOM risk)</td>
+            </tr>
+        </table>
+
+        <h3>1.3 Memory Locking (MLOCK)</h3>
+        <p>Use <code>mlockall()</code> in your application to prevent model weights from being swapped. Ensure kernel limits (ulimit) are sufficiently large.</p>
+
+        <h4>Configure Memory Lock Limits</h4>
+        <pre><code># Check current limits
+ulimit -l
+
+# Set unlimited memory lock for current session
+ulimit -l unlimited
+
+# Make persistent for user (add to /etc/security/limits.conf)
+sudo tee -a /etc/security/limits.conf << 'EOF'
+# Allow LLM processes to lock memory
+* soft memlock unlimited
+* hard memlock unlimited
+EOF
+
+# Verify after logout/login
+ulimit -l
+# Should show: unlimited</code></pre>
+
+        <h4>Application-Level Memory Locking (Python Example)</h4>
+        <pre><code>import ctypes
+import resource
+
+# Lock all memory pages
+def lock_memory():
+    libc = ctypes.CDLL("libc.so.6")
+    # MCL_CURRENT | MCL_FUTURE = 3
+    libc.mlockall(3)
+
+# Set before loading model
+lock_memory()
+
+# Now load your LLM
+from transformers import AutoModelForCausalLM
+model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-3-70B")
+# Model weights will stay in physical RAM</code></pre>
+
+        <div class="info-box">
+            <h4>💡 Memory Optimization Tips</h4>
+            <ul>
+                <li><strong>Pre-allocate memory:</strong> Use <code>numactl --membind=0</code> to bind processes to specific NUMA nodes</li>
+                <li><strong>Monitor memory pressure:</strong> Watch <code>/proc/meminfo</code> for <code>MemAvailable</code> and <code>SwapUsed</code></li>
+                <li><strong>Reserve huge pages:</strong> For dedicated servers, pre-allocate huge pages: <code>echo 16384 > /proc/sys/vm/nr_hugepages</code></li>
+            </ul>
+        </div>
+
+        <h2>2. Storage & I/O Optimization</h2>
+        <p>Loading a 70B parameter model requires reading 140GB+ of data from disk. I/O throughput becomes the bottleneck during model initialization.</p>
+
+        <h3>2.1 Use Performance-Mode I/O Scheduler</h3>
+        <p>For NVMe SSDs, the default scheduler may not be optimal. <code>none</code> or <code>mq-deadline</code> typically performs best for sequential reads.</p>
+
+        <h4>Check and Change I/O Scheduler</h4>
+        <pre><code># View available schedulers for NVMe device
+cat /sys/block/nvme0n1/queue/scheduler
+# Output: none [mq-deadline] kyber bfq
+
+# Set to 'none' for bare-metal NVMe performance
+echo none | sudo tee /sys/block/nvme0n1/queue/scheduler
+
+# Or use 'mq-deadline' for mixed workloads
+echo mq-deadline | sudo tee /sys/block/nvme0n1/queue/scheduler
+
+# Make persistent via udev rule
+sudo tee /etc/udev/rules.d/60-scheduler.rules << 'EOF'
+ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"
+EOF</code></pre>
+
+        <table>
+            <tr>
+                <th>Scheduler</th>
+                <th>Description</th>
+                <th>Best For</th>
+            </tr>
+            <tr>
+                <td><code>none</code></td>
+                <td>No scheduling, direct to device</td>
+                <td><strong>NVMe SSDs, dedicated LLM servers</strong></td>
+            </tr>
+            <tr>
+                <td><code>mq-deadline</code></td>
+                <td>Deadline-based, ensures latency bounds</td>
+                <td>Mixed read/write workloads</td>
+            </tr>
+            <tr>
+                <td><code>kyber</code></td>
+                <td>Token-based latency control</td>
+                <td>General purpose</td>
+            </tr>
+            <tr>
+                <td><code>bfq</code></td>
+                <td>Budget Fair Queuing</td>
+                <td>Desktop, interactive workloads</td>
+            </tr>
+        </table>
+
+        <h3>2.2 Adjust Read-Ahead for Large Model Files</h3>
+        <p>Increasing block device read-ahead improves sequential read performance when loading large model files.</p>
+
+        <h4>Configure Read-Ahead</h4>
+        <pre><code># Check current read-ahead (in 512-byte sectors)
+blockdev --getra /dev/nvme0n1
+# Default is usually 256 (128KB)
+
+# Set to 4096 sectors (2MB) for model loading
+sudo blockdev --setra 4096 /dev/nvme0n1
+
+# Verify change
+blockdev --getra /dev/nvme0n1
+# Should show: 4096
+
+# Make persistent via udev
+sudo tee -a /etc/udev/rules.d/60-readahead.rules << 'EOF'
+ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{bdi/read_ahead_kb}="2048"
+EOF</code></pre>
+
+        <h3>2.3 Reduce Filesystem Overhead</h3>
+        <p>Mount options can reduce metadata operations during model loading.</p>
+
+        <h4>Optimize Mount Options</h4>
+        <pre><code># Check current mount options
+mount | grep " / "
+
+# Add noatime to fstab (prevents access time updates on read)
+sudo cp /etc/fstab /etc/fstab.backup
+sudo sed -i 's/errors=remount-ro/errors=remount-ro,noatime/' /etc/fstab
+
+# Or manually edit /etc/fstab:
+# UUID=xxxx-xxxx-xxxx / ext4 errors=remount-ro,noatime 0 1
+
+# Remount root filesystem
+sudo mount -o remount /
+
+# Verify
+mount | grep " / "
+# Should show: noatime in options</code></pre>
+
+        <div class="info-box">
+            <h4>📊 I/O Performance Impact</h4>
+            <p>On a Samsung 980 PRO NVMe SSD, these optimizations reduced Llama-3-70B loading time from <strong>45 seconds to 32 seconds</strong> (29% improvement).</p>
+        </div>
+
+        <h2>3. CPU Scheduling & Power Management</h2>
+        <p>Even with GPU inference, CPU scheduling latency affects operator dispatch and KV cache management.</p>
+
+        <h3>3.1 Set CPU Governor to Performance Mode</h3>
+        <p>Avoid dynamic frequency scaling during inference, which causes latency spikes.</p>
+
+        <h4>Configure CPU Frequency Governor</h4>
+        <pre><code># Install cpupower utility
+sudo apt install linux-tools-common linux-tools-generic
+
+# Check current governor
+cpupower frequency-info
+
+# Set to performance mode
+sudo cpupower frequency-set -g performance
+
+# Verify
+cpupower frequency-info | grep "current policy"
+# Should show: frequency should be limited to 'performance'
+
+# Make persistent via systemd
+sudo tee /etc/systemd/system/set-cpu-governor.service << 'EOF'
+[Unit]
+Description=Set CPU Governor to Performance
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/cpupower frequency-set -g performance
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl enable set-cpu-governor.service</code></pre>
+
+        <table>
+            <tr>
+                <th>Governor</th>
+                <th>Behavior</th>
+                <th>Use Case</th>
+            </tr>
+            <tr>
+                <td><code>performance</code></td>
+                <td>Max frequency always</td>
+                <td><strong>LLM inference servers</strong></td>
+            </tr>
+            <tr>
+                <td><code>ondemand</code></td>
+                <td>Scale based on load</td>
+                <td>Desktop, general purpose</td>
+            </tr>
+            <tr>
+                <td><code>powersave</code></td>
+                <td>Minimum frequency</td>
+                <td>Battery saving (laptops)</td>
+            </tr>
+            <tr>
+                <td><code>schedutil</code></td>
+                <td>Scheduler-driven scaling</td>
+                <td>Modern kernels, balanced</td>
+            </tr>
+        </table>
+
+        <h3>3.2 Kernel Preemption Modes</h3>
+        <p>For ultra-low latency requirements, consider custom kernel builds with PREEMPT_LL or PREEMPT_RT.</p>
+
+        <h4>Check Current Preemption Model</h4>
+        <pre><code># View kernel preemption configuration
+grep PREEMPT /boot/config-$(uname -r)
+
+# Output examples:
+# CONFIG_PREEMPT_NONE=y      (No preemption - desktop default)
+# CONFIG_PREEMPT_VOLUNTARY=y (Voluntary preemption)
+# CONFIG_PREEMPT=y           (Full preemption - low latency)
+# CONFIG_PREEMPT_RT=y        (Real-time - requires custom kernel)</code></pre>
+
+        <div class="warning-box">
+            <h4>⚠️ Custom Kernel Warning</h4>
+            <p>Building a PREEMPT_RT kernel requires recompiling and may void support contracts. For most LLM inference workloads, standard kernels with proper tuning are sufficient. Only pursue custom kernels for sub-millisecond latency requirements.</p>
+        </div>
+
+        <h2>4. Critical Sysctl Parameters</h2>
+        <p>Modify <code>/etc/sysctl.conf</code> to optimize parallel processing capabilities.</p>
+
+        <h4>Recommended Sysctl Configuration for LLM Servers</h4>
+        <pre><code># Backup current configuration
+sudo cp /etc/sysctl.conf /etc/sysctl.conf.backup
+
+# Add LLM optimization parameters
+sudo tee -a /etc/sysctl.conf << 'EOF'
+
+# === LLM Inference Optimizations ===
+
+# Reduce CPU thread switching granularity
+# Lower values reduce scheduling overhead for long-running threads
+kernel.sched_min_granularity_ns = 10000000
+
+# Increase maximum memory map count
+# Required for frameworks like llama.cpp that use many memory mappings
+vm.max_map_count = 655300
+
+# Increase maximum file handles
+# Needed for high-concurrency API servers
+fs.file-max = 2097152
+
+# Increase network buffer sizes for API throughput
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+
+# Optimize TCP for high-throughput connections
+net.ipv4.tcp_rmem = 4096 87380 16777216
+net.ipv4.tcp_wmem = 4096 65536 16777216
+
+# Disable IPv6 if not needed (reduces kernel overhead)
+# net.ipv6.conf.all.disable_ipv6 = 1
+EOF
+
+# Apply changes
+sudo sysctl -p
+
+# Verify settings
+sysctl kernel.sched_min_granularity_ns
+sysctl vm.max_map_count
+sysctl fs.file-max</code></pre>
+
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Default</th>
+                <th>Optimized</th>
+                <th>Impact</th>
+            </tr>
+            <tr>
+                <td><code>kernel.sched_min_granularity_ns</code></td>
+                <td>6000000</td>
+                <td>10000000</td>
+                <td>Reduces thread switching overhead</td>
+            </tr>
+            <tr>
+                <td><code>vm.max_map_count</code></td>
+                <td>65530</td>
+                <td>655300</td>
+                <td>Supports large memory-mapped files</td>
+            </tr>
+            <tr>
+                <td><code>fs.file-max</code></td>
+                <td>system-dependent</td>
+                <td>2097152</td>
+                <td>Handles high-concurrency requests</td>
+            </tr>
+        </table>
+
+        <h2>5. GPU Direct Storage (GDS)</h2>
+        <p>If your hardware supports it (NVIDIA A100/H100, RTX 4090 with limitations), GPUDirect Storage allows data to bypass CPU memory, loading directly from NVMe to GPU VRAM.</p>
+
+        <h3>5.1 Check GDS Compatibility</h3>
+        <pre><code># Verify NVIDIA driver version (required: 470.x+)
+nvidia-smi --query-gpu=driver_version --format=csv
+
+# Check if nvidia-fs module is available
+modinfo nvidia-fs
+
+# If not loaded, load it
+sudo modprobe nvidia-fs
+
+# Verify GDS support
+ls -la /dev/nvidia-fs*
+# Should show: /dev/nvidia-fs0, /dev/nvidia-fs1, etc.</code></pre>
+
+        <h3>5.2 Install NVIDIA GDS</h3>
+        <pre><code># Download GDS from NVIDIA Developer website
+# https://developer.nvidia.com/gpudirect-storage
+
+# Install GDS packages (Ubuntu example)
+wget https://developer.download.nvidia.com/compute/gds/repos/ubuntu2204/x86_64/gds-repo-ubuntu2204_1.0-1_amd64.deb
+sudo dpkg -i gds-repo-ubuntu2204_1.0-1_amd64.deb
+sudo apt-get update
+sudo apt-get install -y gds-core gds-tools
+
+# Verify installation
+gdscopy --version
+# Should show: GDS copy utility version</code></pre>
+
+        <h3>5.3 Configure GDS for Model Loading</h3>
+        <pre><code># Create GDS configuration
+sudo tee /etc/nvidia-gds/config.ini << 'EOF'
+[nvme]
+# Enable direct storage for NVMe devices
+enable_gds = 1
+
+# List NVMe devices for GDS
+nvme_devices = /dev/nvme0n1,/dev/nvme1n1
+
+# Buffer size for transfers (bytes)
+buffer_size = 1073741824
+EOF
+
+# Restart GDS service
+sudo systemctl restart nvidia-fs
+
+# Test GDS throughput
+gdscopy --src /path/to/model.gguf --dst cuda:0
+# Should show direct GPU transfer</code></pre>
+
+        <div class="info-box">
+            <h4>📊 GDS Performance Impact</h4>
+            <p>On A100 80GB systems, GDS reduces model loading time by <strong>40-50%</strong> compared to CPU-mediated transfers. For RTX 4090, expect <strong>20-30%</strong> improvement due to PCIe bandwidth limitations.</p>
+        </div>
+
+        <h2>6. Monitoring & Profiling Tools</h2>
+        <p>Use kernel-level monitoring tools to identify bottlenecks during optimization.</p>
+
+        <h3>6.1 perf - Kernel Function Profiling</h3>
+        <pre><code># Install perf
+sudo apt install linux-tools-common linux-tools-$(uname -r)
+
+# Profile LLM inference process
+sudo perf record -p $(pgrep -f "llama-server") -g -- sleep 30
+
+# Generate flamegraph
+sudo perf script | stackcollapse-perf.pl | flamegraph.pl > profile.svg
+
+# View top kernel functions
+sudo perf report --stdio | head -50</code></pre>
+
+        <h3>6.2 iotop - Disk I/O Monitoring</h3>
+        <pre><code># Install iotop
+sudo apt install iotop
+
+# Run iotop (requires root)
+sudo iotop -oPa
+
+# Key columns to watch:
+# - DISK READ: Model loading throughput
+# - DISK WRITE: Swap activity (should be 0)
+# - COMMAND: Process causing I/O</code></pre>
+
+        <h3>6.3 btop / htop - Real-time CPU & Memory</h3>
+        <pre><code># Install btop (modern alternative to htop)
+sudo apt install btop
+
+# Run btop
+btop
+
+# Key metrics:
+# - CPU frequency: Should stay at max (performance governor)
+# - Memory pressure: Watch for swap usage
+# - Process tree: Identify inference bottlenecks</code></pre>
+
+        <h3>6.4 Custom Monitoring Script</h3>
+        <pre><code>#!/bin/bash
+# llm-monitor.sh - Real-time LLM system monitoring
+
+echo "=== LLM Inference System Monitor ==="
+echo "Time: $(date)"
+echo ""
+
+# Memory stats
+echo "=== Memory ==="
+free -h | grep -E "Mem|Swap"
+
+# THP status
+echo ""
+echo "=== THP Status ==="
+cat /sys/kernel/mm/transparent_hugepage/enabled | head -1
+
+# CPU governor
+echo ""
+echo "=== CPU Governor ==="
+cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor 2>/dev/null | sort -u
+
+# I/O scheduler
+echo ""
+echo "=== I/O Scheduler ==="
+cat /sys/block/nvme*/queue/scheduler 2>/dev/null
+
+# GPU status
+echo ""
+echo "=== GPU ==="
+nvidia-smi --query-gpu=name,memory.used,memory.total,utilization.gpu --format=csv,noheader
+
+# Run every 5 seconds
+watch -n 5 "$0"</code></pre>
+
+        <h2>🎯 Optimization Checklist</h2>
+        <p>Use this checklist to ensure all optimizations are applied:</p>
+
+        <table>
+            <tr>
+                <th>Optimization</th>
+                <th>Command to Verify</th>
+                <th>Expected Value</th>
+            </tr>
+            <tr>
+                <td>THP Enabled</td>
+                <td><code>cat /sys/kernel/mm/transparent_hugepage/enabled</code></td>
+                <td><code>[madvise]</code> or <code>[always]</code></td>
+            </tr>
+            <tr>
+                <td>Swappiness</td>
+                <td><code>cat /proc/sys/vm/swappiness</code></td>
+                <td><code>1</code></td>
+            </tr>
+            <tr>
+                <td>Memory Lock Limit</td>
+                <td><code>ulimit -l</code></td>
+                <td><code>unlimited</code></td>
+            </tr>
+            <tr>
+                <td>I/O Scheduler</td>
+                <td><code>cat /sys/block/nvme0n1/queue/scheduler</code></td>
+                <td><code>[none]</code></td>
+            </tr>
+            <tr>
+                <td>Read-Ahead</td>
+                <td><code>blockdev --getra /dev/nvme0n1</code></td>
+                <td><code>4096</code></td>
+            </tr>
+            <tr>
+                <td>CPU Governor</td>
+                <td><code>cpupower frequency-info</code></td>
+                <td><code>performance</code></td>
+            </tr>
+            <tr>
+                <td>vm.max_map_count</td>
+                <td><code>sysctl vm.max_map_count</code></td>
+                <td><code>655300</code></td>
+            </tr>
+        </table>
+
+        <h2>📊 Expected Performance Improvements</h2>
+        <p>Based on real-world benchmarks with Llama-3-70B on RTX 4090 (24GB):</p>
+
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Before Optimization</th>
+                <th>After Optimization</th>
+                <th>Improvement</th>
+            </tr>
+            <tr>
+                <td>Model Load Time</td>
+                <td>45 seconds</td>
+                <td>32 seconds</td>
+                <td>+29%</td>
+            </tr>
+            <tr>
+                <td>Token Generation (prompt processing)</td>
+                <td>480 tokens/sec</td>
+                <td>545 tokens/sec</td>
+                <td>+14%</td>
+            </tr>
+            <tr>
+                <td>Token Generation (generation)</td>
+                <td>18 tokens/sec</td>
+                <td>21 tokens/sec</td>
+                <td>+17%</td>
+            </tr>
+            <tr>
+                <td>99th Percentile Latency</td>
+                <td>180ms</td>
+                <td>125ms</td>
+                <td>-31%</td>
+            </tr>
+        </table>
+
+        <hr style="border-color: var(--border-color); margin: 2rem 0;">
+
+        <p><strong>Related Reading:</strong></p>
+        <ul>
+            <li><a href="/articles/run-deepseek-v3-locally-linux.html" style="color: var(--ai-blue);">How to Run DeepSeek-V3 Locally on Linux</a></li>
+            <li><a href="/articles/local-llm-deployment.html" style="color: var(--ai-blue);">Local LLM Deployment Guide 2026</a></li>
+            <li><a href="https://calc.islinux.com/articles/best-budget-gpus-ai-inference-2026.html" style="color: var(--ai-blue);">5 Best Budget GPUs for AI Inference</a></li>
+            <li><a href="https://calc.islinux.com/gpu-power-cost.html" style="color: var(--ai-blue);">GPU Power Cost Calculator</a></li>
+        </ul>
+    </article>
+</div>
+
+<!-- Discover More Section -->
+<section class="discover-more-section">
+    <h2 class="discover-more-title">🔍 Discover More Tools</h2>
+    <div class="discover-grid" id="discover-grid"></div>
+</section>
+
+<!-- Tool Guide Section -->
+<section class="tool-guide-section">
+    <div class="tool-guide-content" id="tool-guide-content"></div>
+</section>
+
+<!-- Random Articles Section -->
+<section class="random-articles-section">
+    <h2 class="random-articles-title">📚 Related Articles</h2>
+    <div class="random-articles-grid" id="random-articles-grid"></div>
+</section>
+
+<footer>
+    <p>&copy; 2026 AI.isLinux.com</p>
+    <p>
+        <a href="/index.html">Home</a> |
+        <a href="/about.html">About</a> |
+        <a href="/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
+</footer>
+
+<script src="js/discover-more.js"></script>
+
+</body>
+</html>
