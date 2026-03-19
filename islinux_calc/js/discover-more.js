@@ -11,7 +11,8 @@
 
     const articles = [
         { href: '/articles/freelancer-rate-calculator.html', icon: '📚', title: 'Freelancer Pricing Strategy', description: 'Scientifically calculate your real hourly rate and avoid underpricing.' },
-        { href: '/articles/gpu-quantization-guide.html', icon: '🖥️', title: '2026 GPU Computing Guide', description: 'Why 4-bit quantization is a lifesaver for small businesses running AI models.' }
+        { href: '/articles/gpu-quantization-guide.html', icon: '🖥️', title: '2026 GPU Computing Guide', description: 'Why 4-bit quantization is a lifesaver for small businesses running AI models.' },
+        { href: '/articles/best-budget-gpus-ai-inference-2026.html', icon: '💳', title: '5 Best Budget GPUs for AI Inference in 2026', description: 'Compare budget GPUs for AI: RTX 3090 vs RTX 5060 vs AMD. VRAM analysis, power costs, and value recommendations.' }
     ];
 
     const toolGuides = {
