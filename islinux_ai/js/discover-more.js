@@ -14,7 +14,8 @@
         { href: '/articles/ai-code-review-guide.html', icon: '🔍', title: 'AI Code Review Guide', description: 'Best practices for AI-assisted code review.' },
         { href: '/articles/git-commit-messages.html', icon: '💡', title: 'Git Commit Messages', description: 'Write better commit messages with AI.' },
         { href: '/articles/copilot-to-agentic-ai.html', icon: '🤖', title: 'From Copilot to Agentic AI', description: 'Build autonomous workflows with local AI agents in 2026.' },
-        { href: '/articles/local-llm-deployment.html', icon: '🚀', title: 'Local LLM Deployment Guide', description: 'Complete guide to deploying Llama 3, Mistral and other models locally in 2026.' }
+        { href: '/articles/local-llm-deployment.html', icon: '🚀', title: 'Local LLM Deployment Guide', description: 'Complete guide to deploying Llama 3, Mistral and other models locally in 2026.' },
+        { href: '/articles/run-deepseek-v3-locally-linux.html', icon: '🔧', title: 'Run DeepSeek-V3 Locally on Linux', description: 'Step-by-step guide to deploying DeepSeek-V3 with Ollama and Llama.cpp on Linux.' }
     ];
 
     const toolGuides = {
