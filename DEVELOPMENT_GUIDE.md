@@ -652,6 +652,58 @@ Before publishing a new tool page, verify:
 ❌ Using relative paths for navigation (use /xxx.html format)
 ```
 
+### 11.7 Article Page Module Requirements
+
+**Important**: Article pages have different module requirements than tool pages.
+
+| Site Type | Discover More | Tool Guide | Related Articles |
+|-----------|---------------|------------|------------------|
+| **Main Site (islinux.com)** | ❌ Not Required | ❌ Not Required | ❌ Not Required |
+| **AI Subsite** | ✅ Required | ✅ Required | ✅ Required |
+| **Tool Subsite** | ✅ Required | ✅ Required | ✅ Required |
+| **Calc Subsite** | ✅ Required | ✅ Required | ✅ Required |
+
+**Main Site Article Template** (No framework modules needed):
+```html
+<div class="container">
+    <a href="/index.html" class="back-link">← Back to Articles</a>
+
+    <article>
+        <h1>Article Title</h1>
+        <div class="meta">...</div>
+
+        <!-- Article Content -->
+        <h2>Section 1</h2>
+        <p>Content...</p>
+
+        <!-- Related Reading (Manual Links) -->
+        <hr>
+        <p><strong>Related Reading:</strong></p>
+        <ul>
+            <li><a href="/related-article.html">Related Article</a></li>
+        </ul>
+    </article>
+</div>
+
+<footer>
+    <p>&copy; 2026 isLinux.com</p>
+    <p>
+        <a href="/index.html">Home</a> |
+        <a href="/about.html">About</a> |
+        <a href="/privacy.html">Privacy</a> |
+        <a href="/contact.html">Contact</a>
+    </p>
+</footer>
+
+</body>
+</html>
+```
+
+**Rationale**:
+- Main site articles focus on pure content reading experience
+- AI/Tool/Calc subsites use framework modules for cross-tool discovery
+- Main site uses manual "Related Reading" links for curated internal linking
+
 ---
 
 ## 13. Quick Reference
