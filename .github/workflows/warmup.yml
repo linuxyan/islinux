@@ -73,7 +73,7 @@ jobs:
                   # 如果不是 HIT 且是第一次尝试，则立即重试
                   if status != 'HIT' and attempt == 1:
                       print(f"    - 正在触发二次预热...")
-                      time.sleep(1) # 留给边缘节点微小的写入时间
+                      time.sleep(2) # 留给边缘节点微小的写入时间
                       return verify_cache(url, attempt=2)
                   
                   return status
@@ -94,7 +94,7 @@ jobs:
                   final_status = verify_cache(url)
                   if final_status == 'HIT':
                       hit_count += 1
-                  time.sleep(0.1) # 避免瞬间请求过载
+                  time.sleep(2) # 避免瞬间请求过载
 
               duration = round(time.time() - start_time, 2)
               print(f"\n=== 预热报告 ===")

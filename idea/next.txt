@@ -1,0 +1,47 @@
+针对你目前的 isLinux 矩阵，特别是基于 GSC 中对 GPU Quantization、DeepSeek-V3 以及 Hardware ROI 的高曝光量，我们可以为 calc.islinux.com 和 tool.islinux.com 量身定制一批高转化率的工具。
+
+这些工具不仅能满足 DevOps 的刚需，还能通过高频的“长尾关键词”持续从 Google 搜索获取低成本流量。
+
+🧮 针对 calc.islinux.com (精准计算类)
+这类工具的逻辑是：“将复杂的硬件规格转化为直观的财务/技术决策。”
+
+1. LLM 显存容量与量化预估器 (LLM VRAM & Quantization Predictor)
+长尾词： vram requirements for deepseek-v3 4-bit vs 8-bit, quantization vram overhead calculator.
+
+功能： 用户输入模型参数量（如 671B）和选择量化格式（INT4, FP8, BF16），自动计算推理所需的最小显存、KV Cache 占用以及多卡负载均衡建议。
+
+价值： 解决用户“我的卡能不能跑这个模型”的终极焦虑。
+
+2. AI 推理 TCO (总拥有成本) 对比计算器
+长尾词： local gpu vs cloud h100 cost per million tokens, ai inference server electricity roi.
+
+功能： 对比本地硬件（如 RTX 5090）与云端 API（如 OpenRouter/DeepSeek API）的长期成本。输入电费、硬件折旧和每日 Token 使用量，生成 ROI 曲线。
+
+价值： 对应你当前曝光较高的硬件 ROI 领域。
+
+3. GPU 算力单位转换器 (TeraFLOPS to Tokens/Sec Converter)
+长尾词： calculate tokens per second from gpu tflops, fp8 vs bf16 performance converter.
+
+功能： 将硬件标称的 TFLOPS 算力，根据模型大小，换算成理论上的每秒生成字数（TPS）。
+
+🛠️ 针对 tool.islinux.com (自动化与配置类)
+这类工具的逻辑是：“一键生成 DevOps 生产力代码。”
+
+1. vLLM / Ollama 启动参数生成器 (Production-Ready CLI Generator)
+长尾词： vllm multi-gpu setup command generator, best ollama environment variables for linux.
+
+功能： 勾选你的 GPU 型号、内存大小和模型路径，一键生成经过内核优化的 vllm serve 或 docker run 命令。
+
+价值： 结合你目前在“Linux 内核优化”方面的 SEO 优势。
+
+2. NVIDIA-SMI 实时监控面板生成器 (Lightweight GPU Monitoring Dashboard)
+长尾词： simple web dashboard for nvidia-smi, monitor gpu temperature via terminal web.
+
+功能： 提供一段极简的 Bash 脚本，将 nvidia-smi 的输出通过你的工具站转化为一个美观、实时的 HTML/JSON 监控页面。
+
+价值： 满足你用户群中对“GPU 算力市场监控”的兴趣。
+
+3. AI 环境系统检测脚本 (One-Click AI Env Checker)
+长尾词： check linux kernel compatibility for cuda 12.8, verify nccl peer-to-peer p2p support script.
+
+功能： 生成一个 Shell 命令，用户粘贴运行后可检测 CPU 调度器、HugePages、CUDA 版本和 P2P 通信状态是否达到了运行大型模型的最佳状态。
