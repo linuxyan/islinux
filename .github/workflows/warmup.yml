@@ -1,0 +1,109 @@
+name: Sitemap Cache Warmer (High Availability)
+
+on:
+  schedule:
+    # 北京时间 周一、三、五 凌晨 00:00 (对应 UTC 16:00)
+    - cron: '0 16 * * 0,2,4'
+  workflow_dispatch:
+    inputs:
+      sitemap_url:
+        description: '要预热的 Sitemap 地址'
+        required: true
+        default: 'https://islinux.com/sitemap_index.xml'
+
+jobs:
+  warmup:
+    runs-on: ubuntu-latest
+    name: Warmup and Verify Cache
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Execute Warmup Script
+        run: |
+          cat << 'EOF' > warmer.py
+          import requests
+          import xml.etree.ElementTree as ET
+          import time
+          import sys
+
+          # 配置信息
+          SITEMAP_URL = "${{ github.event.inputs.sitemap_url }}" or "https://islinux.com/sitemap_index.xml"
+          HEADERS = {'User-Agent': 'Cloudflare-Cache-Warmer/3.0 (isLinux-DevOps)'}
+          NS = {'ns': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+
+          def get_all_urls(url):
+              """递归提取所有 Sitemap 中的 URL"""
+              urls = []
+              try:
+                  print(f"[*] 正在解析: {url}")
+                  r = requests.get(url, timeout=15)
+                  r.raise_for_status()
+                  root = ET.fromstring(r.content)
+                  
+                  # 处理 Sitemap Index (嵌套子 Sitemap)
+                  sitemaps = root.findall('.//ns:sitemap/ns:loc', NS)
+                  if sitemaps:
+                      for sub in sitemaps:
+                          urls.extend(get_all_urls(sub.text))
+                  
+                  # 处理具体页面 URL
+                  pages = root.findall('.//ns:url/ns:loc', NS)
+                  if pages:
+                      urls.extend([p.text for p in pages])
+                      
+              except Exception as e:
+                  print(f"[!] 解析失败 {url}: {e}")
+              return list(set(urls))
+
+          def verify_cache(url, attempt=1):
+              """请求并验证 Header,若非 HIT 则重试一次"""
+              try:
+                  # 使用 GET 请求以确保 Cloudflare 触发“全页面缓存”
+                  resp = requests.get(url, headers=HEADERS, timeout=15)
+                  status = resp.headers.get('cf-cache-status', 'BYPASS/DYNAMIC')
+                  
+                  print(f"    - Attempt {attempt}: [{status}]")
+
+                  # 如果不是 HIT 且是第一次尝试，则立即重试
+                  if status != 'HIT' and attempt == 1:
+                      print(f"    - 正在触发二次预热...")
+                      time.sleep(1) # 留给边缘节点微小的写入时间
+                      return verify_cache(url, attempt=2)
+                  
+                  return status
+              except Exception as e:
+                  print(f"    - [Error]: {e}")
+                  return "ERROR"
+
+          def run():
+              start_time = time.time()
+              print(f"=== 开始预热任务: {SITEMAP_URL} ===")
+              all_urls = get_all_urls(SITEMAP_URL)
+              total = len(all_urls)
+              print(f"\n[+] 发现 {total} 个有效页面，开始校验缓存状态...\n")
+
+              hit_count = 0
+              for i, url in enumerate(all_urls, 1):
+                  print(f"[{i}/{total}] URL: {url}")
+                  final_status = verify_cache(url)
+                  if final_status == 'HIT':
+                      hit_count += 1
+                  time.sleep(0.1) # 避免瞬间请求过载
+
+              duration = round(time.time() - start_time, 2)
+              print(f"\n=== 预热报告 ===")
+              print(f"耗时: {duration}s")
+              print(f"总计页面: {total}")
+              print(f"最终 HIT 数量: {hit_count}")
+              print(f"缓存命中率: {round((hit_count/total)*100, 2) if total > 0 else 0}%")
+
+          if __name__ == "__main__":
+              run()
+          EOF
+          python warmer.py
