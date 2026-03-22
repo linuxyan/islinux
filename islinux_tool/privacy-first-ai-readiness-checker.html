@@ -384,7 +384,10 @@
             copy and run this script in your terminal:
         </p>
         <div class="shell-box">
-            <button class="copy-btn" onclick="copyShell()">Copy</button>
+            <button class="copy-btn" onclick="copyShell()" title="Copy full script">
+                <span id="copyIcon">📋</span>
+                <span id="copyText">Copy</span>
+            </button>
             <pre><code id="shellCode">#!/bin/bash
 # isLinux.com - Privacy AI Auditor v1.0
 # Run this script for deep kernel audit and auto-fix recommendations
@@ -749,8 +752,35 @@ echo "https://ai.islinux.com/articles/how-to-optimize-linux-kernel-llm-inference
 
     function copyShell() {
         const code = document.getElementById('shellCode').innerText;
+        const copyIcon = document.getElementById('copyIcon');
+        const copyText = document.getElementById('copyText');
+
+        // Store original state
+        const originalIcon = copyIcon.textContent;
+        const originalText = copyText.textContent;
+
+        // Show copying state
+        copyIcon.textContent = '⏳';
+        copyText.textContent = 'Copying...';
+
         navigator.clipboard.writeText(code).then(() => {
-            showToast();
+            // Show success state
+            copyIcon.textContent = '✅';
+            copyText.textContent = 'Copied!';
+
+            // Reset after 2 seconds
+            setTimeout(() => {
+                copyIcon.textContent = originalIcon;
+                copyText.textContent = originalText;
+            }, 2000);
+        }).catch(() => {
+            // Show error state
+            copyIcon.textContent = '❌';
+            copyText.textContent = 'Failed';
+            setTimeout(() => {
+                copyIcon.textContent = originalIcon;
+                copyText.textContent = originalText;
+            }, 2000);
         });
     }
 
