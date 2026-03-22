@@ -219,6 +219,19 @@
             border: 1px solid var(--border-color);
         }
 
+        .shell-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .shell-box code {
+            color: #e5e7eb;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
         .copy-btn {
             position: absolute;
             top: 10px;
@@ -367,7 +380,7 @@
         </p>
         <div class="shell-box">
             <button class="copy-btn" onclick="copyShell()">Copy</button>
-            <code id="shellCode">#!/bin/bash
+            <pre><code id="shellCode">#!/bin/bash
 # isLinux.com - Privacy AI Auditor v1.0
 echo "--- Starting isLinux AI System Audit ---"
 
@@ -377,26 +390,26 @@ echo "Kernel: $k_ver"
 
 # Check HugePages (Critical for VRAM efficiency)
 hp=$(cat /proc/meminfo | grep HugePages_Total | awk '{print $2}')
-echo "HugePages: $hp (Recommend > 0 for LLM)"
+echo "HugePages: $hp (Recommend &gt; 0 for LLM)"
 
 # Check Swap Impact
 swp=$(free -m | grep Swap | awk '{print $3}')
 echo "Swap Usage: ${swp}MB"
 
 # Check THP (Transparent HugePages) status
-thp=$(cat /sys/kernel/mm/transparent_hugepage/enabled 2>/dev/null || echo "N/A")
+thp=$(cat /sys/kernel/mm/transparent_hugepage/enabled 2&gt;/dev/null || echo "N/A")
 echo "THP Status: $thp (Recommend 'madvise' for AI)"
 
 # Check NUMA balancing
-numa=$(cat /proc/sys/kernel/numa_balancing 2>/dev/null || echo "N/A")
+numa=$(cat /proc/sys/kernel/numa_balancing 2&gt;/dev/null || echo "N/A")
 echo "NUMA Balancing: $numa (Recommend 0 for single-GPU)"
 
-echo "--- Audit Complete ---"</code>
+echo "--- Audit Complete ---"</code></pre>
         </div>
         <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--text-muted);">
             <strong>Related Guide:</strong>
-            <a href="https://islinux.com/articles/how-to-optimize-linux-kernel-llm-inference.html" style="color: var(--accent-color);">
-                How to optimize Linux Kernel for LLM Inference (March 2026 Update)
+            <a href="https://islinux.com/articles/top-5-linux-distros-ai-development-2026.html" style="color: var(--accent-color);">
+                Top 5 Linux Distributions for AI Development in 2026
             </a>
         </p>
     </div>
@@ -406,20 +419,20 @@ echo "--- Audit Complete ---"</code>
         <div style="display: flex; flex-direction: column; gap: 0.8rem; color: var(--text-muted);">
             <div>
                 <span style="color: var(--accent-color); font-weight: 600;">→</span>
-                <a href="https://islinux.com/articles/run-deepseek-v3-locally-linux.html" style="color: var(--text-color); text-decoration: none; margin-left: 8px;">
-                    How to run DeepSeek-V3 locally on Linux
+                <a href="https://islinux.com/articles/top-5-linux-distros-ai-development-2026.html" style="color: var(--text-color); text-decoration: none; margin-left: 8px;">
+                    Top 5 Linux Distributions for AI Development in 2026
                 </a>
             </div>
             <div>
                 <span style="color: var(--accent-color); font-weight: 600;">→</span>
-                <a href="https://islinux.com/articles/best-budget-gpus-ai-inference-2026.html" style="color: var(--text-color); text-decoration: none; margin-left: 8px;">
-                    March 2026 Budget GPU Guide for AI Inference
+                <a href="https://islinux.com/articles/ultra-fast-terminal-stack-ghostty-2026.html" style="color: var(--text-color); text-decoration: none; margin-left: 8px;">
+                    The 2026 Ultra-Fast Terminal Stack for AI Development
                 </a>
             </div>
             <div>
                 <span style="color: var(--accent-color); font-weight: 600;">→</span>
-                <a href="https://calc.islinux.com/token-vs-gpu.html" style="color: var(--text-color); text-decoration: none; margin-left: 8px;">
-                    AI Power Cost Calculator - Compare Cloud vs Local GPU
+                <a href="https://calc.islinux.com/gpu-power-cost.html" style="color: var(--text-color); text-decoration: none; margin-left: 8px;">
+                    GPU Power Cost Calculator
                 </a>
             </div>
         </div>
@@ -475,7 +488,8 @@ echo "--- Audit Complete ---"</code>
 
         // Step 1: Check RAM
         pBar.style.width = '20%';
-        const ram = navigator.deviceMemory || 4;
+        // navigator.deviceMemory returns approximate value in GB (1.25, 2, 4, 8, 16, etc.)
+        const ram = navigator.deviceMemory || 8;
 
         // Step 2: Check for local AI services
         pBar.style.width = '50%';
@@ -530,33 +544,35 @@ echo "--- Audit Complete ---"</code>
         let recHtml = '';
 
         // RAM Check
+        // navigator.deviceMemory returns approximate values: 1.25, 2, 4, 8, 16
         let ramStatus = 'success';
         let ramIcon = '✅';
-        let ramText = `System memory: ${ram}GB`;
-        if (ram < 8) {
-            ramStatus = 'error';
+        let ramText = `System memory: ~${Math.round(ram)}GB`;
+        if (ram <= 4) {
+            ramStatus = 'warning';
             ramIcon = '⚠️';
-            ramText += ' - Insufficient for large models';
+            ramText += ' - Minimum for small models (7B)';
             recHtml += `<div class="rec-item">
                 <span class="result-icon warning">⚠️</span>
                 <div class="result-content">
-                    <div class="result-label">Hardware: RAM Upgrade Recommended</div>
+                    <div class="result-label">Hardware: Limited RAM Detected</div>
                     <div class="result-value">
-                        Your ${ram}GB RAM is insufficient for large models. Consider upgrading to 32GB+ or check our
-                        <a href="https://islinux.com/articles/best-budget-gpus-ai-inference-2026.html">March 2026 Budget GPU Guide</a> for alternatives.
+                        ~${Math.round(ram)}GB RAM is only sufficient for small models (7B parameters or less).
+                        For larger models like DeepSeek-V3 or Qwen-72B, consider upgrading to 32GB+ or using a dedicated GPU with high VRAM.
                     </div>
                 </div>
             </div>`;
-        } else if (ram < 16) {
-            ramStatus = 'warning';
-            ramIcon = '⚠️';
-            ramText += ' - Minimum for 7B-14B models';
+        } else if (ram <= 8) {
+            ramStatus = 'success';
+            ramIcon = '✅';
+            ramText += ' - Suitable for 7B-14B models';
             recHtml += `<div class="rec-item">
-                <span class="result-icon warning">⚠️</span>
+                <span class="result-icon success">✅</span>
                 <div class="result-content">
-                    <div class="result-label">Hardware: Consider RAM Upgrade</div>
+                    <div class="result-label">Hardware: System Memory OK</div>
                     <div class="result-value">
-                        ${ram}GB is workable for smaller models (7B-14B). For larger models like DeepSeek-V3, consider 32GB+.
+                        ~${Math.round(ram)}GB RAM is suitable for 7B-14B parameter models.
+                        For larger models, consider 16GB+ or a dedicated GPU with 12GB+ VRAM.
                     </div>
                 </div>
             </div>`;
@@ -564,8 +580,8 @@ echo "--- Audit Complete ---"</code>
             recHtml += `<div class="rec-item">
                 <span class="result-icon success">✅</span>
                 <div class="result-content">
-                    <div class="result-label">Hardware: System Memory OK</div>
-                    <div class="result-value">${ram}GB RAM meets requirements for most local inference workloads.</div>
+                    <div class="result-label">Hardware: System Memory Excellent</div>
+                    <div class="result-value">~${Math.round(ram)}GB RAM is excellent for most local inference workloads including 70B+ models with quantization.</div>
                 </div>
             </div>`;
         }
@@ -597,8 +613,8 @@ echo "--- Audit Complete ---"</code>
                 <div class="result-content">
                     <div class="result-label">Hardware: GPU Not Detected</div>
                     <div class="result-value">
-                        No dedicated GPU detected. For optimal AI inference, consider an NVIDIA GPU with 12GB+ VRAM.
-                        See our <a href="https://islinux.com/articles/best-budget-gpus-ai-inference-2026.html">Budget GPU Guide</a>.
+                        No dedicated GPU detected via WebGL. For optimal AI inference, consider an NVIDIA GPU with 12GB+ VRAM.
+                        See our <a href="https://islinux.com/articles/top-5-linux-distros-ai-development-2026.html">Linux distros for AI Development</a>.
                     </div>
                 </div>
             </div>`;
@@ -624,8 +640,8 @@ echo "--- Audit Complete ---"</code>
                 <div class="result-content">
                     <div class="result-label">Privacy: No Local Inference Service</div>
                     <div class="result-value">
-                        Install and run a local AI service for maximum privacy.
-                        Learn <a href="https://islinux.com/articles/run-deepseek-v3-locally-linux.html">How to run DeepSeek-V3 locally on Linux</a>.
+                        Install and run a local AI service (Ollama, vLLM) for maximum privacy.
+                        Learn more in our <a href="https://islinux.com/articles/top-5-linux-distros-ai-development-2026.html">AI Development Guide</a>.
                     </div>
                 </div>
             </div>`;
