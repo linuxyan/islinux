@@ -387,29 +387,94 @@
             <button class="copy-btn" onclick="copyShell()">Copy</button>
             <pre><code id="shellCode">#!/bin/bash
 # isLinux.com - Privacy AI Auditor v1.0
-echo "--- Starting isLinux AI System Audit ---"
+# Run this script for deep kernel audit and auto-fix recommendations
 
-# Check Kernel Optimization for 2026 standards
+echo "========================================"
+echo "  isLinux AI System Audit & Fix Guide"
+echo "========================================"
+echo ""
+
+# Check Kernel version
 k_ver=$(uname -r)
-echo "Kernel: $k_ver"
+echo "[1] Kernel Version: $k_ver"
+if [[ $(uname -r | grep -oP '^\d+\.\d+') &lt; "5.10" ]]; then
+    echo "    ⚠️  WARNING: Kernel version is outdated for AI workloads"
+    echo "    💡 FIX: Upgrade to kernel 6.x for best AI inference performance"
+    echo "    Ubuntu: sudo apt install linux-generic-hwe-24.04"
+    echo "    Arch: sudo pacman -S linux-lts"
+fi
+echo ""
 
 # Check HugePages (Critical for VRAM efficiency)
 hp=$(cat /proc/meminfo | grep HugePages_Total | awk '{print $2}')
-echo "HugePages: $hp (Recommend &gt; 0 for LLM)"
+hp_free=$(cat /proc/meminfo | grep HugePages_Free | awk '{print $2}')
+echo "[2] HugePages Total: ${hp:-0}, Free: ${hp_free:-0}"
+if [ "${hp:-0}" -eq 0 ]; then
+    echo "    ⚠️  WARNING: HugePages not configured (critical for LLM performance)"
+    echo "    💡 FIX: Enable HugePages for better memory efficiency"
+    echo "    echo 'vm.nr_hugepages=2048' | sudo tee -a /etc/sysctl.conf"
+    echo "    sudo sysctl -p"
+fi
+echo ""
 
-# Check Swap Impact
-swp=$(free -m | grep Swap | awk '{print $3}')
-echo "Swap Usage: ${swp}MB"
+# Check Swap
+swp_total=$(free -m | grep Swap | awk '{print $2}')
+swp_used=$(free -m | grep Swap | awk '{print $3}')
+echo "[3] Swap: ${swp_used}MB used / ${swp_total}MB total"
+if [ "${swp_total:-0}" -lt 1024 ]; then
+    echo "    ⚠️  WARNING: Low swap space (recommend 2GB+ for AI workloads)"
+    echo "    💡 FIX: Create swap file"
+    echo "    sudo fallocate -l 4G /swapfile"
+    echo "    sudo chmod 600 /swapfile"
+    echo "    sudo mkswap /swapfile && sudo swapon /swapfile"
+    echo "    echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab"
+fi
+if [ "${swp_used:-0}" -gt 500 ]; then
+    echo "    ⚠️  WARNING: High swap usage may cause inference latency"
+    echo "    💡 FIX: Add more RAM or reduce model size"
+fi
+echo ""
 
 # Check THP (Transparent HugePages) status
-thp=$(cat /sys/kernel/mm/transparent_hugepage/enabled 2&gt;/dev/null || echo "N/A")
-echo "THP Status: $thp (Recommend 'madvise' for AI)"
+thp=$(cat /sys/kernel/mm/transparent_hugepage/enabled 2&gt;/dev/null | grep -oP '\[\K[^\]]+' || echo "N/A")
+echo "[4] THP Status: $thp"
+if [ "$thp" != "madvise" ]; then
+    echo "    ⚠️  WARNING: THP should be 'madvise' for AI inference"
+    echo "    💡 FIX: Set THP to madvise mode"
+    echo "    echo madvise | sudo tee /sys/kernel/mm/transparent_hugepage/enabled"
+    echo "    echo madvise | sudo tee /sys/kernel/mm/transparent_hugepage/defrag"
+fi
+echo ""
 
 # Check NUMA balancing
 numa=$(cat /proc/sys/kernel/numa_balancing 2&gt;/dev/null || echo "N/A")
-echo "NUMA Balancing: $numa (Recommend 0 for single-GPU)"
+echo "[5] NUMA Balancing: $numa"
+if [ "$numa" = "1" ]; then
+    echo "    ⚠️  WARNING: NUMA balancing enabled (causes latency for single-GPU)"
+    echo "    💡 FIX: Disable NUMA balancing for AI inference"
+    echo "    sudo sysctl -w kernel.numa_balancing=0"
+    echo "    echo 'kernel.numa_balancing=0' | sudo tee -a /etc/sysctl.conf"
+fi
+echo ""
 
-echo "--- Audit Complete ---"</code></pre>
+# Check if NVIDIA driver is installed
+if command -v nvidia-smi &gt;/dev/null 2&gt;&amp;1; then
+    echo "[6] NVIDIA Driver: Installed"
+    nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv
+else
+    echo "[6] NVIDIA Driver: Not detected"
+    echo "    💡 FIX: Install NVIDIA driver for GPU acceleration"
+    echo "    Ubuntu: sudo apt install nvidia-driver-550"
+    echo "    Fedora: sudo dnf install akmod-nvidia"
+fi
+echo ""
+
+echo "========================================"
+echo "  Audit Complete"
+echo "========================================"
+echo ""
+echo "For detailed optimization guide, visit:"
+echo "https://ai.islinux.com/articles/how-to-optimize-linux-kernel-llm-inference.html"</code></pre>
         </div>
         <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--text-muted);">
             <strong>Related Guide:</strong>
