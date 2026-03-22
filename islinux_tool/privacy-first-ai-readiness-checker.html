@@ -489,7 +489,11 @@ echo "--- Audit Complete ---"</code></pre>
         // Step 1: Check RAM
         pBar.style.width = '20%';
         // navigator.deviceMemory returns approximate value in GB (1.25, 2, 4, 8, 16, etc.)
-        const ram = navigator.deviceMemory || 8;
+        // Note: Browsers limit this for fingerprinting protection, so 16GB may show as 8GB
+        const detectedRam = navigator.deviceMemory || 8;
+        // For macOS with Apple Silicon, assume at least 16GB if 8GB is detected
+        // This is a heuristic since browsers under-report on M1/M2/M3 Macs
+        const ram = (detectedRam === 8 && /Mac/i.test(navigator.userAgent)) ? 16 : detectedRam;
 
         // Step 2: Check for local AI services
         pBar.style.width = '50%';
