@@ -8,7 +8,8 @@
         { href: '/hash.html', icon: '🔑', title: 'Hash Calculator', description: 'Calculate MD5, SHA1, SHA256 hashes for any text.' },
         { href: '/diff.html', icon: '📊', title: 'Text Diff', description: 'Compare two texts and find the differences line by line.' },
         { href: '/favicon-generator.html', icon: '🎨', title: 'Favicon Generator', description: 'Generate favicon.ico and PNG icons from text with customizable styles.' },
-        { href: '/terminal-config-generator.html', icon: '⌨️', title: 'Terminal Config Generator', description: 'Generate modern terminal config with Starship, Zoxide, Eza, and Bat.' }
+        { href: '/terminal-config-generator.html', icon: '⌨️', title: 'Terminal Config Generator', description: 'Generate modern terminal config with Starship, Zoxide, Eza, and Bat.' },
+        { href: '/vllm-command-generator.html', icon: '🚀', title: 'vLLM Command Generator', description: 'Generate optimized vLLM and Docker commands for multi-GPU AI deployment.' }
     ];
 
     const articles = [
@@ -165,6 +166,31 @@ Encoded: Hello%20World!%20How%20are%20you?</code></pre>
                     <li><strong>Bat:</strong> Cat with syntax highlighting</li>
                     <li><strong>FZF:</strong> Fuzzy finder for files and history</li>
                     <li><strong>Tmux:</strong> Terminal multiplexer basics</li>
+                </ul>
+            `
+        },
+        '/vllm-command-generator.html': {
+            title: 'How to Use vLLM Command Generator',
+            content: `
+                <h3>📋 Usage</h3>
+                <ul>
+                    <li>Select GPU architecture (Ampere+ or older)</li>
+                    <li>Set GPU count for Tensor Parallelism</li>
+                    <li>Enter VRAM per GPU</li>
+                    <li>Enter model path or HuggingFace ID</li>
+                    <li>Choose Native Python or Docker mode</li>
+                    <li>Click "Copy" to copy the generated command</li>
+                </ul>
+                <h3>💡 Deployment Modes</h3>
+                <ul>
+                    <li><strong>Native Python:</strong> Direct deployment with python3, better for development</li>
+                    <li><strong>Docker:</strong> Containerized deployment, recommended for production</li>
+                </ul>
+                <h3>🖥️ Key Parameters</h3>
+                <ul>
+                    <li><strong>gpu_memory_utilization:</strong> Automatically set based on VRAM (0.95 for ≤12GB, 0.90 for >12GB)</li>
+                    <li><strong>dtype:</strong> bfloat16 for Ampere+, float16 for older GPUs</li>
+                    <li><strong>shm-size:</strong> Calculated as 85% of total VRAM, capped at 32GB</li>
                 </ul>
             `
         }
