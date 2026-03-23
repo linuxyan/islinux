@@ -7,7 +7,8 @@
         { href: '/investment-calculator.html', icon: '📈', title: 'Investment Calculator', description: 'Calculate investment returns and compound interest.' },
         { href: '/freelance-rate.html', icon: '💼', title: 'Freelance Rate', description: 'Calculate your ideal freelance hourly rate.' },
         { href: '/token-vs-gpu.html', icon: '🤖', title: 'Token vs GPU', description: 'Compare AI API token costs vs self-hosted GPU expenses.' },
-        { href: '/gpu-power-cost.html', icon: '⚡', title: 'GPU Power Cost', description: 'Calculate monthly electricity cost of running your GPU.' }
+        { href: '/gpu-power-cost.html', icon: '⚡', title: 'GPU Power Cost', description: 'Calculate monthly electricity cost of running your GPU.' },
+        { href: '/llm-vram-calculator.html', icon: '🧠', title: 'LLM VRAM Predictor', description: 'Predict GPU VRAM requirements for LLMs with quantization and context length.' }
     ];
 
     const articles = [

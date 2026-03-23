@@ -55,6 +55,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://calc.islinux.com/llm-vram-calculator.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://calc.islinux.com/articles/freelancer-rate-calculator.html</loc>
     <lastmod>2026-03-16</lastmod>
     <changefreq>monthly</changefreq>
