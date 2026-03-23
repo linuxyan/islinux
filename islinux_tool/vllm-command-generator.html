@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vLLM Command Generator | Production AI Deployment 2026 | Tool.isLinux</title>
+    <meta name="description" content="Generate optimized vLLM and Docker run commands for local AI inference. Supports Multi-GPU TP setup, quantization, and Linux kernel optimization.">
+    <meta name="keywords" content="vLLM command generator, Docker deployment, multi-GPU setup, tensor parallelism, NCCL optimization, Ollama environment variables, DeepSeek-V3, Qwen-2.5">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://tool.islinux.com/vllm-command-generator.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="vLLM Command Generator | Production AI Deployment 2026">
+    <meta property="og:description" content="Generate optimized vLLM and Docker run commands for local AI inference with multi-GPU support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tool.islinux.com/vllm-command-generator.html">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "vLLM Command Generator",
+      "description": "Production-ready CLI generator for vLLM deployment. Optimized for March 2026 hardware landscape with automatic gpu_memory_utilization and shm-size tuning.",
+      "url": "https://tool.islinux.com/vllm-command-generator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Linux",
+      "author": {
+        "@type": "Organization",
+        "name": "isLinux",
+        "url": "https://islinux.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Native Python and Docker deployment modes",
+        "Multi-GPU Tensor Parallelism (TP) configuration",
+        "Automatic gpu_memory_utilization tuning",
+        "NCCL P2P optimization settings",
+        "Architecture-specific dtype selection (BF16/FP16)"
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+            --warning-orange: #ff7b72;
+            --info-blue: #58a6ff;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(35, 134, 54, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        .logo a { color: var(--accent-color); text-decoration: none; }
+        .logo a:hover { text-decoration: underline; }
+
+        .tagline { color: var(--text-muted); margin: 1rem 0 0; }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+        .tool-header {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-header h1 {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .tool-header p { margin: 0; color: var(--text-muted); }
+
+        .tool-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .panel-title {
+            margin: 0 0 1rem;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-group {
+            margin-bottom: 0;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        select, input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 0.875rem;
+            border: 2px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .mode-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .output-section {
+            margin-top: 1.5rem;
+        }
+
+        .output-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .output-box {
+            background: var(--code-bg);
+            color: #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            position: relative;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid var(--border-color);
+            line-height: 1.6;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #475569;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .copy-btn:hover { background: #334155; }
+
+        .alert-box {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .alert-info {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid var(--info-blue);
+        }
+
+        .alert-warning {
+            background: rgba(255, 123, 114, 0.1);
+            border-left: 4px solid var(--warning-orange);
+        }
+
+        .alert-box h4 {
+            margin: 0 0 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .alert-box p {
+            margin: 0;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .alert-box a {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .alert-box a:hover {
+            text-decoration: underline;
+        }
+
+        .faq-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .faq-section h3 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-item h4 {
+            color: #fff;
+            margin: 0 0 0.75rem;
+            font-size: 1rem;
+        }
+
+        .faq-item p {
+            margin: 0;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .faq-item code {
+            background: var(--bg-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--warning-orange);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+            .mode-selector { flex-direction: column; }
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+
+<header>
+    <h1 class="logo"><a href="/index.html">🛠️ Tool.isLinux.com</a></h1>
+    <p class="tagline">Developer Client-side Toolkit</p>
+    <nav>
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="https://islinux.com">Main Site</a>
+    </nav>
+</header>
+
+<div class="container">
+    <a href="/index.html" class="back-link">← Back to Tools</a>
+
+    <div class="tool-header">
+        <h1>🚀 vLLM Command Generator</h1>
+        <p>Production-Ready CLI Generator for Multi-GPU AI Deployment</p>
+    </div>
+
+    <div class="tool-panel">
+        <h2 class="panel-title">One-Click vLLM Deployment: Optimize Your 2026 AI Infrastructure</h2>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+            Are you struggling with <strong>vLLM multi-gpu setup</strong> or looking for the best
+            <strong>Ollama environment variables for Linux</strong>? Deploying large language models
+            like <strong>Qwen-2.5</strong> or <strong>DeepSeek-V3</strong> in production requires more
+            than just a basic run command.
+        </p>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+            You need to account for <strong>Tensor Parallelism (TP)</strong>, <strong>NCCL P2P optimizations</strong>,
+            and <strong>precision-matched dtype settings</strong> to avoid bottlenecks.
+        </p>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+            Our Production-Ready CLI Generator provides instant, copy-pasteable commands for both
+            <strong>Native Python</strong> and <strong>Docker</strong> environments. Optimized for the
+            March 2026 hardware landscape, it automatically tunes your <code>gpu_memory_utilization</code>
+            and <code>shm-size</code> based on your specific VRAM constraints.
+        </p>
+        <p style="color: var(--text-muted); line-height: 1.7; margin-top: 1rem;">
+            Stop guessing your deployment parameters—generate your privacy-first AI stack commands today
+            and ensure your Linux Kernel is tuned for peak inference performance.
+        </p>
+    </div>
+
+    <div class="tool-panel">
+        <div class="input-grid">
+            <div class="input-group">
+                <label class="input-label">GPU Architecture</label>
+                <select id="gpuArch" onchange="updateCommand()">
+                    <option value="ampere">NVIDIA RTX 30/40/50 (Ampere+)</option>
+                    <option value="older">NVIDIA GTX 10/20 (Pascal/Turing)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">GPU Count (Tensor Parallel)</label>
+                <input type="number" id="gpuCount" value="1" min="1" max="8" oninput="updateCommand()">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">VRAM per GPU (GB)</label>
+                <input type="number" id="vram" value="24" oninput="updateCommand()">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Model Path / ID</label>
+                <input type="text" id="modelPath" value="Qwen/Qwen2.5-7B-Instruct" oninput="updateCommand()">
+            </div>
+        </div>
+
+        <div class="mode-selector">
+            <button id="btn-native" class="mode-btn active" onclick="setMode('native')">Native Python</button>
+            <button id="btn-docker" class="mode-btn" onclick="setMode('docker')">Docker Run</button>
+        </div>
+
+        <div class="output-section">
+            <div class="output-label">
+                <span>Generated Command</span>
+            </div>
+            <div class="output-box">
+                <button class="copy-btn" onclick="copyCode()">
+                    <span id="copyIcon">📋</span>
+                    <span id="copyText">Copy</span>
+                </button>
+                <code id="commandOutput"></code>
+            </div>
+
+            <div id="alert-tp" class="alert-box alert-info" style="display: none;">
+                <h4>🌐 Using Multi-GPU?</h4>
+                <p>Ensure your NCCL P2P is optimized. Read our <a href="https://ai.islinux.com/articles/how-to-optimize-linux-kernel-llm-inference.html">Linux Kernel AI Tuning Guide</a>.</p>
+            </div>
+
+            <div id="alert-vram" class="alert-box alert-warning" style="display: none;">
+                <h4>⚠️ VRAM Notice</h4>
+                <p>Check out our <a href="https://calc.islinux.com/articles/best-budget-gpus-ai-inference-2026.html">March 2026 Budget GPU Tiers</a> for local inference recommendations.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tool-panel faq-section">
+        <h3>📚 Deployment FAQ</h3>
+
+        <div class="faq-item">
+            <h4>Q: What are the best Ollama environment variables for Linux in 2026?</h4>
+            <p>
+                For peak performance, always set <code>OLLAMA_NUM_PARALLEL</code> to match your CPU cores
+                and ensure <code>OLLAMA_MAX_LOADED_MODELS</code> fits within your VRAM budget calculated
+                by our <a href="https://calc.islinux.com/llm-vram-calculator.html">VRAM Predictor</a>.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h4>Q: How to fix vLLM Out-of-Memory (OOM) errors?</h4>
+            <p>
+                Most OOM issues are caused by excessive <code>gpu_memory_utilization</code>.
+                For 12GB cards, keep it at 0.9. For production workloads, consider using
+                AWQ or GPTQ 4-bit quantization.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h4>Q: How to choose between Native Python and Docker deployment?</h4>
+            <p>
+                Use <strong>Docker</strong> for production environments with consistent dependencies and isolation.
+                Use <strong>Native Python</strong> for development, debugging, or when you need direct access
+                to system libraries and CUDA tools.
+            </p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Tool.isLinux.com</p>
+    <p>
+        <a href="/index.html">Home</a> |
+        <a href="/about.html">About</a> |
+        <a href="/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
+</footer>
+
+<script>
+    let currentMode = 'native';
+
+    function setMode(mode) {
+        currentMode = mode;
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`btn-${mode}`).classList.add('active');
+        updateCommand();
+    }
+
+    function updateCommand() {
+        const arch = document.getElementById('gpuArch').value;
+        const count = parseInt(document.getElementById('gpuCount').value);
+        const vram = parseInt(document.getElementById('vram').value);
+        const model = document.getElementById('modelPath').value;
+
+        let dtype = (arch === 'ampere') ? 'bfloat16' : 'float16';
+        let memUtil = (vram <= 12) ? 0.95 : 0.90;
+        const shmSize = Math.min(vram * count * 0.85, 32); // Cap at 32GB
+
+        // Show/hide alerts
+        document.getElementById('alert-tp').style.display = (count > 1) ? 'block' : 'none';
+        document.getElementById('alert-vram').style.display = (vram < 16) ? 'block' : 'none';
+
+        let args = [
+            `--model ${model}`,
+            `--tensor-parallel-size ${count}`,
+            `--gpu-memory-utilization ${memUtil}`,
+            `--dtype ${dtype}`,
+            `--max-model-len 32768`
+        ];
+
+        let cmd = "";
+        if (currentMode === 'docker') {
+            cmd = `docker run --gpus all \\
+  --restart unless-stopped \\
+  -v ~/.cache/huggingface:/root/.cache/huggingface \\
+  --shm-size ${shmSize}g \\
+  -p 8000:8000 \\
+  --env "NCCL_P2P_DISABLE=0" \\
+  --env "VLLM_ATTENTION_BACKEND=FLASH_ATTN" \\
+  vllm/vllm-openai:latest \\
+  ${args.join(' \\n  ')}`;
+        } else {
+            cmd = `NCCL_P2P_DISABLE=0 VLLM_ATTENTION_BACKEND=FLASH_ATTN \\
+python3 -m vllm.entrypoints.openai.api_server \\
+  ${args.join(' \\n  ')}`;
+        }
+        document.getElementById('commandOutput').innerText = cmd;
+    }
+
+    function copyCode() {
+        const code = document.getElementById('commandOutput').innerText;
+        const copyIcon = document.getElementById('copyIcon');
+        const copyText = document.getElementById('copyText');
+
+        const originalIcon = copyIcon.textContent;
+        const originalText = copyText.textContent;
+
+        copyIcon.textContent = '⏳';
+        copyText.textContent = 'Copying...';
+
+        navigator.clipboard.writeText(code).then(() => {
+            copyIcon.textContent = '✅';
+            copyText.textContent = 'Copied!';
+            setTimeout(() => {
+                copyIcon.textContent = originalIcon;
+                copyText.textContent = originalText;
+            }, 2000);
+        }).catch(() => {
+            copyIcon.textContent = '❌';
+            copyText.textContent = 'Failed';
+            setTimeout(() => {
+                copyIcon.textContent = originalIcon;
+                copyText.textContent = originalText;
+            }, 2000);
+        });
+    }
+
+    // Initialize
+    updateCommand();
+</script>
+
+</body>
+</html>
