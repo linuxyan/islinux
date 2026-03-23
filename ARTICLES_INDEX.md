@@ -1,6 +1,6 @@
 # isLinux 全站点文章索引
 
-> 最后更新：2026-03-20
+> 最后更新：2026-03-23
 
 ---
 
@@ -52,6 +52,8 @@
 | 如何在 Linux 上本地运行 DeepSeek-V3：分步部署指南 | https://ai.islinux.com/articles/run-deepseek-v3-locally-linux.html | DeepSeek-V3 本地部署完整指南：硬件需求、Ollama 部署、Llama.cpp 设置 |
 | 2026 本地 LLM 部署完整指南 | https://ai.islinux.com/articles/local-llm-deployment.html | 分步指南：对比 Ollama、LM Studio、text-generation-webui、llama.cpp |
 | 如何优化 Linux 内核用于 LLM 推理：DevOps 指南 | https://ai.islinux.com/articles/how-to-optimize-linux-kernel-llm-inference.html | Linux 内核调优完整指南：内存管理、I/O 优化、CPU 调度、GPU Direct Storage |
+| 修复 vLLM 内存泄漏：内核调优指南 | https://ai.islinux.com/articles/fixing-vllm-memory-leaks-kernel-tuning.html | vLLM 内存泄漏问题排查与内核调优解决方案 |
+| 修复 vLLM 上下文漂移：KV Cache 优化 | https://ai.islinux.com/articles/fixing-vllm-context-drift-kv-cache-optimization.html | vLLM 上下文漂移问题分析与 KV Cache 优化策略 |
 
 ### AI 开发实践
 
@@ -61,6 +63,17 @@
 | AI 提示工程：Shell 脚本生成 | https://ai.islinux.com/articles/prompt-engineering-shell.html | 掌握提示工程让 AI 编写高质量 Bash 脚本：完整模板和高级技巧 |
 | Git 提交消息指南 | https://ai.islinux.com/articles/git-commit-messages.html | 使用 AI 编写更好的 Git 提交消息 |
 | AI 代码审查指南 | https://ai.islinux.com/articles/ai-code-review-guide.html | AI 辅助代码审查的最佳实践 |
+
+### 在线工具
+
+| 工具 | 链接 | 描述 |
+|------|------|------|
+| Shell 提示生成器 | https://ai.islinux.com/shell-prompt.html | AI 驱动的 Shell 命令生成工具 |
+| Python 代码生成器 | https://ai.islinux.com/python-generator.html | AI 驱动的 Python 代码生成工具 |
+| 调试助手 | https://ai.islinux.com/debug-assistant.html | AI 辅助代码调试工具 |
+| README 生成器 | https://ai.islinux.com/readme-generator.html | 自动生成项目 README 文档 |
+| SQL 优化器 | https://ai.islinux.com/sql-optimizer.html | AI 驱动的 SQL 查询优化工具 |
+| Git 提交助手 | https://ai.islinux.com/git-commit.html | 自动生成 Git 提交消息 |
 
 ---
 
@@ -83,12 +96,15 @@
 | 工具 | 链接 | 描述 |
 |------|------|------|
 | JSON 格式化工具 | https://tool.islinux.com/json-format.html | 在线 JSON 格式化和验证 |
+| JSON 验证工具 | https://tool.islinux.com/json-validate.html | JSON 语法验证和错误检测 |
 | URL 编码工具 | https://tool.islinux.com/url-encode.html | URL 编码和解码工具 |
 | Base64 编解码工具 | https://tool.islinux.com/base64.html | Base64 编码和解码工具 |
 | 哈希计算工具 | https://tool.islinux.com/hash.html | MD5、SHA1、SHA256 哈希计算 |
 | Diff 比较工具 | https://tool.islinux.com/diff.html | 文本文件和代码比较工具 |
 | Favicon 生成器 | https://tool.islinux.com/favicon-generator.html | 在线生成网站 favicon |
-| 终端配置生成器 | https://tool.islinux.com/terminal-config-generator.html | 生成终端配置文件 |
+| 终端配置生成器 | https://tool.islinux.com/terminal-config-generator.html | 生成终端配置文件 (Starship, Zoxide, Eza, Bat) |
+| vLLM 命令生成器 | https://tool.islinux.com/vllm-command-generator.html | 生成 vLLM 和 Docker 部署命令，支持多 GPU 张量并行 |
+| AI 就绪度检测器 | https://tool.islinux.com/privacy-first-ai-readiness-checker.html | 隐私优先的 AI 工具就绪度检测 |
 
 ---
 
@@ -103,6 +119,7 @@
 
 | 工具 | 链接 | 描述 |
 |------|------|------|
+| LLM VRAM 预测器 | https://calc.islinux.com/llm-vram-calculator.html | 预测 LLM GPU VRAM 需求，支持量化和上下文长度计算 |
 | GPU 功耗成本计算器 | https://calc.islinux.com/gpu-power-cost.html | 计算 GPU 运行成本和电费 |
 | Token vs GPU 成本对比 | https://calc.islinux.com/token-vs-gpu.html | 对比 API Token 成本和本地 GPU 部署成本 |
 
@@ -113,14 +130,9 @@
 | 自由职业者费率计算器 | https://calc.islinux.com/articles/freelancer-rate-calculator.html | 科学计算真实时薪，避免低价竞争，确保公平报酬 |
 | 自由职业项目费率计算器 | https://calc.islinux.com/freelance-rate.html | 自由职业者项目定价和时薪计算工具 |
 | 小时费率计算器 | https://calc.islinux.com/hourly-rate.html | 个人小时费率计算工具 |
-
-### 其他计算器
-
-| 工具 | 链接 | 描述 |
-|------|------|------|
-| 货币转换器 | https://calc.islinux.com/currency-converter.html | 实时货币汇率转换 |
-| 房贷计算器 | https://calc.islinux.com/mortgage-calculator.html | 房屋贷款月供计算 |
-| 投资计算器 | https://calc.islinux.com/investment-calculator.html | 投资收益和复利计算 |
+| 房贷计算器 | https://calc.islinux.com/mortgage-calculator.html | 房屋贷款月供计算 (等额本息/等额本金) |
+| 货币转换器 | https://calc.islinux.com/currency-converter.html | 实时货币汇率转换 (USD/CNY/EUR/GBP/JPY/HKD/SGD) |
+| 投资计算器 | https://calc.islinux.com/investment-calculator.html | 投资收益和复利计算，支持每月定投 |
 
 ---
 
@@ -137,12 +149,8 @@
 
 | 站点 | 文章数量 | 工具数量 |
 |------|----------|----------|
-| 主站 (islinux.com) | 16 | 0 |
-| AI 子站 | 8 | 5 |
-| Tool 子站 | 7 | 7 |
-| Calc 子站 | 2 | 6 |
-| **总计** | **33** | **18** |
-
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6694853699259578"
-     crossorigin="anonymous"></script>
+| 主站 (islinux.com) | 17 | 0 |
+| AI 子站 (ai.islinux.com) | 9 | 6 |
+| Tool 子站 (tool.islinux.com) | 7 | 10 |
+| Calc 子站 (calc.islinux.com) | 3 | 8 |
+| **总计** | **36** | **24** |
