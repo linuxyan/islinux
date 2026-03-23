@@ -334,7 +334,9 @@
             .calculator-grid { grid-template-columns: 1fr; }
         }
     </style>
+    <link rel="stylesheet" href="css/common.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/discover-more.js"></script>
 </head>
 <body>
 
@@ -437,18 +439,35 @@
             </div>
         </div>
 
-        <div class="info-box">
-            <h4>🚀 Ready to Deploy?</h4>
+        <div class="info-box" style="background: rgba(35, 134, 54, 0.1); border-color: var(--accent-color);">
+            <h4 style="color: var(--accent-color);">🚀 Ready to Deploy?</h4>
             <p>
                 Generate optimized <strong>vLLM & Docker Startup Commands</strong> based on these VRAM calculations.
             </p>
-            <p>
-                <a href="https://tool.islinux.com/terminal-config-generator.html">→ Terminal Config Generator</a> |
-                <a href="https://tool.islinux.com/privacy-first-ai-readiness-checker.html">→ AI Readiness Checker</a>
+            <p style="margin-top: 0.75rem;">
+                <a href="https://tool.islinux.com/terminal-config-generator.html" style="color: var(--accent-color);">→ Terminal Config Generator</a><br>
+                <a href="https://tool.islinux.com/privacy-first-ai-readiness-checker.html" style="color: var(--accent-color);">→ AI Readiness Checker</a>
             </p>
         </div>
     </div>
 </div>
+
+<!-- Discover More Section -->
+<section class="discover-section">
+    <h2 class="discover-title">🔍 Discover More</h2>
+    <div class="discover-grid" id="discover-grid"></div>
+</section>
+
+<!-- Tool Guide Section -->
+<section class="tool-guide-section">
+    <div class="tool-guide-content" id="tool-guide-content"></div>
+</section>
+
+<!-- Random Articles Section -->
+<section class="random-articles-section">
+    <h2 class="random-articles-title">📚 Related Articles</h2>
+    <div class="random-articles-grid" id="random-articles-grid"></div>
+</section>
 
 <footer>
     <p>&copy; 2026 Calc.isLinux.com</p>
@@ -459,6 +478,8 @@
         <a href="https://islinux.com">Main Site</a>
     </p>
 </footer>
+
+<div class="toast" id="toast">✅ Copied to clipboard!</div>
 
 <script>
 function updateCalc() {
