@@ -153,6 +153,31 @@
                     <li><strong>Off-peak hours:</strong> Running during off-peak can save 30-50% with time-of-use pricing</li>
                 </ul>
             `
+        },
+        'llm-vram-calculator.html': {
+            title: 'How to Use LLM VRAM Predictor',
+            content: `
+                <h3>📋 Usage</h3>
+                <ul>
+                    <li>Adjust model parameters slider (1B - 400B)</li>
+                    <li>Select quantization level (FP16/INT8/INT4/BitNet)</li>
+                    <li>Set context window size (1K - 262K tokens)</li>
+                    <li>View real-time VRAM breakdown results</li>
+                </ul>
+                <h3>💡 VRAM Components</h3>
+                <ul>
+                    <li><strong>Model Weights:</strong> Static memory for model parameters</li>
+                    <li><strong>KV Cache:</strong> Dynamic memory for context tokens</li>
+                    <li><strong>CUDA Buffer:</strong> Overhead for stable inference</li>
+                </ul>
+                <h3>🖥️ Quantization Guide</h3>
+                <ul>
+                    <li><strong>FP16/BF16:</strong> Full precision, maximum VRAM usage</li>
+                    <li><strong>INT8/FP8:</strong> Good balance, minimal quality loss</li>
+                    <li><strong>INT4/AWQ/GGUF:</strong> Best for consumer GPUs</li>
+                    <li><strong>BitNet 1.58-bit:</strong> Extreme compression for large models</li>
+                </ul>
+            `
         }
     };
 
