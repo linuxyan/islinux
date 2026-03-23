@@ -19,10 +19,7 @@
         { href: '/articles/url-encoding-guide.html', icon: '🔗', title: 'URL Encoding Guide', description: 'Understanding percent-encoding for URLs.' },
         { href: '/articles/hash-functions-guide.html', icon: '🔑', title: 'Hash Functions Guide', description: 'MD5, SHA1, SHA256 comparison and use cases.' },
         { href: '/articles/diff-tool-guide.html', icon: '📊', title: 'Diff Tool Guide', description: 'How to compare text and code using diff.' },
-        { href: '/articles/favicon-best-practices.html', icon: '🎨', title: 'Favicon Best Practices', description: 'Create professional favicons for your website.' },
-        { href: '/articles/vllm-deployment-guide-2026.html', icon: '🚀', title: 'vLLM Deployment Guide 2026', description: 'Complete guide to deploying vLLM with multi-GPU Tensor Parallelism.' },
-        { href: '/articles/local-ai-inference-setup.html', icon: '🤖', title: 'Local AI Inference Setup', description: 'How to set up privacy-first AI inference with Ollama and vLLM.' },
-        { href: '/articles/gpu-vram-optimization.html', icon: '💾', title: 'GPU VRAM Optimization', description: 'Tips for optimizing VRAM usage when running large language models.' }
+        { href: '/articles/favicon-best-practices.html', icon: '🎨', title: 'Favicon Best Practices', description: 'Create professional favicons for your website.' }
     ];
 
     const toolGuides = {
