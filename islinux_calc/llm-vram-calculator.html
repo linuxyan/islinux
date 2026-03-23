@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM VRAM Predictor | Best Memory & Quantization Calculator 2026 | Calc.isLinux</title>
+    <meta name="description" content="Accurately predict GPU VRAM requirements for LLMs (DeepSeek, Qwen) based on parameters, quantization (INT4/FP8), and context length. Updated for March 2026.">
+    <meta name="keywords" content="LLM VRAM calculator, GPU memory predictor, DeepSeek-V3, Qwen-2.5-Max, quantization INT4, FP8, KV cache, vLLM, Ollama, AI inference">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://calc.islinux.com/llm-vram-calculator.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="LLM VRAM Predictor | Best Memory & Quantization Calculator 2026">
+    <meta property="og:description" content="Accurately predict GPU VRAM requirements for LLMs based on parameters, quantization, and context length.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calc.islinux.com/llm-vram-calculator.html">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "LLM VRAM Predictor",
+      "description": "Predict GPU memory usage for large language models. Understand the impact of Quantization (INT4/FP8) and KV Cache to avoid OOM errors.",
+      "url": "https://calc.islinux.com/llm-vram-calculator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Organization",
+        "name": "isLinux",
+        "url": "https://islinux.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Model weights calculation (FP16/BF16/INT8/FP8/INT4)",
+        "KV Cache growth estimation for 32k-128k context",
+        "CUDA activation buffer calculation",
+        "Support for DeepSeek-V3, Qwen-2.5-Max, and more"
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+            --warning-orange: #ff7b72;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(35, 134, 54, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        .logo a { color: var(--accent-color); text-decoration: none; }
+        .logo a:hover { text-decoration: underline; }
+
+        .tagline { color: var(--text-muted); margin: 1rem 0 0; }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+        .tool-header {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-header h1 {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .tool-header p { margin: 0; color: var(--text-muted); }
+
+        .tool-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .panel-title {
+            margin: 0 0 1rem;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-section {
+            background: rgba(35, 134, 54, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .result-section {
+            background: rgba(35, 134, 54, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .input-value {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            accent-color: var(--accent-color);
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .result-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-card.total {
+            background: rgba(35, 134, 54, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .result-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .info-box {
+            background: rgba(255, 123, 114, 0.1);
+            border-left: 4px solid var(--warning-orange);
+            padding: 1.25rem;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+        }
+
+        .info-box h4 {
+            margin: 0 0 0.75rem;
+            color: var(--warning-orange);
+            font-size: 1rem;
+        }
+
+        .info-box p {
+            margin: 0 0 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-box a {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .info-box a:hover {
+            border-bottom-color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+            .calculator-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+
+<header>
+    <h1 class="logo"><a href="/index.html">🧮 Calc.isLinux.com</a></h1>
+    <p class="tagline">AI & Financial Calculators</p>
+    <nav>
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="https://islinux.com">Main Site</a>
+    </nav>
+</header>
+
+<div class="container">
+    <a href="/index.html" class="back-link">← Back to Calculators</a>
+
+    <div class="tool-header">
+        <h1>🧠 LLM VRAM Predictor</h1>
+        <p>Precision Memory Estimation for 2026 AI Architectures</p>
+    </div>
+
+    <div class="tool-panel">
+        <h2 class="panel-title">How to Predict LLM VRAM Requirements in 2026?</h2>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+            Predicting GPU memory usage for large language models is no longer just about the model size.
+            In March 2026, with the rise of <strong>DeepSeek-V3</strong> and <strong>Qwen-2.5-Max</strong>,
+            understanding the impact of <strong>Quantization (INT4/FP8)</strong> and <strong>KV Cache</strong>
+            is critical to avoid OOM errors.
+        </p>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+            Our LLM VRAM Predictor breaks down memory consumption into three layers:
+        </p>
+        <ul style="color: var(--text-muted); line-height: 1.8; padding-left: 1.5rem;">
+            <li><strong>Static Weights:</strong> Whether you are using GGUF, AWQ, or uncompressed BF16.</li>
+            <li><strong>KV Cache Growth:</strong> How much VRAM is consumed as your context length expands to 32k or 128k tokens.</li>
+            <li><strong>CUDA Activation:</strong> The hidden "buffer" required for stable inference.</li>
+        </ul>
+        <p style="color: var(--text-muted); line-height: 1.7; margin-top: 1rem;">
+            Whether you are building a vLLM production cluster or a local Ollama node, use this tool to optimize
+            your hardware ROI and ensure absolute privacy-first performance.
+        </p>
+    </div>
+
+    <div class="tool-panel">
+        <div class="calculator-grid">
+            <div class="input-section">
+                <h3 style="margin-top: 0; color: #fff;">📊 Input Parameters</h3>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Model Parameters</span>
+                        <span class="input-value" id="paramLabel">7B</span>
+                    </div>
+                    <input type="range" id="params" min="1" max="400" step="1" value="7">
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Quantization / Precision</span>
+                    </div>
+                    <select id="precision">
+                        <option value="16">FP16 / BF16 (Native, 16-bit)</option>
+                        <option value="8">INT8 / FP8 (High Quality, 8-bit)</option>
+                        <option value="4" selected>INT4 / AWQ / GGUF (Balanced, 4-bit)</option>
+                        <option value="1.5">BitNet 1.58-bit (Extreme)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <span>Context Window</span>
+                        <span class="input-value" id="ctxLabel">8,192</span>
+                    </div>
+                    <input type="range" id="context" min="1024" max="262144" step="1024" value="8192">
+                </div>
+            </div>
+
+            <div class="result-section">
+                <h3 style="margin-top: 0; color: #fff;">📈 VRAM Breakdown</h3>
+
+                <div class="result-card total">
+                    <span class="result-value" id="totalVRAM">0.00 GB</span>
+                    <span class="result-label">Recommended GPU VRAM</span>
+                </div>
+
+                <div class="result-card">
+                    <span class="result-value" id="weightVRAM">0.00 GB</span>
+                    <span class="result-label">Model Weights (Static)</span>
+                </div>
+
+                <div class="result-card">
+                    <span class="result-value" id="cacheVRAM">0.00 GB</span>
+                    <span class="result-label">KV Cache (Context)</span>
+                </div>
+
+                <div class="result-card">
+                    <span class="result-value" id="overheadVRAM">0.00 GB</span>
+                    <span class="result-label">CUDA Activation Buffer</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h4>🚀 Ready to Deploy?</h4>
+            <p>
+                Generate optimized <strong>vLLM & Docker Startup Commands</strong> based on these VRAM calculations.
+            </p>
+            <p>
+                <a href="https://tool.islinux.com/terminal-config-generator.html">→ Terminal Config Generator</a> |
+                <a href="https://tool.islinux.com/privacy-first-ai-readiness-checker.html">→ AI Readiness Checker</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Calc.isLinux.com</p>
+    <p>
+        <a href="/index.html">Home</a> |
+        <a href="/about.html">About</a> |
+        <a href="/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
+</footer>
+
+<script>
+function updateCalc() {
+    const params = parseFloat(document.getElementById('params').value);
+    const precision = parseFloat(document.getElementById('precision').value);
+    const context = parseInt(document.getElementById('context').value);
+
+    // Update labels
+    document.getElementById('paramLabel').innerText = params + "B";
+    document.getElementById('ctxLabel').innerText = context.toLocaleString();
+
+    // 1. Static Weights: (B * bits) / 8
+    const weights = (params * precision) / 8;
+
+    // 2. KV Cache Growth (empirical constant for 2026 architectures)
+    const cacheFactor = (precision >= 8) ? 0.00012 : 0.00009;
+    const cache = params * context * cacheFactor;
+
+    // 3. CUDA Activation Buffer (hidden overhead)
+    const overhead = (params > 30) ? 2.8 : 1.4;
+
+    const total = weights + cache + overhead;
+
+    // Update results
+    document.getElementById('weightVRAM').innerText = weights.toFixed(2) + " GB";
+    document.getElementById('cacheVRAM').innerText = cache.toFixed(2) + " GB";
+    document.getElementById('overheadVRAM').innerText = overhead.toFixed(2) + " GB";
+    document.getElementById('totalVRAM').innerText = total.toFixed(2) + " GB";
+}
+
+// Initialize
+document.getElementById('params').addEventListener('input', updateCalc);
+document.getElementById('precision').addEventListener('change', updateCalc);
+document.getElementById('context').addEventListener('input', updateCalc);
+updateCalc();
+</script>
+
+</body>
+</html>
