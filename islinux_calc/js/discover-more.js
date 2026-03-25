@@ -8,7 +8,8 @@
         { href: '/freelance-rate.html', icon: '💼', title: 'Freelance Rate', description: 'Calculate your ideal freelance hourly rate.' },
         { href: '/token-vs-gpu.html', icon: '🤖', title: 'Token vs GPU', description: 'Compare AI API token costs vs self-hosted GPU expenses.' },
         { href: '/gpu-power-cost.html', icon: '⚡', title: 'GPU Power Cost', description: 'Calculate monthly electricity cost of running your GPU.' },
-        { href: '/llm-vram-calculator.html', icon: '🧠', title: 'LLM VRAM Predictor', description: 'Predict GPU VRAM requirements for LLMs with quantization and context length.' }
+        { href: '/llm-vram-calculator.html', icon: '🧠', title: 'LLM VRAM Predictor', description: 'Predict GPU VRAM requirements for LLMs with quantization and context length.' },
+        { href: '/gpu-tps-calculator.html', icon: '🚀', title: 'GPU TPS Predictor', description: 'Calculate tokens per second from GPU TFLOPS.' }
     ];
 
     const articles = [
@@ -178,6 +179,28 @@
                     <li><strong>INT4/AWQ/GGUF:</strong> Best for consumer GPUs</li>
                     <li><strong>BitNet 1.58-bit:</strong> Extreme compression for large models</li>
                 </ul>
+            `
+        },
+        'gpu-tps-calculator.html': {
+            title: 'How to Use GPU TPS Predictor',
+            content: `
+                <h3>📋 Usage</h3>
+                <ul>
+                    <li>Enter your GPU TFLOPS (e.g., RTX 4090 BF16: 82.6)</li>
+                    <li>Set model parameters in billions (e.g., 7B, 8B)</li>
+                    <li>Select inference precision (FP8/INT8, BF16/FP16, or FP32)</li>
+                    <li>View estimated tokens per second (TPS)</li>
+                </ul>
+                <h3>💡 Understanding TPS</h3>
+                <ul>
+                    <li><strong>15-20 TPS:</strong> Comfortable for reading</li>
+                    <li><strong>50-100+ TPS:</strong> High-speed data processing</li>
+                </ul>
+                <h3>🔍 Formula</h3>
+                <div class="code-wrapper">
+                    <pre><code>TPS = (TFLOPS × 1000 × MFU) / (2 × Params_B)</code></pre>
+                </div>
+                <p>MFU (Model FLOPs Utilization) is typically 0.55 for optimized stacks like vLLM.</p>
             `
         }
     };
