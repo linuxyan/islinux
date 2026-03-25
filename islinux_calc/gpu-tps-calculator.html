@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU TPS Predictor | Tokens Per Second Calculator 2026 | Calc.isLinux</title>
+    <meta name="description" content="Calculate LLM tokens per second (TPS) from GPU TFLOPS. Professional calculator for NVIDIA RTX 4090/5090, comparing FP8 vs BF16 performance in 2026.">
+    <meta name="keywords" content="GPU TPS calculator, tokens per second, TFLOPS, AI inference speed, RTX 4090, RTX 5090, FP8, BF16, vLLM">
+    <meta name="author" content="isLinux Team">
+    <link rel="canonical" href="https://calc.islinux.com/gpu-tps-calculator.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="GPU TPS Predictor | Tokens Per Second Calculator 2026">
+    <meta property="og:description" content="Calculate tokens per second (TPS) from GPU TFLOPS for AI inference.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calc.islinux.com/gpu-tps-calculator.html">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "GPU TPS Predictor",
+      "description": "Calculate tokens per second (TPS) based on GPU TFLOPS and model parameters for AI inference.",
+      "url": "https://calc.islinux.com/gpu-tps-calculator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Organization",
+        "name": "isLinux",
+        "url": "https://islinux.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "TFLOPS to TPS conversion",
+        "FP8/INT8 vs BF16/FP16 vs FP32 precision support",
+        "Model FLOPs Utilization (MFU) calculation",
+        "Multi-GPU setup support"
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #238636;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-muted: #8b949e;
+            --code-bg: #000;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(35, 134, 54, 0.1) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        .logo a { color: var(--accent-color); text-decoration: none; }
+        .logo a:hover { text-decoration: underline; }
+
+        .tagline { color: var(--text-muted); margin: 1rem 0 0; }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover { border-color: var(--accent-color); color: var(--accent-color); }
+
+        .tool-header {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-header h1 {
+            margin: 0 0 0.5rem;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .tool-header p { margin: 0; color: var(--text-muted); }
+
+        .tool-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .panel-title {
+            margin: 0 0 1rem;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-section {
+            background: rgba(35, 134, 54, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .result-section {
+            background: rgba(35, 134, 54, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-label {
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .input-hint {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .result-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-card.total {
+            background: rgba(35, 134, 54, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .info-box {
+            background: rgba(35, 134, 54, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.25rem;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+        }
+
+        .info-box h4 {
+            margin: 0 0 0.75rem;
+            color: var(--accent-color);
+            font-size: 1rem;
+        }
+
+        .info-box p {
+            margin: 0 0 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .info-box a {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .tech-box {
+            background: rgba(35, 134, 54, 0.05);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .tech-box code {
+            background: var(--code-bg);
+            color: #7ee787;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8rem; }
+            .calculator-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/common.js"></script>
+    <script src="js/discover-more.js"></script>
+</head>
+<body>
+
+<header>
+    <h1 class="logo"><a href="/index.html">🧮 Calc.isLinux.com</a></h1>
+    <p class="tagline">AI & Financial Calculators</p>
+    <nav>
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="https://islinux.com">Main Site</a>
+    </nav>
+</header>
+
+<div class="container">
+    <a href="/index.html" class="back-link">← Back to Calculators</a>
+
+    <div class="tool-header">
+        <h1>🚀 GPU TPS Predictor</h1>
+        <p>Calculate Tokens Per Second from GPU TFLOPS</p>
+    </div>
+
+    <div class="tool-panel">
+        <h2 class="panel-title">How to Calculate TPS from GPU TFLOPS?</h2>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+            The relationship between <strong>GPU TFLOPS</strong> and <strong>Tokens Per Second (TPS)</strong>
+            is governed by Transformer physics. For every token generated, each parameter must perform
+            approximately <strong>2 floating-point operations (FLOPs)</strong>.
+        </p>
+        <div class="tech-box">
+            <strong>The Master Formula:</strong><br><br>
+            <code>TPS = (GPU_TFLOPS × 1000 × MFU) / (2 × Parameters_B)</code><br><br>
+            <small style="color: var(--text-muted);">
+                *MFU (Model FLOPs Utilization) represents real-world efficiency, typically 0.55 for optimized stacks like vLLM.
+            </small>
+        </div>
+    </div>
+
+    <div class="tool-panel">
+        <div class="calculator-grid">
+            <div class="input-section">
+                <h3 style="margin-top: 0; color: #fff;">📊 Input Parameters</h3>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        GPU TFLOPS (Total)
+                    </div>
+                    <input type="number" id="tflops" value="82.6" step="0.1">
+                    <div class="input-hint">RTX 4090 BF16: 82.6 | RTX 5090: ~120</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        Model Parameters (Billion)
+                    </div>
+                    <input type="number" id="params" value="7" step="0.1">
+                    <div class="input-hint">e.g., Llama-3 (8B), Qwen (7B)</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        Inference Precision (Dtype)
+                    </div>
+                    <select id="dtype">
+                        <option value="1">FP8 / INT8 (Max Throughput - Ampere/Blackwell)</option>
+                        <option value="2" selected>BF16 / FP16 (Standard Quality)</option>
+                        <option value="4">FP32 (Legacy / Full Precision)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <h3 style="margin-top: 0; color: #fff;">📈 Estimated Generation Speed</h3>
+
+                <div class="result-card total">
+                    <span class="result-value" id="tpsResult">0.0</span>
+                    <span class="result-label">Tokens Per Second</span>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 Understanding Results</h4>
+                    <p>
+                        <strong>15-20 TPS:</strong> Comfortable for reading<br>
+                        <strong>50-100+ TPS:</strong> High-speed data processing
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h4>🔍 Why Real-World Speed May Vary</h4>
+            <p>
+                While this calculator provides a <strong>compute-bound</strong> estimate, actual results depend on:
+            </p>
+            <ul style="color: var(--text-muted); line-height: 1.8;">
+                <li><strong>Memory Bandwidth:</strong> For batch size = 1, GPU waits for data from VRAM (GB/s matters more than TFLOPS)</li>
+                <li><strong>KV Cache Overhead:</strong> Longer conversations consume more VRAM and compute</li>
+                <li><strong>Kernel Optimization:</strong> Tuned Linux kernel can improve MFU by up to 15%</li>
+            </ul>
+            <p style="margin-top: 1rem;">
+                <strong>Related:</strong>
+                <a href="https://calc.islinux.com/llm-vram-calculator.html">LLM VRAM Calculator</a> |
+                <a href="https://calc.islinux.com/articles/best-budget-gpus-ai-inference-2026.html">Best Budget GPUs 2026</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Discover More Section -->
+<section class="discover-section">
+    <h2 class="discover-title">🔍 Discover More</h2>
+    <div class="discover-grid" id="discover-grid"></div>
+</section>
+
+<!-- Tool Guide Section -->
+<section class="tool-guide-section">
+    <div class="tool-guide-content" id="tool-guide-content"></div>
+</section>
+
+<!-- Random Articles Section -->
+<section class="random-articles-section">
+    <h2 class="random-articles-title">📚 Related Articles</h2>
+    <div class="random-articles-grid" id="random-articles-grid"></div>
+</section>
+
+<footer>
+    <p>&copy; 2026 Calc.isLinux.com</p>
+    <p>
+        <a href="/index.html">Home</a> |
+        <a href="/about.html">About</a> |
+        <a href="/privacy.html">Privacy</a> |
+        <a href="https://islinux.com">Main Site</a>
+    </p>
+</footer>
+
+<div class="toast" id="toast">✅ Copied to clipboard!</div>
+
+<script>
+function calculateTPS() {
+    const tflops = parseFloat(document.getElementById('tflops').value) || 0;
+    const params = parseFloat(document.getElementById('params').value) || 0;
+    const dtypeFactor = parseFloat(document.getElementById('dtype').value) || 2;
+
+    if (tflops > 0 && params > 0) {
+        // MFU (Model FLOPs Utilization) - 2026 industry average
+        const mfu = 0.55;
+
+        // Formula: (TFLOPS * 1000 * MFU) / (2 * Params)
+        const rawTps = (tflops * 1000 * mfu) / (2 * params);
+
+        document.getElementById('tpsResult').innerText = rawTps.toFixed(1);
+    } else {
+        document.getElementById('tpsResult').innerText = "0.0";
+    }
+}
+
+// Initialize
+document.getElementById('tflops').addEventListener('input', calculateTPS);
+document.getElementById('params').addEventListener('input', calculateTPS);
+document.getElementById('dtype').addEventListener('change', calculateTPS);
+calculateTPS();
+</script>
+
+</body>
+</html>
